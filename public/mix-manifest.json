@@ -1,0 +1,9 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/main-view.js": "/js/main-view.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/login.js": "/js/login.js",
+    "/js/layout.js": "/js/layout.js",
+    "/js/login_layout.js": "/js/login_layout.js",
+    "/css/app.css": "/css/app.css"
+}
