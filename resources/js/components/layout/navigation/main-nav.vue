@@ -1,8 +1,6 @@
 <template>
-
-    <v-list nav>
+    <v-list dense nav>
         <template>
-            
             <v-list-item 
             :to="{name: item.link}"
             v-for="(item, index) in navs" link  exact :key="index">
@@ -15,7 +13,6 @@
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-  
         </template>
     </v-list>
 
@@ -23,6 +20,7 @@
 
 <script>
     export default {
+        props:['userDetails'],
         data() {
             return {
                 navs: [
@@ -32,14 +30,19 @@
                         icon: 'mdi-monitor-dashboard'
                     },
                     {
-                        text: 'Barangay Record',
-                        link: 'BarangayRecord',
+                        text: 'Patient',
+                        link: 'PatientInformation',
                         icon: 'mdi-account-group'
                     },
-                      {
-                        text: 'Health Record',
-                        link: 'HealthRecord',
+                    {
+                        text: 'Check-Up',
+                        link: 'CheckUp',
                         icon: 'mdi-account-heart'
+                    },
+                    {
+                        text: 'Illness',
+                        link: 'Illness',
+                        icon: 'mdi-emoticon-sick-outline'
                     },
                     {
                         text: 'Purok',
@@ -47,17 +50,24 @@
                         icon: 'mdi-home-group'
                     },
                     {
-                        text: 'Report',
-                        link: 'Report',
-                        icon: 'mdi-file-chart'
-                    },
-                    {
                         text: 'SMS',
                         link: 'Sms',
                         icon: 'mdi-message-text'
                     },
                     {
-                        text: 'User',
+                        text: 'Report',
+                        link: 'Report',
+                        icon: 'mdi-file-chart'
+                    },
+                    
+                ]
+            }
+        },
+        mounted(){
+            if(this.userDetails.role == 'administrator'){
+                this.navs.push(
+                    {
+                        text: 'Accounts',
                         link: 'User',
                         icon: 'mdi-account-lock'
                     },
@@ -66,9 +76,9 @@
                         link: 'Setting',
                         icon: 'mdi-cog'
                     }
-                ]
+                )
             }
-        },
+        }
 
     }
 

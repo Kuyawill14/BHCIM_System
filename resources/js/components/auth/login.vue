@@ -1,10 +1,5 @@
 <template>
     <v-app>
-        <div id="fb-root"></div>
-
-        <!-- Your Chat Plugin code -->
-        <div id="fb-customer-chat" class="fb-customerchat">
-        </div>
         <v-container :class="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm  ? '' : 'fill-height'" fluid>
 
             <v-row align="center" justify="center">
@@ -16,7 +11,7 @@
                         <sideContainer :system_setting="system_setting"></sideContainer>
 
                         <v-col :class="$vuetify.breakpoint.xs ? 'ma-0 pa-3 PB-0' :'ma-0 pa-0'" cols="12" md="5">
-                            <vue-element-loading :active="isLoggin" spinner="bar-fade-scale" color="#EF6C00" />
+                          <!--   <vue-element-loading :active="isLoggin" spinner="bar-fade-scale" color="#EF6C00" /> -->
                             <v-row align="center" justify="center">
                                 <v-col class="text-left" cols="12" md="12" lg="12" sm="7">
                                     <v-card-text v-if="!isForgotPassword">
@@ -25,28 +20,27 @@
                                             <v-row align="center" justify="center">
                                                 <v-col class="ma-0 pa-0 text-left" cols="12" md="8">
                                                     <div class=" text-md-h5 text-xs-h5 text-sm-h6 font-weight-bold">
-                                                        Login to your <span class="font-weight-regular">Account</span>
+                                                        Account <span class="font-weight-regular">Login</span>
                                                     </div>
                                                    
                                                 </v-col>
 
                                                 <v-col class="ma-0 pa-0 mt-4" cols="12" md="8">
-                                                    <v-text-field outlined label="Username" v-model="form.email"
+                                                    <v-text-field outlined label="Username" v-model="form.username"
                                                         :rules="loginEmailRules" name="Username" prepend-inner-icon="mdi-account"
-                                                        :dense="$vuetify.breakpoint.mdAndUp" type="text"
-                                                        color="primary" required />
+                                                        dense type="text"
+                                                        :color="system_setting.color" required />
                                                 </v-col>
                                                 <v-col class="ma-0 pa-0 mt-2 mb-0" cols="12" md="8">
-                                                    <v-text-field class="mb-0 pb-0" :dense="$vuetify.breakpoint.mdAndUp"
+                                                    <v-text-field class="mb-0 pb-0" dense
                                                         outlined v-model="form.password"
                                                         :append-icon="show ?'mdi-eye':'mdi-eye-off'"
                                                         :rules="[rules.required, rules.min, rules.blank]"
                                                         :type="show ? 'text' : 'password'" name="password"
                                                         label="Password" prepend-inner-icon="mdi-lock"
-                                                        hint="At least 6 characters" color="primary" counter
+                                                        hint="At least 6 characters" :color="system_setting.color" counter
                                                         @click:append="show = !show">
                                                     </v-text-field>
-                                                    <HasError class="error--text" :form="form" field="password" />
                                                 </v-col>
 
 
@@ -65,7 +59,7 @@
                                                 <v-col
                                                     :class="$vuetify.breakpoint.mdAndUp ? 'ma-0 pa-0 text-left' : 'ml-0 pl-0 pr-0 mr-0 mt-1'"
                                                     cols="12" md="8">
-                                                    <v-btn color="primary" class="mb-5" type="submit" :disabled="!valid"
+                                                    <v-btn dark :color="system_setting.color" class="mb-5" type="submit" 
                                                         :block="!$vuetify.breakpoint.mdAndUp"
                                                         :large="!$vuetify.breakpoint.mdAndUp"
                                                         :rounded="!$vuetify.breakpoint.mdAndUp" :loading="isLoggin">
@@ -121,14 +115,14 @@
 </template>
 
 <script>
-    const footer = () => import( /* webpackChunkName: "login_layout" */ "./layout/footer")
+    //const footer = () => import( /* webpackChunkName: "login_layout" */ "./layout/footer")
     const sideContainer = () => import( /* webpackChunkName: "login_layout" */ "./layout/sideContainer")
 
     export default {
         props:['system_setting'],
         title: 'Login',
         components: {
-            footer,
+            //footer,
             sideContainer,
         },
         data() {
@@ -137,19 +131,12 @@
                 dialog: true,
                 valid: true,
                 form: {
-                    email: "",
+                    username: "",
                     password: "",
                     remember: false
                 },
                 loginEmailRules: [
                     v => !!v || "Required",
-                    v => /.+@.+\..+/.test(v) || "Email must be valid",
-                    v => v && !!v.trim() || 'Field cannot be blank',
-                ],
-                emailRules: [
-                    v => !!v || "Required",
-                    v => /.+@.+\..+/.test(v) || "Email must be valid",
-                    v => v && !!v.trim() || 'Field cannot be blank',
                 ],
                 show: false,
                 rules: {
@@ -160,7 +147,6 @@
                 ToManyAttepmtError: null,
                 isForgotPassword: false,
                 IsloadingComponent: false
-
             }
         },
         computed: {
@@ -181,7 +167,20 @@
                 this.$refs.form.resetValidation();
             },
             login() {
-                this.$router.push({name: 'Dashboard'})
+                 this.$store.dispatch('login', this.form)
+            .then((res)=>{
+                if(res.data.success){
+                        this.showSuccess(res.data.message);
+                        if(res.data.details.role == 'administrator' || res.data.details.role == 'bhw')this.$router.push({name: 'Dashboard'});
+                        else if(res.data.details.role == 'patient')this.$router.push({name: 'PatientDashboard'});
+                    }
+                    else this.showError(res.data.message);
+                    this.isloading = false;
+                }).catch(()=>{
+                    this.showError('Login Failed');
+                    this.isloading = false;
+                })
+                //this.$router.push({name: 'Dashboard'})
             },
         
         },

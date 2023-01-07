@@ -1,12 +1,12 @@
 <template>
-   <div class="pt-8 px-3">
+   <div class="pt-7 px-3">
         <v-row>
             <v-col cols="12">
                  <v-card >
                     <v-card-title class="align-start mb-0 pb-0">
-                      <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;">
-                            <div class="pa-5">
-                                <v-icon dark style="font-size: 36px;">mdi-home-group</v-icon>
+                      <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
+                            <div class="pa-4">
+                                <v-icon dark style="font-size: 25px;">mdi-home-group</v-icon>
                                 <span class="white--text">Purok</span> 
                             </div>
                         </v-card>
@@ -25,27 +25,27 @@
                         </v-row>
                         <v-card elevation="0">
                             <v-card-title>
-                                <v-spacer></v-spacer>
-                                    <v-text-field v-model="search" placeholder="Purok #" append-icon="mdi-magnify" label="Search" single-line
+                                    <v-text-field v-model="search"  dense  append-icon="mdi-magnify" label="Search" single-line
                                         hide-details>
                                     </v-text-field>
+                                    <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
                             </v-card-title>
 
-                            <v-data-table  :headers="headers" :items="purokList" :items-per-page="10" class="elevation-0">                                
+                            <v-data-table  :search="search" :headers="headers" :items="purokList" :items-per-page="10" class="elevation-0">                                
                                 <template v-slot:body="{ items }">
                                     <tbody>
                                         <tr v-for="(item, index) in items" :key="index">
-                                            <td width="40%">{{item.name}} {{item.number}}</td>
+                                            <td width="40%">{{item.name}}</td>
                                             <td width="30%"> {{item.description }}</td>
                                             <td width="30%">
                                                 <v-btn small @click="openUpdateDialog(item)" rounded color="info">
-                                                    <v-icon left>
+                                                    <v-icon small>
                                                         mdi-pencil
                                                     </v-icon>
                                                     Edit
                                                 </v-btn>
                                                 <v-btn small @click="showDeletePrompt(item.id)" dark rounded color="danger" >
-                                                    <v-icon>
+                                                    <v-icon small>
                                                         mdi-delete
                                                     </v-icon>
                                                     Delete
@@ -65,7 +65,7 @@
         </v-row>
 
 
-        <v-dialog  v-model="dialog" width="400">
+        <v-dialog  v-model="dialog" width="450">
             <v-card class="pa-2">
                 <v-card-title class="font-weight-bold justify-space-between">
                     {{this.type == "add" ? 'ADD PUROK' :  'UPDATE PUROK'}}
@@ -76,28 +76,23 @@
                     </v-btn>
                 </v-card-title>
                 <v-container>
-                    <v-form autocomplete="false" class="text-center" ref="form" v-model="valid"
+                    <v-form autocomplete="false"  ref="form" v-model="valid"
                         lazy-validation>
                         <v-row class="px-2 pt-2">
                             <v-col class="my-0 py-0" cols="12" md="12">
-                                <v-text-field  dense v-model="form.name" :rules="nameRules" label="Name"
+                                <div class="pb-2 font-weight-bold">Name</div>
+                                <v-text-field  dense v-model="form.name" :rules="nameRules" placeholder="Name"
                                  color="primary" type="text" outlined />
                             </v-col>
-                            <v-col class="my-0 py-0" cols="12" md="12">
-                                <v-text-field label="#" dense type="number" v-model="form.number"
-                                    :rules="nameRules"
-                                    color="primary" outlined />
-                            </v-col>
-
                              <v-col class="my-0 py-0" cols="12" md="12">
+                                <div class="pb-2 font-weight-bold">Description</div>
                                 <v-textarea
                                 v-model="form.description"
                                     outlined
                                     dense
                                     auto-grow
                                     rows="4"
-                                    placeholder="(optional)"
-                                    label="Description"
+                                    placeholder="Description(optional)"
                                     ></v-textarea>
                             </v-col>
                         </v-row>

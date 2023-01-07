@@ -29,7 +29,7 @@ export default {
                     toast.addEventListener('mouseenter', this.$swal.stopTimer)
                     toast.addEventListener('mouseleave', this.$swal.resumeTimer)
                 }
-                })
+              })
         },
        async showDelete(callback){
            this.$swal({
@@ -37,7 +37,7 @@ export default {
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
+                confirmButtonColor: '#B71C1C',
                 cancelButtonColor: '#6c757d',
                 confirmButtonText: 'Confirm'
               }).then((confirmed) => {

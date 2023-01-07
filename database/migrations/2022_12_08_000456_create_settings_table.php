@@ -19,6 +19,7 @@ class CreateSettingsTable extends Migration
             $table->string('system_long_name')->nullable();
             $table->string('logo')->nullable();
             $table->string('login_bg')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }

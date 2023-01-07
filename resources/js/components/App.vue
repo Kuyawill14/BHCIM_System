@@ -8,20 +8,17 @@
     export default {
         data() {
             return {
-                system_setting:[],
+                
             }
         },
-       methods: {
-           async fetchSystemSetting(){
-                await axios.get(`/api/settings`)
-                .then((res)=>{
-                    this.system_setting = res.data;
-                })
+        computed: {
+            system_setting(){
+                return this.$store.getters.setting;
             },
         },
         beforeMount(){
-            this.fetchSystemSetting();
-        }
+            this.$store.dispatch('systemSetting');
+        },
     }
 </script>
 <style>

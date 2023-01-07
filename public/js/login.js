@@ -127,16 +127,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
-var footer = function footer() {
-  return __webpack_require__.e(/*! import() | login_layout */ "login_layout").then(__webpack_require__.bind(__webpack_require__, /*! ./layout/footer */ "./resources/js/components/auth/layout/footer.vue"));
-};
+//const footer = () => import( /* webpackChunkName: "login_layout" */ "./layout/footer")
 var sideContainer = function sideContainer() {
   return __webpack_require__.e(/*! import() | login_layout */ "login_layout").then(__webpack_require__.bind(__webpack_require__, /*! ./layout/sideContainer */ "./resources/js/components/auth/layout/sideContainer.vue"));
 };
@@ -144,7 +136,7 @@ var sideContainer = function sideContainer() {
   props: ['system_setting'],
   title: 'Login',
   components: {
-    footer: footer,
+    //footer,
     sideContainer: sideContainer
   },
   data: function data() {
@@ -153,23 +145,12 @@ var sideContainer = function sideContainer() {
       dialog: true,
       valid: true,
       form: {
-        email: "",
+        username: "",
         password: "",
         remember: false
       },
       loginEmailRules: [function (v) {
         return !!v || "Required";
-      }, function (v) {
-        return /.+@.+\..+/.test(v) || "Email must be valid";
-      }, function (v) {
-        return v && !!v.trim() || 'Field cannot be blank';
-      }],
-      emailRules: [function (v) {
-        return !!v || "Required";
-      }, function (v) {
-        return /.+@.+\..+/.test(v) || "Email must be valid";
-      }, function (v) {
-        return v && !!v.trim() || 'Field cannot be blank';
       }],
       show: false,
       rules: {
@@ -209,9 +190,22 @@ var sideContainer = function sideContainer() {
       this.$refs.form.resetValidation();
     },
     login: function login() {
-      this.$router.push({
-        name: 'Dashboard'
+      var _this2 = this;
+      this.$store.dispatch('login', this.form).then(function (res) {
+        if (res.data.success) {
+          _this2.showSuccess(res.data.message);
+          if (res.data.details.role == 'administrator' || res.data.details.role == 'bhw') _this2.$router.push({
+            name: 'Dashboard'
+          });else if (res.data.details.role == 'patient') _this2.$router.push({
+            name: 'PatientDashboard'
+          });
+        } else _this2.showError(res.data.message);
+        _this2.isloading = false;
+      })["catch"](function () {
+        _this2.showError('Login Failed');
+        _this2.isloading = false;
       });
+      //this.$router.push({name: 'Dashboard'})
     }
   }
 });
@@ -305,13 +299,6 @@ var render = function () {
   return _c(
     "v-app",
     [
-      _c("div", { attrs: { id: "fb-root" } }),
-      _vm._v(" "),
-      _c("div", {
-        staticClass: "fb-customerchat",
-        attrs: { id: "fb-customer-chat" },
-      }),
-      _vm._v(" "),
       _c(
         "v-container",
         {
@@ -359,14 +346,6 @@ var render = function () {
                           attrs: { cols: "12", md: "5" },
                         },
                         [
-                          _c("vue-element-loading", {
-                            attrs: {
-                              active: _vm.isLoggin,
-                              spinner: "bar-fade-scale",
-                              color: "#EF6C00",
-                            },
-                          }),
-                          _vm._v(" "),
                           _c(
                             "v-row",
                             { attrs: { align: "center", justify: "center" } },
@@ -439,7 +418,7 @@ var render = function () {
                                                         },
                                                         [
                                                           _vm._v(
-                                                            "\n                                                        Login to your "
+                                                            "\n                                                        Account "
                                                           ),
                                                           _c(
                                                             "span",
@@ -447,7 +426,7 @@ var render = function () {
                                                               staticClass:
                                                                 "font-weight-regular",
                                                             },
-                                                            [_vm._v("Account")]
+                                                            [_vm._v("Login")]
                                                           ),
                                                         ]
                                                       ),
@@ -474,27 +453,27 @@ var render = function () {
                                                           name: "Username",
                                                           "prepend-inner-icon":
                                                             "mdi-account",
-                                                          dense:
-                                                            _vm.$vuetify
-                                                              .breakpoint
-                                                              .mdAndUp,
+                                                          dense: "",
                                                           type: "text",
-                                                          color: "primary",
+                                                          color:
+                                                            _vm.system_setting
+                                                              .color,
                                                           required: "",
                                                         },
                                                         model: {
-                                                          value: _vm.form.email,
+                                                          value:
+                                                            _vm.form.username,
                                                           callback: function (
                                                             $$v
                                                           ) {
                                                             _vm.$set(
                                                               _vm.form,
-                                                              "email",
+                                                              "username",
                                                               $$v
                                                             )
                                                           },
                                                           expression:
-                                                            "form.email",
+                                                            "form.username",
                                                         },
                                                       }),
                                                     ],
@@ -516,10 +495,7 @@ var render = function () {
                                                         staticClass:
                                                           "mb-0 pb-0",
                                                         attrs: {
-                                                          dense:
-                                                            _vm.$vuetify
-                                                              .breakpoint
-                                                              .mdAndUp,
+                                                          dense: "",
                                                           outlined: "",
                                                           "append-icon":
                                                             _vm.show
@@ -538,7 +514,9 @@ var render = function () {
                                                           "prepend-inner-icon":
                                                             "mdi-lock",
                                                           hint: "At least 6 characters",
-                                                          color: "primary",
+                                                          color:
+                                                            _vm.system_setting
+                                                              .color,
                                                           counter: "",
                                                         },
                                                         on: {
@@ -562,15 +540,6 @@ var render = function () {
                                                           },
                                                           expression:
                                                             "form.password",
-                                                        },
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c("HasError", {
-                                                        staticClass:
-                                                          "error--text",
-                                                        attrs: {
-                                                          form: _vm.form,
-                                                          field: "password",
                                                         },
                                                       }),
                                                     ],
@@ -679,10 +648,11 @@ var render = function () {
                                                         {
                                                           staticClass: "mb-5",
                                                           attrs: {
-                                                            color: "primary",
+                                                            dark: "",
+                                                            color:
+                                                              _vm.system_setting
+                                                                .color,
                                                             type: "submit",
-                                                            disabled:
-                                                              !_vm.valid,
                                                             block:
                                                               !_vm.$vuetify
                                                                 .breakpoint

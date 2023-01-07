@@ -15,8 +15,7 @@ class CreatePuroksTable extends Migration
     {
         Schema::create('puroks', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->integer('number');
+            $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();
         });

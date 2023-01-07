@@ -14,7 +14,8 @@ export default new Vuetify({
                 error: '#b71c1c',
                 grey_active: '#F5F5F5',
                 info:'#1565C0',
-                danger: '#B71C1C'
+                danger: '#B71C1C',
+                warning: '#B71C1C'
                
             },
         },

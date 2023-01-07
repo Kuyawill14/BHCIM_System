@@ -2,12 +2,11 @@
     <v-app >
         <sidebar :system_setting="system_setting"></sidebar>
         <v-main>
-            <v-container fluid width="100%">
+            <v-container class="pt-5"  fluid width="100%">
                 <router-view :system_setting="system_setting"></router-view>
             </v-container>
         </v-main>
     </v-app>
-
 </template>
 
 <style lang="scss" scoped>
@@ -36,7 +35,7 @@
           
         },
         beforeMount(){
-           
+           this.$vuetify.theme.themes.light.primary = this.system_setting.color;
         }
     }
 

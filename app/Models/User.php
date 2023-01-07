@@ -18,9 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name','gender', 'patient_id', 'username', 'password','role',
     ];
 
     /**
@@ -41,4 +39,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function patient_details()
+    {
+        return $this->hasOne(PatientInformation::class, 'id', 'patient_id');
+    }
 }

@@ -15,7 +15,6 @@ class PurokController extends Controller
     public function store(Request $request){
         $newPurok = new Purok;
         $newPurok->name = $request->name;
-        $newPurok->number = $request->number;
         $newPurok->description = $request->description;
         $newPurok->save();
 
@@ -31,7 +30,6 @@ class PurokController extends Controller
         $purok = Purok::find($id);
         if($purok){
             $purok->name = $request->name;
-            $purok->number = $request->number;
             $purok->description = $request->description;
             $purok->save();
 

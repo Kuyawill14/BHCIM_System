@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/main-view.js": "/js/main-view.js",
     "/js/dashboard.js": "/js/dashboard.js",
+    "/js/Patient.js": "/js/Patient.js",
     "/js/login.js": "/js/login.js",
     "/js/layout.js": "/js/layout.js",
     "/js/login_layout.js": "/js/login_layout.js",
