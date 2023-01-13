@@ -18,7 +18,7 @@ class PatientInformation extends Model
     {
         return $this->hasOne(HealthInformation::class, 'patient_id', 'id');
     }
-
+  
     public function account()
     {
         return $this->hasOne(User::class, 'patient_id', 'id');

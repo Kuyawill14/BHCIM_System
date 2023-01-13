@@ -31,17 +31,14 @@
                     <v-col cols="12" class="my-0 py-0"  md="2">
                         <div class="pb-2 font-weight-bold">Middle Initial</div>
                         <v-text-field :readonly="type == 'view'" placeholder="M.I" dense type="text" v-model="form.m_name"
-                        
-                            maxlenght="2"
+                            maxlength="1"
                             :rules="nameRules"
                             color="primary" :outlined="type != 'view'" />
                     </v-col>
                     <v-col cols="12" class="my-0 py-0"  md="2">
                         <div class="pb-2 font-weight-bold">Ext(eg. Jr. Sr.)</div>
-                        <v-text-field :readonly="type == 'view'" placeholder="M.I" dense type="text" v-model="form.name_ext"
-                           
-                            maxlenght="2"
-                         
+                        <v-text-field :readonly="type == 'view'" placeholder="Ext" dense type="text" v-model="form.name_ext"
+                            maxlength="2"
                             color="primary" :outlined="type != 'view'" />
                     </v-col>
                     <v-col cols="12" class="my-0 py-0" md="3">

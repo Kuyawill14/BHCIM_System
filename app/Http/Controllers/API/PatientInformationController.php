@@ -15,6 +15,9 @@ class PatientInformationController extends Controller
     public function index(){
         return PatientInformation::with(['purok'])
         ->with(['healthRecord'])
+        ->with(['account' => function ($query){
+            $query->select('patient_id', 'picture');
+        }])
         ->get();
     }
 
@@ -83,7 +86,11 @@ class PatientInformationController extends Controller
         }
     }
     public function view($id){
-        $viewPatient = PatientInformation::with(['purok'])->find($id);
+        $viewPatient = PatientInformation::with(['purok'])
+        ->with(['account' => function ($query){
+            $query->select('patient_id', 'picture');
+        }])
+        ->find($id);
         if($viewPatient){
             return response()->json([
                 "success"=> true,

@@ -2584,13 +2584,43 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
       },
       beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
     }, {
-      path: "/report",
+      path: "/patientreport",
       component: function component() {
-        return __webpack_require__.e(/*! import() | dashboard */ "dashboard").then(__webpack_require__.bind(__webpack_require__, /*! ../components/pages/report/report.vue */ "./resources/js/components/pages/report/report.vue"));
+        return __webpack_require__.e(/*! import() | dashboard */ "dashboard").then(__webpack_require__.bind(__webpack_require__, /*! ../components/pages/report/patientReport.vue */ "./resources/js/components/pages/report/patientReport.vue"));
       },
-      name: "Report",
+      name: "PatientReport",
       meta: {
-        preview_name: "Report"
+        preview_name: "PatientReport"
+      },
+      beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
+    }, {
+      path: "/checkupreport",
+      component: function component() {
+        return __webpack_require__.e(/*! import() | dashboard */ "dashboard").then(__webpack_require__.bind(__webpack_require__, /*! ../components/pages/report/checkUpReport.vue */ "./resources/js/components/pages/report/checkUpReport.vue"));
+      },
+      name: "CheckUpReport",
+      meta: {
+        preview_name: "checkUpReport"
+      },
+      beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
+    }, {
+      path: "/illnessreport",
+      component: function component() {
+        return __webpack_require__.e(/*! import() | dashboard */ "dashboard").then(__webpack_require__.bind(__webpack_require__, /*! ../components/pages/report/illnessReport.vue */ "./resources/js/components/pages/report/illnessReport.vue"));
+      },
+      name: "IllnessReport",
+      meta: {
+        preview_name: "illnessReport"
+      },
+      beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
+    }, {
+      path: "/medicineReport",
+      component: function component() {
+        return __webpack_require__.e(/*! import() | dashboard */ "dashboard").then(__webpack_require__.bind(__webpack_require__, /*! ../components/pages/report/medicineReport.vue */ "./resources/js/components/pages/report/medicineReport.vue"));
+      },
+      name: "MedicineReport",
+      meta: {
+        preview_name: "medicineReport"
       },
       beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
     }, {
@@ -2601,6 +2631,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
       name: "Sms",
       meta: {
         preview_name: "Sms Support"
+      },
+      beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
+    }, {
+      path: "/medicine",
+      component: function component() {
+        return __webpack_require__.e(/*! import() | dashboard */ "dashboard").then(__webpack_require__.bind(__webpack_require__, /*! ../components/pages/medicine/medicine.vue */ "./resources/js/components/pages/medicine/medicine.vue"));
+      },
+      name: "Medicine",
+      meta: {
+        preview_name: "Medicine"
       },
       beforeEnter: _middleware__WEBPACK_IMPORTED_MODULE_1__["default"].admin_bhw_rules
     }, {
@@ -38210,6 +38250,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/amd define */
+/******/ 	(() => {
+/******/ 		__webpack_require__.amdD = function () {
+/******/ 			throw new Error('define cannot be used indirect');
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/amd options */
+/******/ 	(() => {
+/******/ 		__webpack_require__.amdO = {};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
 /******/ 		var deferred = [];

@@ -2,7 +2,11 @@
 <v-row>
     <v-col class="text-center pt-5 mb-0 pb-0" cols="12">
         <v-avatar size="120">
-            <v-img
+            <v-img v-if="patientDetails.account"
+                :alt="`${patientDetails.f_name} ${patientDetails.l_name} avatar`"
+                :src="patientDetails.account.picture ? '/storage/'+patientDetails.account.picture : patientDetails.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
+            </v-img>
+              <v-img v-else
                 :alt="`${patientDetails.f_name} ${patientDetails.l_name} avatar`"
                 :src="patientDetails.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
             </v-img>

@@ -703,13 +703,16 @@ var render = function () {
                           on
                         ),
                         [
-                          _vm.userDetails.gender == 1
+                          _vm.userDetails.picture
                             ? _c(
                                 "v-avatar",
                                 { attrs: { color: "brown", size: "35" } },
                                 [
                                   _c("v-img", {
-                                    attrs: { src: "/storage/upload/pp_1.png" },
+                                    attrs: {
+                                      src:
+                                        "/storage/" + _vm.userDetails.picture,
+                                    },
                                   }),
                                 ],
                                 1
@@ -719,7 +722,12 @@ var render = function () {
                                 { attrs: { color: "brown", size: "35" } },
                                 [
                                   _c("v-img", {
-                                    attrs: { src: "/storage/upload/pp_2.png" },
+                                    attrs: {
+                                      src:
+                                        _vm.userDetails.gender == 1
+                                          ? "/storage/upload/pp_1.png"
+                                          : "/storage/upload/pp_2.png",
+                                    },
                                   }),
                                 ],
                                 1

@@ -12,6 +12,7 @@ use App\Http\Controllers\API\AccountsController;
 use App\Http\Controllers\API\IllnessController;
 use App\Http\Controllers\API\CheckUpController;
 use App\Http\Controllers\API\SmsController;
+use App\Http\Controllers\API\MedicineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,11 +52,12 @@ Route::prefix('/patient_information')->group(function () {
 
 //check-up record
 Route::prefix('/check_up')->group(function () {
-    Route::get('/{id}', [CheckUpController::class, 'index']);
+    Route::get('/check/{id}', [CheckUpController::class, 'index']);
     Route::post('/insert', [CheckUpController::class, 'store']);
     Route::get('/edit/{id}', [CheckUpController::class, 'edit']);
     Route::put('/update/{id}', [CheckUpController::class, 'update']);
     Route::delete('/delete/{id}', [CheckUpController::class, 'destroy']);
+    Route::get('/report', [CheckUpController::class, 'report']);
 });
 
 //illness record
@@ -65,6 +67,7 @@ Route::prefix('/illness')->group(function () {
     Route::get('/edit/{id}', [IllnessController::class, 'edit']);
     Route::put('/update/{id}', [IllnessController::class, 'update']);
     Route::delete('/delete/{id}', [IllnessController::class, 'delete']);
+    Route::get('/report', [IllnessController::class, 'report']);
 });
 
 //purok
@@ -84,7 +87,7 @@ Route::prefix('/account')->group(function () {
     Route::delete('/delete/{id}', [AccountsController::class, 'delete']);
 });
 
-//check-up record
+//sms
 Route::prefix('/sms')->group(function () {
     Route::get('', [SmsController::class, 'index']);
     Route::get('/view/{id}', [SmsController::class, 'show']);
@@ -95,12 +98,21 @@ Route::prefix('/sms')->group(function () {
     Route::delete('/delete/{id}', [SmsController::class, 'delete']);
 });
 
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//medicine
+Route::prefix('/medicine')->group(function () {
+    Route::get('', [MedicineController::class, 'index']);
+    Route::get('/view/{id}', [MedicineController::class, 'show']);
+    Route::post('/insert', [MedicineController::class, 'store']);
+    Route::get('/edit/{id}', [MedicineController::class, 'edit']);
+    Route::put('/update/{id}', [MedicineController::class, 'update']);
+    Route::delete('/delete/{id}', [MedicineController::class, 'delete']);
 });
- */
 
- Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
+    Route::post('/update', [AuthController::class, 'update']);
+});
+
+Route::post('/login', [AuthController::class, 'login']);
 //Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->get('/currentuser', [AuthController::class, 'currentuser']);
 Route::post('/logout', [AuthController::class, 'logout']);

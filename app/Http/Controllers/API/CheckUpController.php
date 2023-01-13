@@ -5,20 +5,40 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CheckUpRecord;
+use App\Models\Illness;
 
 class CheckUpController extends Controller
 {
     
     public function index($id)
     {
-        $CheckUpRecord = CheckUpRecord::where('patient_id', $id)->get();
+        $CheckUpRecord = CheckUpRecord::with(['picture'])
+        ->where('patient_id', $id)->get();
+
         return $CheckUpRecord;
     }
 
     
-    public function create()
+    public function report(Request $request)
     {
-        //
+        $CheckUpRecord = CheckUpRecord::
+        when($request->input('date_from'), function ($query) use ($request) {
+            $query->where('created_at','>=',$request->input('date_from'));
+        })
+        ->when($request->input('date_to'), function ($query) use ($request) {
+            $query->where('created_at','<=',$request->input('date_to'));
+        })
+        ->with(['info' =>  function ($query){
+            $query->with(['purok']);
+        }])
+        ->get();
+
+        foreach($CheckUpRecord as $check){
+            $check->Illness = Illness::select('id', 'name')
+            ->whereIn('id', $check['illness_id'])->get();
+        }
+
+        return $CheckUpRecord;
     }
 
     public function store(Request $request)

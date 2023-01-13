@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->Boolean('isActive')->default(0);
             $table->string('password');
             $table->integer('patient_id')->nullable();
+            $table->string('picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

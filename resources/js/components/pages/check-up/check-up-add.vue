@@ -54,35 +54,42 @@
                                 </v-col>
                                 <v-col cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Related Illness</div>
-                                    <v-select
-                                        dense
-                                        multiple
-                                        item-text="name"
-                                        item-value="id"
-                                        :rules="[rules.required]" 
+                                     <v-autocomplete
                                         v-model="form.illness_id"
                                         :items="illnessList"
                                         outlined
+                                        dense
+                                        chips
+                                        item-text="name"
+                                        item-value="id"
                                         color="primary"
                                         placeholder="Illness"
-                                    ></v-select>
+                                        multiple
+                                    ></v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Prescription Medicine</div>
-                                   <!--  <v-text-field v-model="form.medicine_given" placeholder="Prescription Medicine" 
-                                    dense small type="number" color="primary" outlined /> -->
-                                    <v-select
-                                        dense
-                                        multiple
-                                        item-text="name"
-                                        item-value="id"
-                                        :rules="[rules.required]" 
+                                    <v-autocomplete
                                         v-model="form.medicine_given"
                                         :items="illnessList"
                                         outlined
+                                        dense
+                                        chips
+                                        item-text="name"
+                                        item-value="id"
                                         color="primary"
                                         placeholder="Prescription Medicine"
-                                    ></v-select>
+                                        multiple>
+                                        <template slot="selection" slot-scope="data">
+                                            <v-chip v-bind="data.attrs" :input-value="data.selected">
+                                                {{ data.item.name }} - (expire: )
+                                            </v-chip>
+                                        </template>
+                                        <template slot="item" slot-scope="data">
+                                            <v-checkbox  v-model="data.selected"></v-checkbox>
+                                            {{ data.item.name }} - (expire: )
+                                        </template>
+                                    </v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" class="my-0 py-0" md="12">
                                     <div class="pb-2 font-weight-bold">Check-Up Details</div>

@@ -29,7 +29,15 @@
                                 <v-list-item  color="red" :class="selectedPatient_Id != item.id ? 'rounded-lg' : 'grey_active rounded-lg'"  link 
                                 @click="selectedPatient_Id != item.id ? changeSelected(item, false) : changeSelected(item, true)" v-for="item in getPatient" :key="item.id">
                                     <v-list-item-avatar>
+                                        
                                         <v-img
+                                            v-if="item.account"
+                                            :alt="`${item.f_name} ${item.l_name} avatar`"
+                                            :src="item.account.picture ? '/storage/'+item.account.picture : 
+                                            item.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
+                                        </v-img>
+                                         <v-img
+                                            v-else
                                             :alt="`${item.f_name} ${item.l_name} avatar`"
                                             :src="item.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
                                         </v-img>

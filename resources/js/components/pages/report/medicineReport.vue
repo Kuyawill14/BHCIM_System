@@ -7,7 +7,7 @@
                       <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
                             <div class="pa-4">
                                 <v-icon dark style="font-size: 25px;">mdi-file-chart</v-icon>
-                                <span class="white--text">Reports</span> 
+                                <span class="white--text">Medicine Report</span> 
                             </div>
                         </v-card>
                     </v-card-title>
@@ -15,40 +15,13 @@
                     <div class="px-10 py-10">
                         <v-card elevation="0">
                             <v-row >
-                                <v-col v-for="item in reportTypes" :key="item.id" cols="3">
-                                    <v-hover v-slot="{ hover }">
-                                        <v-card link  height="220px" width="100%" 
-                                        :color="hover ? 'primary' : ''" class="d-flex justify-center align-center"  >
-                                            <div class="text-center">
-                                                <div>
-                                                    <v-icon :dark="hover" 
-                                                    :color="hover ? '' : 'primary'"
-                                                    style="font-size: 45px;">mdi-file-chart</v-icon>
-                                                </div>
-                                                <h5 :class="hover ? 'white--text fw-bold mt-2' : 'fw-bold mt-2'">{{item.name}}</h5>
-                                            </div>
-                                        </v-card>
-                                    </v-hover>
-                                </v-col>
+                              
                             </v-row>
-
-                            
                         </v-card>
                    </div>
                 </v-card>
             </v-col>
         </v-row>
-
-         <v-dialog  v-model="dialog" width="450">
-           <IllnessForm
-           :formData="form"
-           @closeDialog="dialog = false"
-           @AddIllness="dialog = false, type = 'add', fetchIllnessList()"
-           @UpdatePatient="updateAccount"
-           v-if="dialog"
-           :type="type"
-           />
-        </v-dialog>
     </div>
 </template>
 <script>
@@ -67,12 +40,6 @@
           { text: 'Action', sortable: false },
         ],
         illnessList: [],
-        reportTypes:[
-            {id: 1, name: 'Illness Report'},
-            {id: 2, name: 'Check-Up Report'},
-            {id: 3, name: 'Patient List Report'},
-            {id: 4, name: 'Medicine List Report'}
-        ],
         search: '',
         type:'add',
         dialog: false,

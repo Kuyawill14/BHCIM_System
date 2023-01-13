@@ -32,11 +32,11 @@
       <v-menu min-width="150" offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon text v-bind="attrs"  v-on="on">
-             <v-avatar v-if="userDetails.gender == 1" color="brown" size="35">
-                <v-img src="/storage/upload/pp_1.png"></v-img>
+             <v-avatar v-if="userDetails.picture" color="brown" size="35">
+                <v-img :src="'/storage/'+userDetails.picture"></v-img>
               </v-avatar>
               <v-avatar v-else color="brown" size="35">
-                <v-img src="/storage/upload/pp_2.png"></v-img>
+                <v-img :src="userDetails.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
               </v-avatar>
           </v-btn>
         

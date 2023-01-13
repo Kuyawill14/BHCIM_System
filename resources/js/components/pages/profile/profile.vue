@@ -50,11 +50,11 @@
                                             placeholder="Gender"
                                         ></v-select>
                                     </v-col>
-                                     <v-col class="my-0 py-0" cols="12" md="12">
+                                     <v-col v-if="userDetails.role == 'administrator'" class="my-0 py-0" cols="12" md="12">
                                         <div class="pb-2 font-weight-bold">Role</div>
                                         <v-select
                                             :rules="nameRules" 
-                                            v-model="userDetails.gender"
+                                            v-model="userDetails.role"
                                             item-text="text"
                                             item-value="role"
                                             :items="roles"
@@ -62,6 +62,29 @@
                                             color="primary"
                                             placeholder="Role"
                                         ></v-select>
+                                    </v-col>
+
+                                    <v-col v-if="(userDetails.picture == null || userDetails.picture == '')" class="my-0 py-0" cols="12" md="12">
+                                        <div class="pb-2 font-weight-bold">Profile</div>
+                                          <v-file-input
+                                            :rules="rules"
+                                            outlined
+                                            @change="FileChange"
+                                            accept="image/png, image/jpeg, image/bmp"
+                                            placeholder="Pick profile"
+                                            prepend-inner-icon="mdi-image-area" prepend-icon=""    
+                                        ></v-file-input>
+                                    </v-col>
+
+                                    <v-col v-else class="my-0 py-0" cols="12" md="12">
+                                        <div class="pb-2 font-weight-bold">Profile</div>
+                                        <v-text-field 
+                                            outlined
+                                            v-model="userDetails.picture"
+                                            clearable
+                                            placeholder="Pick profile"
+                                            prepend-inner-icon="mdi-image-area" prepend-icon=""    
+                                        ></v-text-field>
                                     </v-col>
                                     <v-col class="my-0 py-0" cols="12" md="12">
                                          <v-btn
@@ -74,6 +97,7 @@
                                             Save Changes
                                         </v-btn>
                                     </v-col>
+
 
                                 </v-row>
                             </v-form>
@@ -95,7 +119,7 @@
       rules: [
         value => !value || value.size < 5000000 || 'System logo size should be less than 5 MB!',
       ],
-      system_logo: '',
+      user_profile: '',
       system_bg: '',
       genderType: [
             {text: 'Male', val: 1},
@@ -116,29 +140,24 @@
     methods: {
         validate () {
             if(this.$refs.form.validate()){
-                this.updateSystemInfo();  
+                this.updateProfile();  
             }
         },
         reset () {
             this.$refs.form.reset()
         },
-        async updateSystemInfo(){
+        async updateProfile(){
             let fd = new FormData
-            fd.append('system_logo', this.system_logo);
-            fd.append('system_bg', this.system_bg);
-            fd.append('system_setting', JSON.stringify(this.system_setting));
-            await axios.post(`/api/settings/update/${this.system_setting.id}`, fd)
+            fd.append('profile', this.user_profile);
+            fd.append('userDetails', JSON.stringify(this.userDetails));
+            await axios.post(`/api/user/update`, fd)
             .then((res)=>{
-                this.$router.go();
+                this.userDetails.picture = res.data.data;
                 this.showSuccess(res.data.message);
             })
         },
-        BgFileChange(file){
-            this.system_bg = file;
-        },
         FileChange(file){
-            this.system_logo = file;
-            this.system_setting.logo = `upload/setting/${file.name}`
+            this.user_profile = file;
         },
     },
    

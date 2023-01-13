@@ -80,7 +80,7 @@ export default {
             })
         },
         async getCheckUpRecord(){
-            axios.get(`/api/check_up/${this.$route.params.id}`)
+            axios.get(`/api/check_up/check/${this.$route.params.id}`)
             .then((res)=>{
                 this.recordList = res.data;
                 this.recordList.forEach(item => {

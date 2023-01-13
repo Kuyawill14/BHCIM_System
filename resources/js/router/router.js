@@ -64,10 +64,31 @@ const router = new Router({
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/report",
-                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/report.vue"),
-                    name: "Report",
-                    meta: { preview_name:  "Report" },
+                    path: "/patientreport",
+                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/patientReport.vue"),
+                    name: "PatientReport",
+                    meta: { preview_name:  "PatientReport" },
+                    beforeEnter: middleware.admin_bhw_rules
+                },
+                {
+                    path: "/checkupreport",
+                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/checkUpReport.vue"),
+                    name: "CheckUpReport",
+                    meta: { preview_name:  "checkUpReport" },
+                    beforeEnter: middleware.admin_bhw_rules
+                },
+                {
+                    path: "/illnessreport",
+                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/illnessReport.vue"),
+                    name: "IllnessReport",
+                    meta: { preview_name:  "illnessReport" },
+                    beforeEnter: middleware.admin_bhw_rules
+                },
+                {
+                    path: "/medicineReport",
+                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/medicineReport.vue"),
+                    name: "MedicineReport",
+                    meta: { preview_name:  "medicineReport" },
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
@@ -75,6 +96,13 @@ const router = new Router({
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/sms/sms.vue"),
                     name: "Sms",
                     meta: { preview_name:  "Sms Support" },
+                    beforeEnter: middleware.admin_bhw_rules
+                },
+                {
+                    path: "/medicine",
+                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/medicine/medicine.vue"),
+                    name: "Medicine",
+                    meta: { preview_name:  "Medicine" },
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {

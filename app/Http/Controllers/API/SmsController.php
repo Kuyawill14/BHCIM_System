@@ -13,7 +13,11 @@ class SmsController extends Controller
 {
     public function index()
     {
-        return Sms::with(['information'])
+        return Sms::with(['information' => function($q){
+            $q->with(['account' => function($qq){
+                $qq->select('patient_id', 'picture');
+            }]);
+        }])
         ->with(['messages'])
         ->get();
     }

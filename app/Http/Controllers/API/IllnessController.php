@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Illness;
+use App\Models\CheckUpRecord;
 
 class IllnessController extends Controller
 {
@@ -49,15 +50,14 @@ class IllnessController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function report()
     {
-        //
+        $illness = Illness::get();
+        foreach($illness as $item){
+            $count = CheckUpRecord::where('illness_id', 'LIKE', '%'.$item->id.'%')->count();
+            $item->check_up_record_count = $count;
+        }
+        return $illness;
     }
 
     /**
