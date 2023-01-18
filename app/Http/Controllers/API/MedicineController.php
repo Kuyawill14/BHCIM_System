@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Medicine;
+use App\Models\MedicineStock;
 
 class MedicineController extends Controller
 {
@@ -28,9 +29,26 @@ class MedicineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add(Request $request, $id)
     {
-        //
+            $newStock = new MedicineStock;
+            $newStock->medicine_id = $id;
+            $newStock->quantity = $request->quantity;
+            $newStock->expiration_date = $request->expiration_date;
+            $newStock->save();
+            
+            if($newStock){
+                return response()->json([
+                    "success"=> true,
+                    "message"=> 'New medicine stock successfully added!'
+                ]);
+            }   
+
+            return response()->json([
+                "success"=> true,
+                "message"=> 'adding medicine stock unsuccessful!'
+            ]);
+           
     }
 
     /**
@@ -41,7 +59,35 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+
+            $newMedicine = new Medicine;
+            $newMedicine->name = $request->name;
+            $newMedicine->description = $request->description;
+            $newMedicine->save();
+            
+            $newStock = new MedicineStock;
+            $newStock->medicine_id = $newMedicine->id;
+            $newStock->quantity = $request->quantity;
+            $newStock->expiration_date = $request->expiration_date;
+            $newStock->save();
+            
+            DB::commit();
+            return response()->json([
+                "success"=> true,
+                "data"=> $newMedicine,
+                "message"=> 'New medicine successfully added!'
+            ]);
+
+        }catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                "success"=> false,
+                "message"=> 'Adding medicine failed!'
+            ]);
+        }
     }
 
     /**
@@ -86,6 +132,18 @@ class MedicineController extends Controller
      */
     public function delete($id)
     {
-        //
+        $delete = Medicine::find($id);
+        if($delete){
+            $delete->stocks()->delete();
+            $delete->delete();
+            return response()->json([
+                "success"=> true,
+                "message"=> 'Medicine successfully delete!'
+            ]);
+        }
+        return response()->json([
+            "success"=> false,
+            "message"=> 'Data not found!'
+        ]);
     }
 }

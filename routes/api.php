@@ -103,6 +103,7 @@ Route::prefix('/medicine')->group(function () {
     Route::get('', [MedicineController::class, 'index']);
     Route::get('/view/{id}', [MedicineController::class, 'show']);
     Route::post('/insert', [MedicineController::class, 'store']);
+    Route::put('/add/{id}', [MedicineController::class, 'add']);
     Route::get('/edit/{id}', [MedicineController::class, 'edit']);
     Route::put('/update/{id}', [MedicineController::class, 'update']);
     Route::delete('/delete/{id}', [MedicineController::class, 'delete']);

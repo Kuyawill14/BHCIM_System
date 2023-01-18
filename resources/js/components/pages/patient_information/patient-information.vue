@@ -18,7 +18,7 @@
                             <div class="mt-5">
                                 <v-btn @click="addNewPatient()" dark rounded color="primary">
                                     <v-icon left>mdi-plus</v-icon>
-                                    Add New Record
+                                    Add New Patient
                                 </v-btn>
                             </div>
                         </v-col>
@@ -193,8 +193,12 @@ import PatientForm from './patient-add_edit-form'
         async deletePatient(id){
             await axios.delete(`/api/patient_information/delete/${id}`)
             .then((res)=>{
-                this.fetchPatientList();
-                this.showSuccess(res.data.message);
+                if(res.data.success){
+                    this.fetchPatientList();
+                    this.showSuccess(res.data.message);
+                }else{
+                    this.showError(res.data.message);
+                }
             })
         },
         async fetchPurokList(){

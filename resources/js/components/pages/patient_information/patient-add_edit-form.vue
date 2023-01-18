@@ -221,7 +221,7 @@
                 </v-row>
       
                 <v-card-actions v-if="type != 'view'" class="pr-0 mr-0 pb-3 pt-2">
-                    <v-btn class="px-10" large rounded color="primary" @click="validate()">
+                    <v-btn :loading="isloading" class="px-10" large rounded color="primary" @click="validate()">
                         <v-icon left>mdi-lock</v-icon>
                         {{this.type == "add" ? 'Submit' :  'Update'}}</v-btn>
                 </v-card-actions>
@@ -270,11 +270,13 @@
             nameRules: [
                 v => !!v || 'Field is required',
             ],
+            isloading: false,
       }
     },
     methods: {
           validate() {
             if (this.$refs.form.validate()) {
+                this.isloading = true;
                 if(this.type == 'add'){
                     this.addPatientInformation();
                 }else{
@@ -317,14 +319,14 @@
             await axios.put(`/api/patient_information/update/${this.form.id}`, this.form)
             .then((res)=>{
                  if(res.data.success){
-                    this.reset();
                     this.$emit('UpdatePatient');
                     this.showSuccess(res.data.message);
+                    this.reset();
                 }else{
                     this.showError(res.data.message);
                 }
-               
             })
+            this.isloading = false;
         },
         async addPatientInformation(){
             this.getAge();
@@ -332,14 +334,14 @@
             await axios.post(`/api/patient_information/insert`, this.form)
             .then((res)=>{
                 if(res.data.success){
-                    this.reset();
                     this.$emit('AddPatient', res.data.data);
                     this.showSuccess(res.data.message);
+                    this.reset();
                 }else{
                     this.showError(res.data.message);
                 }
-               
             })
+            this.isloading = false;
         },
     },
     beforeMount(){

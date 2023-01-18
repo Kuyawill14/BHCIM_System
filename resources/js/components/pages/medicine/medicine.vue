@@ -39,7 +39,7 @@
                                           <td>{{item.description}}</td>
                                            <td>{{item.total_stocks ? item.total_stocks.qty : 0}}</td>
                                           <td width="30%">
-                                            <v-btn small @click="openUpdateDialog(item.id)" rounded color="primary">
+                                            <v-btn small @click="addstock(item)" rounded color="primary">
                                                   <v-icon small>
                                                       mdi-plus
                                                   </v-icon>
@@ -71,24 +71,23 @@
             </v-col>
         </v-row>
 
-        <!--  <v-dialog  v-model="dialog" width="450">
-           <IllnessForm
+         <v-dialog  v-model="dialog" width="450">
+           <MedicineForm
            :formData="form"
            @closeDialog="dialog = false"
-           @AddIllness="dialog = false, type = 'add', fetchmedicineList()"
-           @UpdatePatient="updateAccount"
+           @addMedicine="fetchMedicineList(), dialog = false, type = 'add'"
            v-if="dialog"
            :type="type"
            />
-        </v-dialog> -->
+        </v-dialog>
     </div>
 </template>
 <script>
-/* import IllnessForm from './Illness-add_edit-form' */
+import MedicineForm from './medicine-add_edit-form'
   export default {
-   /*  components:{
-        IllnessForm
-    }, */
+    components:{
+        MedicineForm
+    },
     data () {
       return {
         loading: false,
@@ -120,7 +119,7 @@
         },
         async openUpdateDialog(id){
             this.loading = true;
-            await axios.get(`/api/illness/edit/${id}`)
+            await axios.get(`/api/medicine/edit/${id}`)
             .then((res)=>{
                 this.type = 'update';
                 this.form = res.data.data;
@@ -128,14 +127,11 @@
                 this.dialog = true;  
             })
         },
-        async updatePatientInformation(){
-            this.type = 'add';
-            this.dialog = false;
-            this.fetchmedicineList();
-        },
-        async addPatientInformation(data){
-            this.medicineList.push(data);
-            this.dialog = false;
+        async addstock(data){
+        
+            this.type = 'add_stock';
+            this.form = data;
+            this.dialog = true;  
         },
         async showDeletePrompt(id){
             this.showDelete((confirmed) => {
@@ -146,11 +142,11 @@
             });  
         },
         async deletePatient(id){
-            await axios.delete(`/api/illness/delete/${id}`)
+            await axios.delete(`/api/medicine/delete/${id}`)
             .then((res)=>{
                 if(res.data.success){
                     this.showSuccess(res.data.message);
-                    this.fetchmedicineList();
+                    this.fetchMedicineList();
                 }else{
                     this.showError(res.data.message);
                 }

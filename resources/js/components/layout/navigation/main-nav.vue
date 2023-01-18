@@ -12,7 +12,41 @@
             </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link  exact :to="{name:'PatientInformation'}">
+         <v-list-group id="sub_group" :value="false" no-action prepend-icon="mdi-account-group">
+            <template v-slot:activator>
+                <v-list-item-content>
+                    <v-list-item-title>
+                        Patient
+                    </v-list-item-title>
+                </v-list-item-content>
+            </template>
+            <v-list dense nav sub-group>
+                <v-list-item link  exact :to="{name:'PatientInformation'}">
+               
+                     <v-list-item-icon>
+                        <v-icon>mdi-account</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            List
+                        </v-list-item-title>
+                    </v-list-item-content>
+           
+                </v-list-item>
+                 <v-list-item link  exact :to="{name:'Purok'}">
+                   <v-list-item-icon>
+                        <v-icon>mdi-home-group</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Purok
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-list-group>
+
+      <!--   <v-list-item link  exact :to="{name:'PatientInformation'}">
             <v-list-item-icon>
                 <v-icon>mdi-account-group</v-icon>
             </v-list-item-icon>
@@ -21,9 +55,51 @@
                     Patient
                 </v-list-item-title>
             </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
 
-        <v-list-item link  exact :to="{name:'CheckUp'}">
+         <v-list-group id="sub_group" :value="false" no-action prepend-icon="mdi-account-heart">
+            <template v-slot:activator>
+                <v-list-item-content>
+                    <v-list-item-title>
+                        Check-Up
+                    </v-list-item-title>
+                </v-list-item-content>
+            </template>
+            <v-list dense nav sub-group>
+                <v-list-item link  exact :to="{name:'CheckUp'}">
+                     <v-list-item-icon>
+                        <v-icon>mdi-account-check</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Check-up Patient 
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link  exact :to="{name:'Illness'}">
+                    <v-list-item-icon>
+                        <v-icon>mdi-emoticon-sick-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Illness
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+               <v-list-item link  exact :to="{name:'Medicine'}">
+                    <v-list-item-icon>
+                        <v-icon>mdi-pill-multiple</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Medicines
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-list-group>
+
+        <!-- <v-list-item link  exact :to="{name:'CheckUp'}">
             <v-list-item-icon>
                 <v-icon>mdi-account-heart</v-icon>
             </v-list-item-icon>
@@ -32,20 +108,11 @@
                     Check-Up
                 </v-list-item-title>
             </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
 
-        <v-list-item link  exact :to="{name:'Illness'}">
-            <v-list-item-icon>
-                <v-icon>mdi-emoticon-sick-outline</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-                <v-list-item-title>
-                    Illness
-                </v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
+        
 
-        <v-list-item link  exact :to="{name:'Purok'}">
+       <!--  <v-list-item link  exact :to="{name:'Purok'}">
             <v-list-item-icon>
                 <v-icon>mdi-home-group</v-icon>
             </v-list-item-icon>
@@ -54,7 +121,7 @@
                     Purok
                 </v-list-item-title>
             </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
 
         <v-list-item link  exact :to="{name:'Sms'}">
             <v-list-item-icon>
@@ -66,7 +133,7 @@
                 </v-list-item-title>
             </v-list-item-content>
         </v-list-item>
-        <v-list-item link  exact :to="{name:'Medicine'}">
+      <!--   <v-list-item link  exact :to="{name:'Medicine'}">
             <v-list-item-icon>
                 <v-icon>mdi-pill-multiple</v-icon>
             </v-list-item-icon>
@@ -75,7 +142,7 @@
                     Medicines
                 </v-list-item-title>
             </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
 
         <v-list-group id="sub_group" :value="false" no-action prepend-icon="mdi-file-chart">
             <template v-slot:activator>
@@ -85,6 +152,7 @@
                     </v-list-item-title>
                 </v-list-item-content>
             </template>
+            <v-list dense nav sub-group>
                 <v-list-item link  exact :to="{name:'PatientReport'}">
                     <v-list-item-title>
                         Patient List Report
@@ -105,6 +173,7 @@
                         Medicine List Report
                     </v-list-item-title>
                 </v-list-item>
+            </v-list>
         </v-list-group>
 
 

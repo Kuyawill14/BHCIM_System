@@ -71,7 +71,7 @@
                                     <div class="pb-2 font-weight-bold">Prescription Medicine</div>
                                     <v-autocomplete
                                         v-model="form.medicine_given"
-                                        :items="illnessList"
+                                        :items="medicineList"
                                         outlined
                                         dense
                                         chips
@@ -121,6 +121,7 @@ export default {
     data() {
         return {
             illnessList: [],
+            medicineList: [],
             patientDetails: [],
             valid: true,
             isloaded: false,
@@ -169,6 +170,12 @@ export default {
                 this.illnessList = res.data;
             })
         },
+         async getIMedicine(){
+            await axios.get(`/api/medicine`)
+            .then((res)=>{
+                this.medicineList = res.data;
+            })
+        },
         validate() {
             if (this.$refs.form.validate()) {
                this.AddCheckUpRecord();
@@ -187,6 +194,7 @@ export default {
     beforeMount(){
         this.getPatientDetails();
         this.getIllnessList();
+        this.getIMedicine();
         for (let i = 0; i < 10; i++) {
             this.month_of_pregnant.push(i+1)
         }

@@ -148,6 +148,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userDetails']
@@ -460,21 +529,97 @@ var render = function () {
       ),
       _vm._v(" "),
       _c(
-        "v-list-item",
-        { attrs: { link: "", exact: "", to: { name: "PatientInformation" } } },
+        "v-list-group",
+        {
+          attrs: {
+            id: "sub_group",
+            value: false,
+            "no-action": "",
+            "prepend-icon": "mdi-account-group",
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function () {
+                return [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                    Patient\n                "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ]
+              },
+              proxy: true,
+            },
+          ]),
+        },
         [
-          _c(
-            "v-list-item-icon",
-            [_c("v-icon", [_vm._v("mdi-account-group")])],
-            1
-          ),
           _vm._v(" "),
           _c(
-            "v-list-item-content",
+            "v-list",
+            { attrs: { dense: "", nav: "", "sub-group": "" } },
             [
-              _c("v-list-item-title", [
-                _vm._v("\n                Patient\n            "),
-              ]),
+              _c(
+                "v-list-item",
+                {
+                  attrs: {
+                    link: "",
+                    exact: "",
+                    to: { name: "PatientInformation" },
+                  },
+                },
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [_c("v-icon", [_vm._v("mdi-account")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                        List\n                    "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                { attrs: { link: "", exact: "", to: { name: "Purok" } } },
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [_c("v-icon", [_vm._v("mdi-home-group")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                        Purok\n                    "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
             ],
             1
           ),
@@ -483,63 +628,116 @@ var render = function () {
       ),
       _vm._v(" "),
       _c(
-        "v-list-item",
-        { attrs: { link: "", exact: "", to: { name: "CheckUp" } } },
+        "v-list-group",
+        {
+          attrs: {
+            id: "sub_group",
+            value: false,
+            "no-action": "",
+            "prepend-icon": "mdi-account-heart",
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function () {
+                return [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                    Check-Up\n                "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ]
+              },
+              proxy: true,
+            },
+          ]),
+        },
         [
-          _c(
-            "v-list-item-icon",
-            [_c("v-icon", [_vm._v("mdi-account-heart")])],
-            1
-          ),
           _vm._v(" "),
           _c(
-            "v-list-item-content",
+            "v-list",
+            { attrs: { dense: "", nav: "", "sub-group": "" } },
             [
-              _c("v-list-item-title", [
-                _vm._v("\n                Check-Up\n            "),
-              ]),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-list-item",
-        { attrs: { link: "", exact: "", to: { name: "Illness" } } },
-        [
-          _c(
-            "v-list-item-icon",
-            [_c("v-icon", [_vm._v("mdi-emoticon-sick-outline")])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item-content",
-            [
-              _c("v-list-item-title", [
-                _vm._v("\n                Illness\n            "),
-              ]),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-list-item",
-        { attrs: { link: "", exact: "", to: { name: "Purok" } } },
-        [
-          _c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-home-group")])], 1),
-          _vm._v(" "),
-          _c(
-            "v-list-item-content",
-            [
-              _c("v-list-item-title", [
-                _vm._v("\n                Purok\n            "),
-              ]),
+              _c(
+                "v-list-item",
+                { attrs: { link: "", exact: "", to: { name: "CheckUp" } } },
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [_c("v-icon", [_vm._v("mdi-account-check")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                        Check-up Patient \n                    "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                { attrs: { link: "", exact: "", to: { name: "Illness" } } },
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [_c("v-icon", [_vm._v("mdi-emoticon-sick-outline")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                        Illness\n                    "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                { attrs: { link: "", exact: "", to: { name: "Medicine" } } },
+                [
+                  _c(
+                    "v-list-item-icon",
+                    [_c("v-icon", [_vm._v("mdi-pill-multiple")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                        Medicines\n                    "
+                        ),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
             ],
             1
           ),
@@ -562,29 +760,6 @@ var render = function () {
             [
               _c("v-list-item-title", [
                 _vm._v("\n                SMS\n            "),
-              ]),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-list-item",
-        { attrs: { link: "", exact: "", to: { name: "Medicine" } } },
-        [
-          _c(
-            "v-list-item-icon",
-            [_c("v-icon", [_vm._v("mdi-pill-multiple")])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item-content",
-            [
-              _c("v-list-item-title", [
-                _vm._v("\n                Medicines\n            "),
               ]),
             ],
             1
@@ -627,53 +802,72 @@ var render = function () {
         [
           _vm._v(" "),
           _c(
-            "v-list-item",
-            { attrs: { link: "", exact: "", to: { name: "PatientReport" } } },
+            "v-list",
+            { attrs: { dense: "", nav: "", "sub-group": "" } },
             [
-              _c("v-list-item-title", [
-                _vm._v(
-                  "\n                    Patient List Report\n                "
-                ),
-              ]),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item",
-            { attrs: { link: "", exact: "", to: { name: "CheckUpReport" } } },
-            [
-              _c("v-list-item-title", [
-                _vm._v(
-                  "\n                    Check-up Report\n                "
-                ),
-              ]),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item",
-            { attrs: { link: "", exact: "", to: { name: "IllnessReport" } } },
-            [
-              _c("v-list-item-title", [
-                _vm._v(
-                  "\n                    Illness Report\n                "
-                ),
-              ]),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item",
-            { attrs: { link: "", exact: "", to: { name: "MedicineReport" } } },
-            [
-              _c("v-list-item-title", [
-                _vm._v(
-                  "\n                    Medicine List Report\n                "
-                ),
-              ]),
+              _c(
+                "v-list-item",
+                {
+                  attrs: { link: "", exact: "", to: { name: "PatientReport" } },
+                },
+                [
+                  _c("v-list-item-title", [
+                    _vm._v(
+                      "\n                    Patient List Report\n                "
+                    ),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                {
+                  attrs: { link: "", exact: "", to: { name: "CheckUpReport" } },
+                },
+                [
+                  _c("v-list-item-title", [
+                    _vm._v(
+                      "\n                    Check-up Report\n                "
+                    ),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                {
+                  attrs: { link: "", exact: "", to: { name: "IllnessReport" } },
+                },
+                [
+                  _c("v-list-item-title", [
+                    _vm._v(
+                      "\n                    Illness Report\n                "
+                    ),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                {
+                  attrs: {
+                    link: "",
+                    exact: "",
+                    to: { name: "MedicineReport" },
+                  },
+                },
+                [
+                  _c("v-list-item-title", [
+                    _vm._v(
+                      "\n                    Medicine List Report\n                "
+                    ),
+                  ]),
+                ],
+                1
+              ),
             ],
             1
           ),

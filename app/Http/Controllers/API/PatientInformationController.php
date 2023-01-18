@@ -46,15 +46,7 @@ class PatientInformationController extends Controller
             $newHealthRecord->patient_id = $newPatient->id;
             $newHealthRecord->weight = $request->weight;
             $newHealthRecord->height = $request->height;
-            $newHealthRecord->blood_type = $request->b_type;
-            //$newHealthRecord->blood_pressure = $request->b_pressure_up.'/'.$request->b_pressure_down;
-            /* if($request->gender == 2){
-                $newHealthRecord->isPregnant = $request->pregnant;
-                if($request->pregnant){
-                    $newHealthRecord->month_of_pregnant = $request->months_pregnant;
-                }
-            } */
-            
+            $newHealthRecord->blood_type = $request->b_type;        
             $newHealthRecord->sickness = $request->sickness;
             $newHealthRecord->medication = $request->medication;
             $newHealthRecord->save();
@@ -149,14 +141,6 @@ class PatientInformationController extends Controller
                     $UpdateHealthRecord->weight = $request->weight;
                     $UpdateHealthRecord->height = $request->height;
                     $UpdateHealthRecord->blood_type = $request->b_type;
-                    //$UpdateHealthRecord->blood_pressure = $request->b_pressure_up.'/'.$request->b_pressure_down;
-                   /*  if($request->gender == 2){
-                        $UpdateHealthRecord->isPregnant = $request->pregnant;
-                        if($request->pregnant){
-                            $UpdateHealthRecord->month_of_pregnant = $request->months_pregnant;
-                        }
-                    } */
-                    
                     $UpdateHealthRecord->sickness = $request->sickness;
                     $UpdateHealthRecord->medication = $request->medication;
                     $UpdateHealthRecord->save();

@@ -71,7 +71,6 @@
            :formData="form"
            @closeDialog="dialog = false"
            @AddIllness="dialog = false, type = 'add', fetchIllnessList()"
-           @UpdatePatient="updateAccount"
            v-if="dialog"
            :type="type"
            />
