@@ -39,7 +39,7 @@
                                           <td>{{item.description}}</td>
                                            <td>{{item.total_stocks ? item.total_stocks.qty : 0}}</td>
                                           <td width="30%">
-                                            <v-btn small @click="addstock(item)" rounded color="primary">
+                                            <v-btn small @click="addstock(item.id,item.name)" rounded color="primary">
                                                   <v-icon small>
                                                       mdi-plus
                                                   </v-icon>
@@ -80,13 +80,26 @@
            :type="type"
            />
         </v-dialog>
+
+        <v-dialog  v-model="stockDialog" width="1000">
+           <MedicineStock
+           :medicine_id="medicine_id"
+           :medicine_name="medicine_name"
+           @closeDialog="stockDialog = false"
+           @reloadMain="fetchMedicineList()"
+           v-if="stockDialog"
+           />
+        </v-dialog>
     </div>
 </template>
 <script>
 import MedicineForm from './medicine-add_edit-form'
+import MedicineStock from './medicine-stock'
+
   export default {
     components:{
-        MedicineForm
+        MedicineForm,
+        MedicineStock
     },
     data () {
       return {
@@ -103,9 +116,13 @@ import MedicineForm from './medicine-add_edit-form'
           { text: 'Action', sortable: false },
         ],
         medicineList: [],
+        medicine_id: '',
+        medicine_name: '',
         search: '',
         type:'add',
         dialog: false,
+        stockDialog: false,
+        medicineId: '',
         valid: true,
         form: '',
       }
@@ -127,11 +144,11 @@ import MedicineForm from './medicine-add_edit-form'
                 this.dialog = true;  
             })
         },
-        async addstock(data){
-        
-            this.type = 'add_stock';
-            this.form = data;
-            this.dialog = true;  
+        async addstock(id, name){
+            this.medicine_id = id;
+            this.medicine_name = name;
+            this.type = 'update';
+            this.stockDialog = true;
         },
         async showDeletePrompt(id){
             this.showDelete((confirmed) => {

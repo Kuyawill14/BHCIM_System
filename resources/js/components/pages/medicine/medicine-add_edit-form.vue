@@ -29,13 +29,13 @@
                             rows="3"
                             ></v-textarea>
                     </v-col>
-                    <v-col class="my-0 py-0" cols="12" md="12">
+                    <v-col v-if="this.type != 'update'" class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Quantity</div>
                         <v-text-field class="text-uppercase" dense v-model="form.quantity" 
                         :rules="[rules.required]" 
                             color="primary" type="number" outlined />
                     </v-col>
-                    <v-col class="my-0 py-0" cols="12" md="12">
+                    <v-col v-if="this.type != 'update'" class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Expiration Date</div>
                         <v-text-field class="text-uppercase" dense v-model="form.expiration_date" 
                         :rules="[rules.required]" 
@@ -112,18 +112,7 @@ export default {
                     }
                 })
             },
-            async addMedicineStock(){
-                await axios.put(`/api/medicine/add/${this.formData.id}`, this.form)
-                .then((res)=>{
-                    if(res.data.success){
-                        this.showSuccess(res.data.message);
-                        this.$emit('addMedicine', res.data.data);
-                        this.$refs.form.reset();
-                    }else{
-                        this.showError(res.data.message);
-                    }
-                })
-            },
+           
     }
 }
 </script>
