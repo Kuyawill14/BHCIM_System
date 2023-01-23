@@ -19,12 +19,8 @@
               Back
       </v-btn>
     </div>
-     
 
-      
-        <p style="width:45%;line-height:17px" class="pl-3 pt-5">{{$vuetify.breakpoint.mdAndUp ? system_setting.system_long_name : system_setting.system_short_name}}</p>
-        
-     
+        <p style="width:50%;line-height:20px" class="pl-3 pt-5">{{$vuetify.breakpoint.mdAndUp ? system_setting.system_long_name : system_setting.system_short_name}}</p>
       <v-spacer></v-spacer>
       <div>
          <span>Hi! {{userDetails.name}} </span>
@@ -56,11 +52,11 @@
     <v-navigation-drawer width="220" v-if="currentRouteName != 'CheckUp' && currentRouteName != 'CheckUpRecord' && currentRouteName != 'CheckUpAdd'" v-model="nav" dark :color="system_setting.color"  app>
       <v-list class="mb-0 pb-0 ">
           <v-list-item class="d-flex justify-center pt-3">
-              <v-img height="120" width="120" max-height="120" max-width="120"
+              <v-img height="110" width="110" max-height="110" max-width="110"
                 :src="'/storage/'+system_setting.logo"></v-img>
           </v-list-item>
           <v-list-item  link>
-            <v-list-item-content class="text-uppercase d-flex justify-center font-weight-bold" style="font-size: 17px">
+            <v-list-item-content class="text-uppercase text-center font-weight-bold" style="font-size: 17px">
                 {{system_setting.system_short_name}}
             </v-list-item-content>
           </v-list-item>

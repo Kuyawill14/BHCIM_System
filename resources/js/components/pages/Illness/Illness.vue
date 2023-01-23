@@ -66,7 +66,7 @@
             </v-col>
         </v-row>
 
-         <v-dialog  v-model="dialog" width="450">
+         <v-dialog  v-model="dialog" width="600">
            <IllnessForm
            :formData="form"
            @closeDialog="dialog = false"

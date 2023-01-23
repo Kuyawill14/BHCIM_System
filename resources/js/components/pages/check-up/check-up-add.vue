@@ -27,7 +27,7 @@
                                         dense small type="number" color="primary" outlined />
                                     </div>
                                 </v-col>
-                                <v-col v-if="patientDetails.gender != 1" cols="12" class="my-0 py-0" md="6">
+                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Pregnant</div>
                                     <v-select
                                         dense
@@ -41,7 +41,7 @@
                                         placeholder="Pregnant"
                                     ></v-select>
                                 </v-col>
-                                <v-col v-if="patientDetails.gender != 1" cols="12" class="my-0 py-0" md="6">
+                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Months of Pregnancy</div>
                                     <v-select
                                         dense
@@ -68,7 +68,7 @@
                                     ></v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" class="my-0 py-0" md="6">
-                                    <div class="pb-2 font-weight-bold">Prescription Medicine</div>
+                                    <div class="pb-2 font-weight-bold">Prescribe Medicine</div>
                                     <v-autocomplete
                                         v-model="form.medicine_given"
                                         :items="medicineList"

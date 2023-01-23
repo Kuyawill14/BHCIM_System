@@ -13,6 +13,8 @@ use App\Http\Controllers\API\IllnessController;
 use App\Http\Controllers\API\CheckUpController;
 use App\Http\Controllers\API\SmsController;
 use App\Http\Controllers\API\MedicineController;
+use App\Http\Controllers\API\ServicesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +89,17 @@ Route::prefix('/account')->group(function () {
     Route::delete('/delete/{id}', [AccountsController::class, 'delete']);
 });
 
+//services
+Route::prefix('/services')->group(function () {
+    Route::get('', [ServicesController::class, 'index']);
+    Route::post('/insert', [ServicesController::class, 'store']);
+    Route::get('/edit/{id}', [ServicesController::class, 'edit']);
+    Route::put('/update/{id}', [ServicesController::class, 'update']);
+    Route::delete('/delete/{id}', [ServicesController::class, 'delete']);
+    Route::put('/activate/{id}', [ServicesController::class, 'activate']);
+    Route::put('/send_notification/{id}', [ServicesController::class, 'send_notification']);
+});
+
 //sms
 Route::prefix('/sms')->group(function () {
     Route::get('', [SmsController::class, 'index']);
@@ -108,6 +121,7 @@ Route::prefix('/medicine')->group(function () {
     Route::put('/update/{id}', [MedicineController::class, 'update']);
     Route::delete('/delete/{id}', [MedicineController::class, 'delete']);
     Route::delete('/deleteStock/{id}', [MedicineController::class, 'deleteStock']);
+    Route::get('/report', [MedicineController::class, 'report']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
