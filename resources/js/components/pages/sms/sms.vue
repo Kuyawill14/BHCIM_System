@@ -29,21 +29,23 @@
                             <template v-for="(item, index) in SmsList">
                                 <v-list-item  :class="selected_id != item.id ? 'rounded-lg' : 'grey_active rounded-lg'"
                                  @click="setSelectedMessage(item)" link :key="item.id">
-                                    <v-list-item-avatar  >
-                                      <v-img v-if="item.information.account" alt="avatar" 
+                                    <v-list-item-avatar v-if="item.patient_id != 0" >
+                                      <v-img v-if="item.patient_id != 0 && item.information.account" alt="avatar" 
                                       :src="item.information.account.picture ?  '/storage/'+item.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
-                                      <v-img v-else alt="avatar" :src="item.information.gender == 1 ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                      <v-img v-else alt="avatar" :src="item.information.gender == 1  ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                    </v-list-item-avatar>
+                                    <v-list-item-avatar v-else>
+                                      <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
                                     </v-list-item-avatar>
                                     <v-list-item-content>
                                         <div  style="font-size:12px">
-                                          {{item.information ? item.information.f_name+' '+item.information.l_name : 'No name' }}
+                                          {{item.information ? item.information.f_name+' '+item.information.l_name : 'All Patient' }}
                                         </div>
                                         <small>{{item.number}}</small>
                                         <v-list-item-subtitle style="font-size:10px">
                                           {{item.latest_message}}
                                         </v-list-item-subtitle>
                                     </v-list-item-content>
-
                                     <v-list-item-action>
                                         <v-list-item-action-text >
                                             <v-btn @click="showDeletePrompt(item.id)" icon x-small>
@@ -73,14 +75,17 @@
                           <div v-if="selected_id">
                             <div class="text-center">
                                 <div class="text-center">
-                                    <v-avatar height="60" width="60" max-height="60" max-width="60">
-                                          <v-img v-if="selected_details.information.account" alt="avatar" 
+                                    <v-avatar v-if="selected_details.patient_id != 0" height="60" width="60" max-height="60" max-width="60">
+                                          <v-img v-if="selected_details.information" alt="avatar" 
                                       :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
                                       <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
                                     </v-avatar>
+                                    <v-avatar v-else height="60" width="60" max-height="60" max-width="60">
+                                      <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
+                                    </v-avatar>
                                 </div>
                                 <div class="font-weight-bold">
-                                  {{selected_details.information ? selected_details.information.f_name+' '+selected_details.information.l_name : 'No name' }}
+                                  {{selected_details.information ? selected_details.information.f_name+' '+selected_details.information.l_name : 'All Patient' }}
                                 </div>
                                 <small>{{selected_details.number}}</small>
                             </div>
@@ -97,7 +102,6 @@
                                           <div class="text-right pr-4">
                                             <small>2022/21/09</small>
                                           </div>
-                                        
                                         </v-card>
                                         <v-avatar class="mt-1" height="40" width="40" max-height="100" max-width="100">
                                             <v-img src="/storage/upload/pp_1.png"></v-img>
@@ -105,10 +109,13 @@
                                     </v-container>
 
                                     <v-container v-if="item.from == userDetails.id" class="d-flex justify-content-start mt-0 pt-0">
-                                      <v-avatar class="mt-1" height="40" width="40" max-height="100" max-width="100">
-                                             <v-img v-if="selected_details.information.account" alt="avatar" 
-                                      :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
-                                      <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                        <v-avatar v-if="selected_details.patient_id != 0" class="mt-1" height="40" width="40" max-height="100" max-width="100">
+                                             <v-img v-if="selected_details.information" alt="avatar" 
+                                              :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
+                                            <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                        </v-avatar>
+                                         <v-avatar v-else height="60" width="60" max-height="60" max-width="60">
+                                          <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
                                         </v-avatar>
                                 
                                         <v-card class="rounded-xl" width="50%" min-height="7vh" elevation="0">
@@ -160,7 +167,7 @@
                                   prepend-inner-icon="mdi-magnify" prepend-icon=""    
                                   rounded outlined ></v-autocomplete>
                                 </div>
-                                <div class="px-2  mt-0">
+                                <div v-if="form.patient_id != 'all'" class="px-2  mt-0">
                                   <v-text-field :rules="rules" label="Number" 
                                   v-model="form.number" 
                                   rounded outlined auto-grow type="number"></v-text-field>
@@ -203,7 +210,7 @@
         message: '',
       },
       search: null,
-      searchPatient: [],
+      searchPatient: [{name: 'All Patient', id: 'all'}],
       valid: true,
       valid2: true,
       selected_id: '',
@@ -218,28 +225,35 @@
      watch: {
       search (val) {
         if(val){
-           if (this.searchPatient.length > 0) return
-            if (this.isLoading) return
-            this.isLoading = true
-            axios.get(`/api/patient_information/search?search=${escape(this.search)}`)
-            .then((res)=>{
-              this.searchPatient = res.data;
-            }).catch(err => {
-              console.log(err)
-            })
-            .finally(() => (this.isLoading = false))
+          if(val != 'All Patient'){
+            if (this.searchPatient.length > 1) return
+              if (this.isLoading) return
+              this.isLoading = true
+              axios.get(`/api/patient_information/search?search=${escape(this.search)}`)
+              .then((res)=>{
+                this.searchPatient = res.data;
+              }).catch(err => {
+                console.log(err)
+              })
+              .finally(() => (this.isLoading = false))
+          }
+           
         }else{
-          this.searchPatient = [];
+          this.searchPatient = [{name: 'All Patient', id: 'all'}];
         }
       },
     },
     methods: {
       userSelected(){
-        this.searchPatient.forEach(item => {
-            if(item.id == this.form.patient_id){
-              this.form.number = item.cell_number;
-            }
-        });
+        console.log(this.form.patient_id)
+        if(this.form.patient_id != 'all'){
+          this.searchPatient.forEach(item => {
+              if(item.id == this.form.patient_id){
+                this.form.number = item.cell_number;
+              }
+          });
+        }
+        
       },
       validate2() {
           if(this.$refs.form2.validate()) {

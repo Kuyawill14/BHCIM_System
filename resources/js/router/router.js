@@ -92,6 +92,13 @@ const router = new Router({
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
+                    path: "/services",
+                    component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/services/service.vue"),
+                    name: "Services",
+                    meta: { preview_name:  "Services" },
+                    beforeEnter: middleware.admin_bhw_rules
+                },
+                {
                     path: "/sms",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/sms/sms.vue"),
                     name: "Sms",

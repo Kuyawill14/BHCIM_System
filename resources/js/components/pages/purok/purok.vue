@@ -65,7 +65,7 @@
         </v-row>
 
 
-        <v-dialog  v-model="dialog" width="450">
+        <v-dialog  v-model="dialog" width="600">
             <v-card class="pa-2">
                 <v-card-title class="font-weight-bold justify-space-between">
                     {{this.type == "add" ? 'ADD PUROK' :  'UPDATE PUROK'}}

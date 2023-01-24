@@ -6,8 +6,8 @@
                     <v-card-title class="align-start mb-0 pb-0">
                       <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
                             <div class="pa-4">
-                                <v-icon dark style="font-size: 25px;">mdi-pill-multiple</v-icon>
-                                <span class="white--text">Medicine List</span> 
+                                <v-icon dark style="font-size: 25px;">mdi-emoticon-sick-outline</v-icon>
+                                <span class="white--text">Health Center Events</span> 
                             </div>
                         </v-card>
                     </v-card-title>
@@ -18,7 +18,7 @@
                             <div class="mt-5">
                                 <v-btn @click="type = 'add', dialog = true" dark rounded color="primary">
                                     <v-icon left>mdi-plus</v-icon>
-                                    Add New Medicine
+                                    Add New Event
                                 </v-btn>
                             </div>
                         </v-col>
@@ -31,27 +31,35 @@
                                 <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
                           </v-card-title>
 
-                          <v-data-table :search="search"  :headers="headers" :items="medicineList" :items-per-page="10" class="elevation-0">                                
+                          <v-data-table :search="search"  :headers="headers" :items="eventList" :items-per-page="10" class="elevation-0">                                
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
                                           <td width="20%">{{item.name}}</td>
-                                          <td>{{item.description}}</td>
-                                           <td>{{item.total_stocks ? item.total_stocks.qty : 0}}</td>
+                                          <td>
+                                            {{item.description}}
+                                          </td>
+                                          <td>
+                                            {{item.date}}
+                                          </td>
+                                          <td>
+                                            <v-switch @change="activateEvent(item.id,item.active)" inset v-model="item.active"></v-switch>
+                                          </td>
                                           <td width="30%">
-                                            <v-btn small @click="addstock(item.id,item.name)" rounded color="primary">
+                                            <v-btn v-if="item.active" class="my-2" small @click="sendNotification(item.id)" rounded color="primary">
                                                   <v-icon small>
-                                                      mdi-plus
+                                                      mdi-email-arrow-right
                                                   </v-icon>
-                                                  Add Stock
+                                                  Send Announcement
                                               </v-btn>
+                                               
                                              <v-btn small @click="openUpdateDialog(item.id)" rounded color="info">
                                                   <v-icon small>
                                                       mdi-pencil
                                                   </v-icon>
                                                   Edit
                                               </v-btn>
-                                              <v-btn small @click="showDeletePrompt(item.id)" dark rounded color="danger" >
+                                              <v-btn small :class="item.active ? 'mb-2' : ''" @click="showDeletePrompt(item.id)" dark rounded color="danger" >
                                                   <v-icon small>
                                                       mdi-delete
                                                   </v-icon>
@@ -59,7 +67,7 @@
                                               </v-btn>
                                           </td>
                                       </tr>
-                                      <tr v-if="medicineList.length == 0">
+                                      <tr v-if="eventList.length == 0">
                                           <td colspan="42" class="text-center"> No data available</td>
                                       </tr>
                                   </tbody>
@@ -72,34 +80,21 @@
         </v-row>
 
          <v-dialog  v-model="dialog" width="600">
-           <MedicineForm
+           <ServiceForm
            :formData="form"
            @closeDialog="dialog = false"
-           @addMedicine="fetchMedicineList(), dialog = false, type = 'add'"
+           @AddEvent="dialog = false, type = 'add', fetchEventList()"
            v-if="dialog"
            :type="type"
-           />
-        </v-dialog>
-
-        <v-dialog  v-model="stockDialog" width="1000">
-           <MedicineStock
-           :medicine_id="medicine_id"
-           :medicine_name="medicine_name"
-           @closeDialog="stockDialog = false"
-           @reloadMain="fetchMedicineList()"
-           v-if="stockDialog"
            />
         </v-dialog>
     </div>
 </template>
 <script>
-import MedicineForm from './medicine-add_edit-form'
-import MedicineStock from './medicine-stock'
-
+import ServiceForm from './service-add_edit-form'
   export default {
     components:{
-        MedicineForm,
-        MedicineStock
+        ServiceForm
     },
     data () {
       return {
@@ -107,36 +102,56 @@ import MedicineStock from './medicine-stock'
         search: '',
         headers: [
           {
-            text: 'Name',
+            text: 'Title',
             align: 'start',
             value:'name',
           },
           { text: 'Description', value: 'description'},
-          { text: 'Qty', value: 'Qty'},
+          { text: 'Date', value: 'date'},
+          { text: 'Active', value: 'active', sortable: false},
           { text: 'Action', sortable: false },
         ],
-        medicineList: [],
-        medicine_id: '',
-        medicine_name: '',
+        eventList: [],
         search: '',
         type:'add',
         dialog: false,
-        stockDialog: false,
-        medicineId: '',
         valid: true,
         form: '',
       }
     },
     methods: {
-        async fetchMedicineList(){
-            await axios.get(`/api/medicine`)
+        async fetchEventList(){
+            await axios.get(`/api/services`)
             .then((res)=>{
-                this.medicineList = res.data;
+                this.eventList = res.data;
+            })
+        },
+        async activateEvent(id, status){
+            let form = {};
+            form.active = status;
+            await axios.put(`/api/services/activate/${id}`,form)
+            .then((res)=>{
+                 if(res.data.success){
+                    this.showSuccess(res.data.message);
+                }else{
+                    this.showError(res.data.message);
+                }
+            })
+        },
+        async sendNotification(id){
+            let form = {};
+            await axios.put(`/api/services/send_notification/${id}`,form)
+            .then((res)=>{
+                 if(res.data.success){
+                    this.showSuccess(res.data.message);
+                }else{
+                    this.showError(res.data.message);
+                }
             })
         },
         async openUpdateDialog(id){
             this.loading = true;
-            await axios.get(`/api/medicine/edit/${id}`)
+            await axios.get(`/api/services/edit/${id}`)
             .then((res)=>{
                 this.type = 'update';
                 this.form = res.data.data;
@@ -144,35 +159,28 @@ import MedicineStock from './medicine-stock'
                 this.dialog = true;  
             })
         },
-        async addstock(id, name){
-            this.medicine_id = id;
-            this.medicine_name = name;
-            this.type = 'update';
-            this.stockDialog = true;
-        },
         async showDeletePrompt(id){
             this.showDelete((confirmed) => {
                let vm = this;
                if(confirmed) {
-                   vm.deletePatient(id);                
+                   vm.deleteService(id);                
                 }
             });  
         },
-        async deletePatient(id){
-            await axios.delete(`/api/medicine/delete/${id}`)
+        async deleteService(id){
+            await axios.delete(`/api/services/delete/${id}`)
             .then((res)=>{
                 if(res.data.success){
                     this.showSuccess(res.data.message);
-                    this.fetchMedicineList();
+                    this.fetchEventList();
                 }else{
                     this.showError(res.data.message);
                 }
-               
             })
         },
     },
     beforeMount() {
-        this.fetchMedicineList();
+        this.fetchEventList();
     },
   }
 </script>

@@ -40,7 +40,8 @@ class MedicineController extends Controller
             if($newStock){
                 return response()->json([
                     "success"=> true,
-                    "message"=> 'New medicine stock successfully added!'
+                    "message"=> 'New medicine stock successfully added!',
+                    "data" => $newStock,
                 ]);
             }   
 
@@ -98,7 +99,8 @@ class MedicineController extends Controller
      */
     public function show($id)
     {
-        //
+        $Stock = MedicineStock::where('medicine_id', $id)->get();
+        return $Stock;
     }
 
     /**
@@ -109,7 +111,19 @@ class MedicineController extends Controller
      */
     public function edit($id)
     {
-        //
+        $editMedicine = Medicine::find($id);
+        if($editMedicine){
+            return response()->json([
+                "success"=> true,
+                "data"=> $editMedicine,
+            ]);
+        }
+
+        return response()->json([
+            "success"=> false,
+            "data"=> [],
+            "message"=> 'Data not found!'
+        ]);
     }
 
     /**
@@ -121,7 +135,24 @@ class MedicineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updateMedicineStock = MedicineStock::find($id);
+        if($updateMedicineStock){
+            $updateMedicineStock->expiration_date = $request->expiration_date;
+            $updateMedicineStock->quantity = $request->quantity;
+            $updateMedicineStock->save();
+
+            return response()->json([
+                "success"=> true,
+                "data"=> $updateMedicineStock,
+                "message"=> 'Medicine stock successfully updated!'
+            ]);
+        }
+
+        return response()->json([
+            "success"=> false,
+            "data"=> [],
+            "message"=> 'Data not found!'
+        ]);
     }
 
     /**
@@ -139,6 +170,28 @@ class MedicineController extends Controller
             return response()->json([
                 "success"=> true,
                 "message"=> 'Medicine successfully delete!'
+            ]);
+        }
+        return response()->json([
+            "success"=> false,
+            "message"=> 'Data not found!'
+        ]);
+    }
+
+      /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteStock($id)
+    {
+        $delete = MedicineStock::find($id);
+        if($delete){
+            $delete->delete();
+            return response()->json([
+                "success"=> true,
+                "message"=> 'Stock successfully delete!'
             ]);
         }
         return response()->json([

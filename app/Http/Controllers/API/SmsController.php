@@ -35,7 +35,7 @@ class SmsController extends Controller
 
     public function store(Request $request)
     {
-       
+ 
         
         DB::beginTransaction();
         try {
@@ -45,13 +45,13 @@ class SmsController extends Controller
             $number = "639852394030";
             $from = "BHW";
             $message_content = $request->message;
-            //$this->sendSmsMessage($number, $from, $message_content);
+            //$this->sendSmsMessage($request->number, $from, $request->message);
 
             $newSms = new Sms;
-            $newSms->patient_id = $request->patient_id;;
+            $newSms->patient_id = $request->patient_id == 'all' ? 0 : $request->patient_id;
             $newSms->number = $request->number;
             $newSms->save();
-
+            
             $newMessage = new Message;
             $newMessage->sms_id = $newSms->id;
             $newMessage->from = $request->sender_id;
