@@ -45,9 +45,11 @@ Route::prefix('/settings')->group(function () {
 Route::prefix('/patient_information')->group(function () {
     Route::get('', [PatientInformationController::class, 'index']);
     Route::post('/insert', [PatientInformationController::class, 'store']);
+    Route::post('/insert-child', [PatientInformationController::class, 'store_child']);
     Route::get('/view/{id}', [PatientInformationController::class, 'view']);
     Route::get('/edit/{id}', [PatientInformationController::class, 'edit']);
     Route::put('/update/{id}', [PatientInformationController::class, 'update']);
+    Route::put('/update-child/{id}', [PatientInformationController::class, 'update_child']);
     Route::delete('/delete/{id}', [PatientInformationController::class, 'delete']);
     Route::get('/search', [PatientInformationController::class, 'search']);
 });

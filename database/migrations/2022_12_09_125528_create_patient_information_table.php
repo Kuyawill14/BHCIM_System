@@ -28,6 +28,11 @@ class CreatePatientInformationTable extends Migration
             $table->string("cell_number")->nullable();
             $table->integer("purok_id")->nullable();
             $table->string("guardian")->nullable();
+            $table->string("mother_name")->nullable();
+            $table->string("father_name")->nullable();
+            $table->boolean("nhts_member")->nullable();
+            $table->boolean("fourps_member")->nullable();
+            $table->boolean("isChild")->default(0);
             $table->timestamps();
         });
     }

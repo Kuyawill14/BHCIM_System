@@ -1,7 +1,7 @@
 <template>
     <div>
-        <v-container flat class="pa-5 d-flex justify-center align-center">
-            <v-card :width="$vuetify.breakpoint.mdAndUp ? '90%' : '100%'" class="pa-2">
+        <v-container flat class="pa-1 d-flex justify-center align-center">
+            <v-card elevation="0" :width="$vuetify.breakpoint.mdAndUp ? '90%' : '100%'" class="pa-2">
                <checkDetails v-if="isloaded" :patientDetails="patientDetails"></checkDetails>
                 <v-form autocomplete="false"  ref="form" v-model="valid" lazy-validation>
                     <v-row>
@@ -27,7 +27,7 @@
                                         dense small type="number" color="primary" outlined />
                                     </div>
                                 </v-col>
-                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="6">
+                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="4">
                                     <div class="pb-2 font-weight-bold">Pregnant</div>
                                     <v-select
                                         dense
@@ -41,10 +41,18 @@
                                         placeholder="Pregnant"
                                     ></v-select>
                                 </v-col>
-                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="6">
+                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="4">
+                                    <div class="pb-2 font-weight-bold">Last Menstruation</div>
+                                    <v-text-field @change="computeMonthPregnant()" v-model="form.last_mensturation" 
+                                        :rules="[rules.required]" 
+                                        :disabled="form.pregnant == false"
+                                        placeholder="Last Menstruation" dense small type="month"  color="primary" outlined />
+                                </v-col>
+                                <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="4">
                                     <div class="pb-2 font-weight-bold">Months of Pregnancy</div>
                                     <v-select
                                         dense
+                                        :disabled="form.pregnant == false"
                                         v-model="form.month_of_pregnancy"
                                         :items="month_of_pregnant"
                                         outlined
@@ -133,7 +141,7 @@ export default {
                 { text: 'Remarks', value: 'age' },
                 { text: 'Action', },
             ],
-            pregnant:[{text: 'YES', val: true},{text: 'NO', val: false}],
+            pregnant:[{text: 'YES', val: true},{text: 'NO', val: 'false'}],
             month_of_pregnant: [],
             rules: {
                 required: value => !!value || "Field is Required.",
@@ -182,13 +190,22 @@ export default {
             }
         },
         async AddCheckUpRecord(){
-       
             this.form.gender = this.patientDetails.gender;
             await axios.post(`/api/check_up/insert`, this.form)
             .then((res)=>{
                 this.$refs.form.reset();
                 this.showSuccess(res.data.message);
             })
+        },
+        computeMonthPregnant(){
+            let currentDate = new Date();
+            let date = new Date(this.form.last_mensturation+'-01')
+            let month;
+            month = (currentDate.getFullYear() - date.getFullYear()) * 12;
+            month -= date.getMonth() + 1;
+            month += currentDate.getMonth()+1;
+
+            this.form.month_of_pregnancy = month;
         }
     },
     beforeMount(){

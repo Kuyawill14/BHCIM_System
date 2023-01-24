@@ -1,7 +1,7 @@
 <template>
    <div>
         <v-container flat class="pa-5 d-flex justify-center align-center">
-            <v-card :width="$vuetify.breakpoint.mdAndUp ? '90%' : '100%'" class="pa-2">
+            <v-card elevation="0" :width="$vuetify.breakpoint.mdAndUp ? '90%' : '100%'" class="pa-2">
                 <v-row>
                     <v-col class="text-center pt-5" cols="12">
                         <v-avatar  tile size="120">

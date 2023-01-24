@@ -40,6 +40,8 @@ class PatientInformationController extends Controller
             $newPatient->cell_number = $request->cell_number;
             $newPatient->purok_id = $request->purok_id;
             $newPatient->guardian = $request->guardian;
+            $newPatient->nhts_member = $request->nhts_member;
+            $newPatient->fourps_member = $request->fourps_member;
             $newPatient->save();
 
             $newHealthRecord = new HealthInformation;
@@ -77,6 +79,67 @@ class PatientInformationController extends Controller
             ]);
         }
     }
+
+    public function store_child(Request $request){
+ 
+
+        DB::beginTransaction();
+        try {
+
+            $newPatient = new PatientInformation;
+            $newPatient->l_name = $request->l_name;
+            $newPatient->f_name = $request->f_name;
+            $newPatient->m_name = $request->m_name;
+            $newPatient->name_ext = $request->name_ext;
+            $newPatient->gender = $request->gender;
+            $newPatient->b_date = $request->b_date;
+            $newPatient->age = $request->age;
+            $newPatient->b_place = $request->b_place;
+            $newPatient->cell_number = $request->cell_number;
+            $newPatient->purok_id = $request->purok_id;
+            $newPatient->mother_name = $request->mother_name;
+            $newPatient->father_name = $request->father_name;
+            $newPatient->nhts_member = $request->nhts_member;
+            $newPatient->fourps_member = $request->fourps_member;
+            $newPatient->isChild = true;
+            $newPatient->save();
+
+            $newHealthRecord = new HealthInformation;
+            $newHealthRecord->patient_id = $newPatient->id;
+            $newHealthRecord->weight = $request->weight;
+            $newHealthRecord->height = $request->height;
+            $newHealthRecord->blood_type = $request->b_type;        
+            $newHealthRecord->sickness = $request->sickness;
+            $newHealthRecord->medication = $request->medication;
+            $newHealthRecord->save();
+
+            $newAccount = User::create([
+                'name' =>  $request->f_name.' '.$request->l_name,
+                'gender' =>  $request->gender,
+                'username' => 'patient'.strtolower($request->l_name),
+                'email_verified_at'=>  date('Y-m-d H:i:s'),
+                'password' => Hash::make('123123'),
+                'patient_id' => $newPatient->id,
+                'role' => 'patient',
+            ]);
+
+            DB::commit();
+            return response()->json([
+                "success"=> true,
+                "data"=> $newPatient,
+                "message"=> 'New patient successfully added!'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                "success"=> false,
+                "message"=> 'Adding patient failed!'
+            ]);
+        }
+    }
+
     public function view($id){
         $viewPatient = PatientInformation::with(['purok'])
         ->with(['account' => function ($query){
@@ -134,6 +197,72 @@ class PatientInformationController extends Controller
                 $updatePatient->cell_number = $request->cell_number;
                 $updatePatient->purok_id = $request->purok_id;
                 $updatePatient->guardian = $request->guardian;
+                $updatePatient->nhts_member = $request->nhts_member;
+                $updatePatient->fourps_member = $request->fourps_member;
+                $updatePatient->isChild = false;
+                $updatePatient->save();
+
+                $UpdateHealthRecord = HealthInformation::find($request->health_record_id);
+                if($UpdateHealthRecord){
+                    $UpdateHealthRecord->weight = $request->weight;
+                    $UpdateHealthRecord->height = $request->height;
+                    $UpdateHealthRecord->blood_type = $request->b_type;
+                    $UpdateHealthRecord->sickness = $request->sickness;
+                    $UpdateHealthRecord->medication = $request->medication;
+                    $UpdateHealthRecord->save();
+                }
+            
+                DB::commit();
+                return response()->json([
+                    "success"=> true,
+                    "data"=> $updatePatient,
+                    "message"=> 'Patient details successfully updated!'
+                ]);
+            }
+
+            return response()->json([
+                "success"=> false,
+                "data"=> [],
+                "message"=> 'Data not found!'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                "success"=> false,
+                "message"=> 'Update patient details failed!'
+            ]);
+        }
+       
+    }
+
+    public function update_child(Request $request, $id){
+        //return $request;
+        DB::beginTransaction();
+        try {
+ 
+            $updatePatient = PatientInformation::find($id);
+            if($updatePatient){
+
+                $updatePatient->l_name = $request->l_name;
+                $updatePatient->f_name = $request->f_name;
+                $updatePatient->m_name = $request->m_name;
+                $updatePatient->name_ext = $request->name_ext;
+                $updatePatient->gender = $request->gender;
+                $updatePatient->status = $request->status;
+                $updatePatient->b_date = $request->b_date;
+                $updatePatient->age = $request->age;
+                $updatePatient->b_place = $request->b_place;
+                //$updatePatient->occupation = $request->occupation;
+                $updatePatient->cell_number = $request->cell_number;
+                $updatePatient->purok_id = $request->purok_id;
+                //$updatePatient->guardian = $request->guardian;
+                $updatePatient->mother_name = $request->mother_name;
+                $updatePatient->father_name = $request->father_name;
+                $updatePatient->nhts_member = $request->nhts_member;
+                $updatePatient->fourps_member = $request->fourps_member;
+                $updatePatient->isChild = true;
                 $updatePatient->save();
 
                 $UpdateHealthRecord = HealthInformation::find($request->health_record_id);

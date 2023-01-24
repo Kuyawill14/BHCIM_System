@@ -56,20 +56,8 @@
                             placeholder="Gender"
                         ></v-select>
                     </v-col>
-                    <v-col cols="12" class="my-0 py-0" md="3">
-                        <div class="pb-2 font-weight-bold">Civil Status</div>
-                        <v-select
-                            dense
-                            :readonly="type == 'view'"
-                            :rules="nameRules"
-                            v-model="form.status"
-                            :items="statusType"
-                            :outlined="type != 'view'"
-                            color="primary"
-                            placeholder="Civil Status"
-                        ></v-select>
-                    </v-col>
-                        <v-col cols="12" class="my-0 py-0" md="4">
+                    
+                    <v-col cols="12" class="my-0 py-0" md="4">
                             <div class="pb-2 font-weight-bold">Date of Birth</div>
                             <v-text-field :readonly="type == 'view'" placeholder="Date of Birth" dense 
                             @change="getAge()"
@@ -82,6 +70,19 @@
                             <v-text-field :readonly="type == 'view'" placeholder="Age" dense type="number"  v-model="form.age"
                             :rules="nameRules"
                             color="primary" :outlined="type != 'view'" />
+                    </v-col>
+                    <v-col v-if="form.age > 5 || form.age == ''" cols="12" class="my-0 py-0" md="3">
+                        <div class="pb-2 font-weight-bold">Civil Status</div>
+                        <v-select
+                            dense
+                            :readonly="type == 'view'"
+                            :rules="nameRules"
+                            v-model="form.status"
+                            :items="statusType"
+                            :outlined="type != 'view'"
+                            color="primary"
+                            placeholder="Civil Status"
+                        ></v-select>
                     </v-col>
                         <v-col cols="12" class="my-0 py-0" md="12">
                             <div class="pb-2 font-weight-bold">Place of Birth</div>
@@ -98,7 +99,7 @@
                             ></v-textarea>
                     </v-col>
                     
-                        <v-col cols="12" class="my-0 py-0" md="12">
+                    <v-col v-if="form.age >= 18" cols="12" class="my-0 py-0" md="12">
                             <div class="pb-2 font-weight-bold">Occcupation</div>
                             <v-textarea
                             :readonly="type == 'view'"
@@ -111,7 +112,7 @@
                             placeholder="Occcupation"
                             ></v-textarea>
                     </v-col>
-                    <v-col cols="12" class="my-0 py-0" md="12">
+                    <v-col v-if="form.age > 5 && form.age <= 17" cols="12" class="my-0 py-0" md="12">
                         <div class="pb-2 font-weight-bold">Guardian Name</div>
                         <v-textarea
                         :readonly="type == 'view'"
@@ -123,6 +124,27 @@
                         placeholder="Guardian Name(Optional)"
                         ></v-textarea>
                     </v-col>
+
+                    <v-card-title v-if="form.age <= 5 && form.age != ''" class="font-weight-bold justify-space-between pl-0 ml-0 mb-2">
+                            <div>
+                            <v-icon color="primary" x-large>mdi-menu-right</v-icon>
+                            PARENT INFORMATION
+                        </div>
+                    </v-card-title>
+
+                    <v-col v-if="form.age <= 5 && form.age != ''" cols="12" class="my-0 py-0" md="6">
+                        <div class="pb-2 font-weight-bold">Mother Name</div>
+                        <v-text-field :readonly="type == 'view'" placeholder="Mother Name" 
+                        :rules="nameRules" dense type="text"  v-model="form.mother_name"
+                        color="primary" :outlined="type != 'view'" />
+                    </v-col>
+                     <v-col v-if="form.age <= 5 && form.age != ''" cols="12" class="my-0 py-0" md="6">
+                        <div class="pb-2 font-weight-bold">Father Name</div>
+                        <v-text-field :readonly="type == 'view'" placeholder="Father Name" 
+                        :rules="nameRules" dense type="text"  v-model="form.father_name"
+                        color="primary" :outlined="type != 'view'" />
+                    </v-col>
+
                     <v-col cols="12" class="my-0 py-0" md="7">
                         <div class="pb-2 font-weight-bold">Mobile Number</div>
                         <v-text-field :readonly="type == 'view'" placeholder="Mobile Number" 
@@ -130,7 +152,7 @@
                         :rules="nameRules" dense type="number"  v-model="form.cell_number"
                         color="primary" :outlined="type != 'view'" />
                     </v-col>
-                        <v-col cols="12" class="my-0 py-0" md="5">
+                    <v-col cols="12" class="my-0 py-0" md="5">
                         <div class="pb-2 font-weight-bold">Purok</div>
                         <v-select
                         :readonly="type == 'view'"
@@ -151,7 +173,33 @@
                             </template>
                         </v-select>
                     </v-col>
+                     <v-col cols="12" class="my-0 py-0" md="7">
+                        <div class="pb-0 font-weight-bold">NHTS Member</div>
+                        <v-radio-group :readonly="type == 'view'" class="pt-0 " row v-model="form.nhts_member">
+                        <v-radio
+                            v-for="mem in fourPMember"
+                            :key="mem.val"
+                            :label="mem.text"
+                            :value="mem.val"
+                        ></v-radio>
+                        </v-radio-group>
+                    </v-col>
+                    <v-col cols="12" class="my-0 py-0" md="7">
+                        <div class="pb-0 font-weight-bold">4Ps Member</div>
+                        <v-radio-group :readonly="type == 'view'" class="pt-0 " row v-model="form.fourps_member">
+                        <v-radio
+                            
+                            v-for="mem in fourPMember"
+                            :key="mem.val"
+                            :label="mem.text"
+                            :value="mem.val"
+                        ></v-radio>
+                        </v-radio-group>
+                    </v-col>
+
                 </v-row>
+                
+
                 <v-card-title class="font-weight-bold justify-space-between pl-0 ml-0 mb-2">
                         <div>
                         <v-icon color="primary" x-large>mdi-menu-right</v-icon>
@@ -236,8 +284,12 @@
     data () {
       return {
             genderType: [
-            {text: 'Male', val: 1},
-            {text: 'Female', val: 2},
+                {text: 'Male', val: 1},
+                {text: 'Female', val: 2},
+            ],
+            fourPMember:[
+                {text: 'YES', val: 1},
+                {text: 'NO', val: 0},
             ],
             statusType: ['Single', 'Married','Widowed'],
             valid: true,
@@ -316,12 +368,14 @@
             this.form.age = ageYear;
         },
         async updatePatientInformation(){
-            await axios.put(`/api/patient_information/update/${this.form.id}`, this.form)
+            let url = this.form.age <= 5 ? `/api/patient_information/update-child` : `/api/patient_information/update`;
+            await axios.put(`${url}/${this.form.id}`, this.form)
             .then((res)=>{
                  if(res.data.success){
-                    this.$emit('UpdatePatient');
+                    this.$refs.form.reset();
                     this.showSuccess(res.data.message);
-                    this.reset();
+                    this.$emit('UpdatePatient');
+                    
                 }else{
                     this.showError(res.data.message);
                 }
@@ -329,19 +383,21 @@
             this.isloading = false;
         },
         async addPatientInformation(){
-            this.getAge();
-            this.form.cell_number.replace(/\s/g,'');
-            await axios.post(`/api/patient_information/insert`, this.form)
-            .then((res)=>{
-                if(res.data.success){
-                    this.$emit('AddPatient', res.data.data);
-                    this.showSuccess(res.data.message);
-                    this.reset();
-                }else{
-                    this.showError(res.data.message);
-                }
-            })
+            //this.getAge();
+            let url = this.form.age <= 5 ? `/api/patient_information/insert-child` : `/api/patient_information/insert`;
+             this.form.cell_number.replace(/\s/g,'');
+                await axios.post(url, this.form)
+                .then((res)=>{
+                    if(res.data.success){
+                        this.$refs.form.reset();
+                        this.showSuccess(res.data.message);
+                        this.$emit('AddPatient', res.data.data);
+                    }else{
+                        this.showError(res.data.message);
+                    }
+                })
             this.isloading = false;
+            
         },
     },
     beforeMount(){

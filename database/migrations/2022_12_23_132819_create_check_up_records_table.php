@@ -19,6 +19,7 @@ class CreateCheckUpRecordsTable extends Migration
             $table->string('blood_pressure')->nullable();
             $table->string('temperature')->nullable();
             $table->boolean('pregnant')->default(0);
+            $table->string('last_mensturation')->nullable();
             $table->integer('month_of_pregnancy')->nullable();
             $table->string('illness_id')->nullable();
             $table->string('medicine_given')->nullable();

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <v-container fluid class="pa-5 d-flex justify-center align-center">
-            <v-card width="100%" class="pa-2">
+        <v-container fluid class="py-1 px-5 d-flex justify-center align-center">
+            <v-card elevation="0" width="100%" class="pa-2">
                 <checkDetails v-if="isloaded" :patientDetails="patientDetails"></checkDetails>
                 <v-row>
                     <v-col cols="12" class="px-3">

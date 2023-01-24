@@ -190,8 +190,6 @@ class ServicesController extends Controller
             "message"=> 'Message notification sent to all patient!',
         ]);
 
-        
-
         if($Service){
             $Service->active = $request->active;
             $Service->save();

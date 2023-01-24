@@ -1,6 +1,6 @@
 <template>
 <v-row>
-    <v-col class="text-center pt-5 mb-0 pb-0" cols="12">
+    <v-col class="text-center pt-0 mb-0 pb-0" cols="12">
         <v-avatar size="120">
             <v-img v-if="patientDetails.account"
                 :alt="`${patientDetails.f_name} ${patientDetails.l_name} avatar`"

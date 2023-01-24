@@ -2,7 +2,7 @@
    <div class="pt-7 px-3">
         <v-row>
             <v-col cols="12">
-                 <v-card >
+                 <v-card>
                     <v-card-title class="align-start mb-0 pb-0">
                       <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
                             <div class="pa-4">
@@ -35,7 +35,7 @@
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
-                                          <td width="20%">{{item.l_name+" "+item.m_name+" "+item.f_name}}</td>
+                                          <td >{{item.l_name+" "+item.m_name+" "+item.f_name}}</td>
                                           <td>
                                             <v-chip v-if="item.gender == 1" small dark class="ma-2" color="blue" >
                                               Male
@@ -45,28 +45,34 @@
                                             </v-chip>
                                           </td>
                                           <td>{{item.status}}</td>
-                                          <td width="10%">{{item.b_date}}</td>
+                                          <td>{{item.b_date}}</td>
                                           <td>{{item.age}}</td>
                                           <td>{{item.purok ? item.purok.name : ''}}</td>
                                            <td>{{item.cell_number}}</td>
-                                          <td width="30%">
-                                             <v-btn small dark @click="viewPatient(item.id)" rounded color="primary">
+                                          <td width="25%">
+                                             <v-btn class="my-1" small dark @click="viewPatient(item.id)" rounded color="warning">
                                                   <v-icon small>
                                                       mdi-eye
                                                   </v-icon>
                                                   View
                                               </v-btn>
-                                              <v-btn small @click="openUpdateDialog(item.id)" rounded color="info">
+                                              <v-btn class="my-1" small @click="openUpdateDialog(item.id)" rounded color="info">
                                                   <v-icon small>
                                                       mdi-pencil
                                                   </v-icon>
                                                   Edit
                                               </v-btn>
-                                              <v-btn small @click="showDeletePrompt(item.id)" dark rounded color="danger" >
+                                              <v-btn class="my-1" small @click="showDeletePrompt(item.id)" dark rounded color="danger" >
                                                   <v-icon small>
                                                       mdi-delete
                                                   </v-icon>
                                                   Delete
+                                              </v-btn>
+                                              <v-btn class="my-1" small dark @click="$router.push({name: 'CheckUpAdd', params:{id: item.id}})" rounded color="primary">
+                                                  <v-icon small left>
+                                                      mdi-account-heart
+                                                  </v-icon>
+                                                  Check-up
                                               </v-btn>
                                           </td>
                                       </tr>
@@ -89,10 +95,21 @@
             :formData="form"
             v-on:AddPatient="addPatientInformation"
             v-on:UpdatePatient="updatePatientInformation"
-            v-on:closeDialog="dialog = false, form = []"
+            v-on:closeDialog="dialog = false, form = null"
             :purokList="purokList"
             :type="type"/>
         </v-dialog>
+
+         <v-dialog persistent width="600"
+            transition="dialog-bottom-transition"  v-model="purokDialog">
+           <PurokForm
+           v-if="purokDialog"
+           @closeDialog="purokDialog = false"
+           @purokAdded="purokDialog = false,newPurokAdded()"
+           />
+        </v-dialog>
+
+        
 
          <v-overlay :value="loading">
             <v-progress-circular
@@ -105,9 +122,11 @@
 
 <script>
 import PatientForm from './patient-add_edit-form'
+import PurokForm from './add-purok-form'
   export default {
     components:{
-        PatientForm
+        PatientForm,
+        PurokForm,
     },
     data () {
       return {
@@ -132,19 +151,27 @@ import PatientForm from './patient-add_edit-form'
             search: '',
             type:'add',
             dialog: false,
+            purokDialog: false,
             valid: true,
             form: '',
       }
     },
     methods: {
+        async newPurokAdded(){
+            await axios.get(`/api/purok`)
+            .then((res)=>{
+                this.purokList = res.data;
+                this.addNewPatient();
+            })
+        },
         addNewPatient(){
             if(this.purokList.length > 0){
                 this.type = 'add';
                 this.dialog = true;
             }else{
                 this.showError('Please create a purok data first!');
+                this.purokDialog = true;
             }
-           
         },
         async fetchPatientList(){
             await axios.get(`/api/patient_information`)
@@ -175,6 +202,7 @@ import PatientForm from './patient-add_edit-form'
         async updatePatientInformation(){
             this.type = 'add';
             this.dialog = false;
+            this.form = null;
             this.fetchPatientList();
         },
         async addPatientInformation(data){
