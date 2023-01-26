@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>BARANGAY HEALTH CENTER INFORMATION MANAGEMENT SYSTEM WITH SMS SUPPORT</title> 
+        <link rel="icon" type="image/png" href="{{URL::asset('/img/system_logo.png')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}"> 
         <style>
             html {
