@@ -47,7 +47,7 @@
             <template v-slot:activator>
                 <v-list-item-content>
                     <v-list-item-title>
-                        Check-Up
+                        Health
                     </v-list-item-title>
                 </v-list-item-content>
             </template>
@@ -132,7 +132,7 @@
                 </v-list-item>
                  <v-list-item link  exact :to="{name:'MedicineReport'}">
                     <v-list-item-title>
-                        Medicine List Report
+                        Medicine Stock Report
                     </v-list-item-title>
                 </v-list-item>
             </v-list>

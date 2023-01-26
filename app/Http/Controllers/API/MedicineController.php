@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Medicine;
 use App\Models\MedicineStock;
+use App\Models\CheckUpRecord;
 
 class MedicineController extends Controller
 {
@@ -89,6 +90,24 @@ class MedicineController extends Controller
                 "message"=> 'Adding medicine failed!'
             ]);
         }
+    }
+
+    public function report()
+    {
+    
+        $medicine = Medicine::with(['total_stocks' => function($query){
+            $query->select('medicine_id', DB::raw("SUM(quantity) as qty"))
+            ->groupBy('medicine_id');
+        }])->get();
+  
+
+        foreach($medicine as $item){
+            $count = CheckUpRecord::where('medicine_given', 'LIKE', '%'.$item->id.'%')->count();
+            $item->total_given = $count;
+            $remaining = $item->total_stocks->qty - $count;
+            $item->remaining = $remaining > 0 ? $remaining : 0;
+        }
+        return $medicine;
     }
 
     /**

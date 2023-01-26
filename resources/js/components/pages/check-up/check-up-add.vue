@@ -44,15 +44,14 @@
                                 <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="4">
                                     <div class="pb-2 font-weight-bold">Last Menstruation</div>
                                     <v-text-field @change="computeMonthPregnant()" v-model="form.last_mensturation" 
-                                        :rules="[rules.required]" 
-                                        :disabled="form.pregnant == false"
+                                        :disabled="form.pregnant == 'false'"
                                         placeholder="Last Menstruation" dense small type="month"  color="primary" outlined />
                                 </v-col>
                                 <v-col v-if="patientDetails.gender != 1 && patientDetails.age > 18" cols="12" class="my-0 py-0" md="4">
                                     <div class="pb-2 font-weight-bold">Months of Pregnancy</div>
                                     <v-select
                                         dense
-                                        :disabled="form.pregnant == false"
+                                        :disabled="form.pregnant == 'false'"
                                         v-model="form.month_of_pregnancy"
                                         :items="month_of_pregnant"
                                         outlined

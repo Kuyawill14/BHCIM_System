@@ -50,8 +50,11 @@ class CheckUpController extends Controller
         $newCheckUp->temperature = $request->temperature;
         
         if($request->gender == 2){
-            $newCheckUp->pregnant = $request->pregnant == true ? $request->pregnant : false;
-            $newCheckUp->month_of_pregnancy = $request->month_of_pregnancy;
+            $newCheckUp->pregnant = $request->pregnant == true ? 1 : 0;
+            if($request->pregnant == true){
+                $newCheckUp->last_mensturation = $request->last_mensturation;
+                $newCheckUp->month_of_pregnancy = $request->month_of_pregnancy;
+            }
         }
        
         $newCheckUp->medicine_given = $request->medicine_given;

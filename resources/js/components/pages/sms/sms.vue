@@ -14,7 +14,7 @@
             
                    <div class="mt-3 ">
                       <v-row>
-                        <v-col class="pa-5 pl-8" style="min-height:580px;overflow-x:auto" cols="12" md="4">
+                        <v-col class="pa-5 pl-8" style="max-height:580px;overflow-x:auto" cols="12" md="4">
                           <v-card class="d-flex justify-content-between px-3 py-4">
                             <div class="font-weight-bold mt-1">Messages</div>
                             <div>
@@ -138,7 +138,7 @@
                                 label="Message" rounded hide-details outlined auto-grow  rows="2"></v-textarea>
                               </div>
                                <div class="px-2 text-right mt-2">
-                                  <v-btn @click="validate2()"  color="primary" rounded large>
+                                  <v-btn @click="validate2()" :loading="isSending"  color="primary" rounded large>
                                     Send
                                       <v-icon right dark>
                                           mdi-send
@@ -178,7 +178,7 @@
                                   rounded outlined auto-grow rows="5"></v-textarea>
                                 </div>
                                 <div class="px-2 text-right mt-0">
-                                  <v-btn @click="validate()"  color="primary" rounded large>
+                                  <v-btn @click="validate()" :loading="isSending" color="primary" rounded large>
                                     Send
                                       <v-icon right dark>
                                           mdi-send
@@ -216,6 +216,7 @@
       selected_id: '',
       selected_details: [],
       creating_new: false,
+      isSending: false,
     }),
     computed: {
         userDetails() {
@@ -258,10 +259,12 @@
       validate2() {
           if(this.$refs.form2.validate()) {
               this.SendMessage();
+              this.isSending = true;
           }
       },
        validate() {
           if(this.$refs.form.validate()) {
+              this.isSending = true;
               this.addMessage();
           }
       },
@@ -272,6 +275,7 @@
             this.showSuccess(res.data.message);
             this.creating_new = false;
             this.fetchSmsList();
+            this.isSending = false;
             this.$refs.form.reset();
             this.$refs.form2.reset();
         })
@@ -282,6 +286,9 @@
           .then((res)=>{
             this.selected_details.messages.push(res.data.data);
             this.$refs.form2.reset();
+            this.isSending = false;
+        }).catch((e)=>{
+            this.isSending = false;
         })
       },
       setSelectedMessage(item){

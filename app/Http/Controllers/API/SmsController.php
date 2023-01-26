@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sms;
 use App\Models\Message;
+use App\Models\PatientInformation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,9 +23,22 @@ class SmsController extends Controller
         ->get();
     }
 
+    public function sendToAll($number, $from, $message_content)
+    {
+        $allPatient = PatientInformation::all();
+        foreach($allPatient as $p){
+            $phone_number = $p->cell_number;
+            if($phone_number){
+                $this->sendSmsMessage($phone_number, $from, $request->message);
+            }
+        }
+    }
+
     public function sendSmsMessage($number, $from, $message_content)
     {
-        $basic  = new \Vonage\Client\Credentials\Basic("55cf0945", "LJnDPPDYu0sYQkYa");
+        $key = env('VONAGE_API_KEY');
+        $secret = env('VONAGE_API_SECRET');
+        $basic  = new \Vonage\Client\Credentials\Basic($key, $secret);
         $client = new \Vonage\Client($basic);
 
         $response = $client->sms()->send(
@@ -36,7 +50,6 @@ class SmsController extends Controller
     public function store(Request $request)
     {
  
-        
         DB::beginTransaction();
         try {
            
@@ -45,7 +58,15 @@ class SmsController extends Controller
             $number = "639852394030";
             $from = "BHW";
             $message_content = $request->message;
-            //$this->sendSmsMessage($request->number, $from, $request->message);
+
+            if($request->patient_id == 'all' ){
+                //$this->sendToAll($request->number, $from, $request->message);
+            }else{
+                //$this->sendSmsMessage($request->number, $from, $request->message);
+
+                //$this->sendSmsMessage($number, $from, $request->message);
+            }
+            
 
             $newSms = new Sms;
             $newSms->patient_id = $request->patient_id == 'all' ? 0 : $request->patient_id;
@@ -82,6 +103,7 @@ class SmsController extends Controller
             $from = "BHW";
             $message_content = $request->message;
             //$this->sendSmsMessage($number, $from, $message_content);
+            
     
             $newMessage = new Message;
             $newMessage->sms_id = $id;

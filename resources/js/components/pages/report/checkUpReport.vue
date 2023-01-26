@@ -6,7 +6,7 @@
                     <v-card-title class="align-start mb-0 pb-0">
                       <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
                             <div class="pa-4">
-                                <v-icon dark style="font-size: 25px;">mdi-emoticon-sick-outline</v-icon>
+                                <v-icon dark style="font-size: 25px;">mdi-account-heart</v-icon>
                                 <span class="white--text">Check-Up Report</span> 
                             </div>
                         </v-card>
