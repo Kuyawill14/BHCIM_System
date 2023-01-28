@@ -99,8 +99,8 @@
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" class="my-0 py-0" md="12">
-                                    <div class="pb-2 font-weight-bold">Check-Up Details</div>
-                                    <v-textarea  v-model="form.consultation_notes" placeholder="Check-up details" 
+                                    <div class="pb-2 font-weight-bold">Check-Up Remarks</div>
+                                    <v-textarea  v-model="form.consultation_notes" placeholder="Check-up remarks" 
                                     :rules="[rules.required]" 
                                     auto-grow
                                     dense small rows="3" color="primary" outlined />

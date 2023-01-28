@@ -31,9 +31,22 @@
                     </v-col>
                      <v-col class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Date</div>
-                        <v-text-field class="text-uppercase" dense v-model="form.date" 
-                        :rules="[rules.required]" 
-                            color="primary" type="date" outlined />
+                        <v-datetime-picker
+                            v-model="form.date"
+                            outlined
+                            id="date_picker"
+                            class="mt-0 pt-0"
+                            :date-picker-props="dateProps"
+                            :time-picker-props="timeProps"
+                            time-format="HH:mm"
+                            color="primary"> 
+                            <template slot="dateIcon">
+                                <v-icon>mdi-calendar</v-icon>
+                            </template>
+                            <template slot="timeIcon">
+                                <v-icon>mdi-clock</v-icon>
+                            </template>
+                        </v-datetime-picker>
                     </v-col>
                 </v-row>
             </v-form>
@@ -63,6 +76,14 @@ export default {
                 min: v => (v && v.length >= 6) || "Min 6 characters",
                 blank: v => v && !!v.trim() || 'Field cannot be blank',
             },
+            dateProps: {
+                headerColor: 'primary',
+                min: this.moment(Date.now()).format('YYYY-MM-DD')
+            },
+            timeProps: {
+                useSeconds: false,
+                ampmInTitle: true
+            },
         }
     },
     methods:{
@@ -91,6 +112,22 @@ export default {
                     this.showSuccess(res.data.message);
                 })
             },
-    }
+    },
+    beforeMount() {
+        if(this.type == "update"){
+            if(this.form.date){
+                let tmpDate = this.moment(this.form.date).format('YYYY-MM-DD h:mm');
+                this.form.date = tmpDate;
+            }
+        }
+       
+    },
 }
 </script>
+<style>
+#date_picker .v-input__slot {
+    border: 1px solid black !important;
+
+
+}
+</style>

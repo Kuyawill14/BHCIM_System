@@ -6,14 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CheckUpRecord;
 use App\Models\Illness;
+use App\Models\Medicine;
 
 class CheckUpController extends Controller
 {
     
     public function index($id)
     {
-        $CheckUpRecord = CheckUpRecord::with(['picture'])
-        ->where('patient_id', $id)->get();
+        $CheckUpRecord = CheckUpRecord::with(['info'])->where('patient_id', $id)->get();
+
+        foreach($CheckUpRecord as $check){
+            if(isset($check['illness_id'])){
+                $check->Illness = Illness::select('id', 'name')
+                ->whereIn('id', $check['illness_id'])->get();
+            }
+
+            if(isset($check['medicine_given'])){
+                $check->medicine = Medicine::select('name')
+                ->whereIn('id', $check->medicine_given)->get();
+            }
+        }
 
         return $CheckUpRecord;
     }
@@ -36,6 +48,9 @@ class CheckUpController extends Controller
         foreach($CheckUpRecord as $check){
             $check->Illness = Illness::select('id', 'name')
             ->whereIn('id', $check['illness_id'])->get();
+
+            $check->medicine = Medicine::select('id', 'name')
+            ->whereIn('id', $check['medicine_given'])->get();
         }
 
         return $CheckUpRecord;
@@ -76,7 +91,7 @@ class CheckUpController extends Controller
 
     public function edit($id)
     {
-        $editCheckup = CheckUpRecord::find($id);
+        $editCheckup = CheckUpRecord::with(['info'])->find($id);
         if($editCheckup){
             return response()->json([
                 "success"=> true,
@@ -95,11 +110,16 @@ class CheckUpController extends Controller
     {
         $updateCheckUp = CheckUpRecord::find($id);
         if($updateCheckUp){
-            $updateCheckUp->patient_id = $request->patient_id;
             $updateCheckUp->blood_pressure = $request->b_pressure_up.'/'.$request->b_pressure_down;
             $updateCheckUp->temperature = $request->temperature;
-            $updateCheckUp->pregnant = $request->pregnant;
-            $updateCheckUp->month_of_pregnant = $request->month_of_pregnant;
+
+            if($request->gender == 2){
+                $updateCheckUp->pregnant = $request->pregnant == true ? 1 : 0;
+                if($request->pregnant == true){
+                    $updateCheckUp->last_mensturation = $request->last_mensturation;
+                    $updateCheckUp->month_of_pregnancy = $request->month_of_pregnancy;
+                }
+            }
             $updateCheckUp->illness_id = $request->illness_id;
             $updateCheckUp->medicine_given = $request->medicine_given;
             $updateCheckUp->consultation_notes = $request->consultation_notes;

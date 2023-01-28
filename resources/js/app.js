@@ -13,12 +13,11 @@ import vuetify from './plugins/vuetify';
 import store from "./store/store";
 import router from "./router/router";
 import VueSweetalert2 from 'vue-sweetalert2';
-
+import moment from 'moment';
+Vue.prototype.moment = moment;
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
-
-
 import globalMixin from './mixins/globalMixins'
 Vue.mixin(globalMixin);
 

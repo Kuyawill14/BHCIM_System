@@ -94,6 +94,7 @@ Route::prefix('/account')->group(function () {
 //services
 Route::prefix('/services')->group(function () {
     Route::get('', [ServicesController::class, 'index']);
+    Route::get('/active-events', [ServicesController::class, 'active_events']);
     Route::post('/insert', [ServicesController::class, 'store']);
     Route::get('/edit/{id}', [ServicesController::class, 'edit']);
     Route::put('/update/{id}', [ServicesController::class, 'update']);
@@ -101,6 +102,8 @@ Route::prefix('/services')->group(function () {
     Route::put('/activate/{id}', [ServicesController::class, 'activate']);
     Route::put('/send_notification/{id}', [ServicesController::class, 'send_notification']);
 });
+
+
 
 //sms
 Route::prefix('/sms')->group(function () {

@@ -40,7 +40,7 @@
                                             {{item.description}}
                                           </td>
                                           <td>
-                                            {{item.date}}
+                                            {{item.date ? moment(item.date ).format('LLLL') : ''}}
                                           </td>
                                           <td>
                                             <v-switch @change="activateEvent(item.id,item.active)" inset v-model="item.active"></v-switch>

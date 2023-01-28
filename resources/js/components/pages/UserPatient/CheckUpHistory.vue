@@ -26,7 +26,7 @@
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
-                                          <td >{{item.date}}</td>
+                                          <td >{{item.date ? moment(item.date).format('MMMM DD, YYYY') : ''}}</td>
                                           <td>{{item.blood_pressure}}</td>
                                           <td>{{item.temperature}}</td>
                                           <td >{{item.medicine_given}}</td>

@@ -22,7 +22,7 @@ const router = new Router({
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/patientinformation",
+                    path: "/patient-information",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/patient_information/patient-information.vue"),
                     name: "PatientInformation",
                     meta: { preview_name:  "Patients" },
@@ -36,14 +36,14 @@ const router = new Router({
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/checkuprecord/:id",
+                    path: "/check-up-record/:id",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/check-up/check-up-record.vue"),
                     name: "CheckUpRecord",
                     meta: { preview_name:  "Check-Up Record" },
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/checkupadd/:id",
+                    path: "/check-up-add/:id",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/check-up/check-up-add.vue"),
                     name: "CheckUpAdd",
                     meta: { preview_name:  "Check-Up ADD" },
@@ -64,14 +64,14 @@ const router = new Router({
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/patientreport",
+                    path: "/patient-report",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/patientReport.vue"),
                     name: "PatientReport",
                     meta: { preview_name:  "PatientReport" },
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/checkupreport",
+                    path: "/checkup-report",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/checkUpReport.vue"),
                     name: "CheckUpReport",
                     meta: { preview_name:  "checkUpReport" },
@@ -85,7 +85,7 @@ const router = new Router({
                     beforeEnter: middleware.admin_bhw_rules
                 },
                 {
-                    path: "/medicineReport",
+                    path: "/medicine-report",
                     component: () =>import ( /*webpackChunkName: "dashboard"*/ "../components/pages/report/medicineReport.vue"),
                     name: "MedicineReport",
                     meta: { preview_name:  "medicineReport" },
@@ -134,25 +134,25 @@ const router = new Router({
                     beforeEnter: middleware.bhw_rules
                 },
                 {
-                    path: "/patientdashboard",
+                    path: "/patient-dashboard",
                     component: () =>import ( /*webpackChunkName: "Patient"*/ "../components/pages/UserPatient/PatientMainPage.vue"),
                     name: "PatientDashboard",
                     beforeEnter: middleware.patient_rules
                 },
                 {
-                    path: "/myappointment",
-                    component: () =>import ( /*webpackChunkName: "Patient"*/ "../components/pages/UserPatient/PatientAppointment.vue"),
-                    name: "MyAppointment",
+                    path: "/health-center-events",
+                    component: () =>import ( /*webpackChunkName: "Patient"*/ "../components/pages/UserPatient/HealthCenterEvents.vue"),
+                    name: "HealthCenterEvents",
                     beforeEnter: middleware.patient_rules
                 },
                 {
-                    path: "/checkuphistory",
+                    path: "/check-up-history",
                     component: () =>import ( /*webpackChunkName: "Patient"*/ "../components/pages/UserPatient/CheckUpHistory.vue"),
                     name: "CheckUpHistory",
                     beforeEnter: middleware.patient_rules
                 },
                 {
-                    path: "/patientsms",
+                    path: "/patient-sms",
                     component: () =>import ( /*webpackChunkName: "Patient"*/ "../components/pages/UserPatient/PatientSms.vue"),
                     name: "PatientSms",
                     beforeEnter: middleware.patient_rules

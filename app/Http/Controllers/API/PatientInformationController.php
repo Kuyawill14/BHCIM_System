@@ -56,7 +56,7 @@ class PatientInformationController extends Controller
             $newAccount = User::create([
                 'name' =>  $request->f_name.' '.$request->l_name,
                 'gender' =>  $request->gender,
-                'username' => 'patient'.strtolower($request->l_name),
+                'username' => 'patient_'.strtolower($request->l_name),
                 'email_verified_at'=>  date('Y-m-d H:i:s'),
                 'password' => Hash::make('123123'),
                 'patient_id' => $newPatient->id,

@@ -24,9 +24,10 @@ class ServicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function active_events()
     {
-        //
+        $active_events = Services::where('active', 1)->get();
+        return $active_events;
     }
 
     /**

@@ -25,20 +25,20 @@
             return {
                 navs: [
                     {
-                        text: 'Dashboard',
+                        text: 'Home',
                         link: 'PatientDashboard',
-                        icon: 'mdi-monitor-dashboard'
+                        icon: 'mdi-view-dashboard'
                     },
                     {
                         text: 'Check-Up History',
                         link: 'CheckUpHistory',
                         icon: 'mdi-clipboard-text-clock'
                     },
-                    {
-                        text: 'Check-Up Dates',
-                        link: 'MyAppointment',
+               /*      {
+                        text: 'Events',
+                        link: 'HealthCenterEvents',
                         icon: 'mdi-calendar-check'
-                    },
+                    }, */
                       {
                         text: 'SMS',
                         link: 'PatientSms',
