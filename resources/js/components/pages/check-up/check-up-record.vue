@@ -66,6 +66,7 @@ export default {
         checkDetails,
         viewRecord,
         updateRecord
+        
     },
     data() {
         return {
