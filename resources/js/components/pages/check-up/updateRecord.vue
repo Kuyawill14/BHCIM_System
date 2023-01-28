@@ -69,10 +69,6 @@
                                         {{ data.item.name }}
                                     </v-chip>
                                 </template>
-                                <template slot="item" slot-scope="data">
-                                    <v-checkbox  v-model="data.selected"></v-checkbox>
-                                    {{ data.item.name }}
-                                </template>
                                 </v-autocomplete>
                         </v-col>
                         <v-col cols="12" class="my-0 py-0" md="6">
@@ -92,10 +88,6 @@
                                     <v-chip color="primary" small v-bind="data.attrs" :input-value="data.selected">
                                         {{ data.item.name }}
                                     </v-chip>
-                                </template>
-                                <template slot="item" slot-scope="data">
-                                    <v-checkbox  v-model="data.selected"></v-checkbox>
-                                    {{ data.item.name }}
                                 </template>
                             </v-autocomplete>
                         </v-col>

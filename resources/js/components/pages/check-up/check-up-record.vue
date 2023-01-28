@@ -9,7 +9,7 @@
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
-                                          <td >{{item.date ? moment(item.date).format('MMMM DD, YYYY') : ''}}</td>
+                                          <td >{{item.created_at ? moment(item.created_at).format('MMMM DD, YYYY') : ''}}</td>
                                           <td>{{item.blood_pressure}}</td>
                                           <td>{{item.temperature}}</td>
                                           <td >{{joinArray(item.medicine)}}</td>
@@ -66,7 +66,7 @@ export default {
         checkDetails,
         viewRecord,
         updateRecord
-        
+
     },
     data() {
         return {
@@ -90,11 +90,13 @@ export default {
     },
     methods:{
         joinArray(data){
-            let arrayData = [];
-            data.forEach(item => {
-                arrayData.push(item.name)
-            });
-            return arrayData.join(',');
+            if(data){
+                let arrayData = [];
+                data.forEach(item => {
+                    arrayData.push(item.name)
+                });
+                return arrayData.join(',');
+            }
         },
         async getPatientDetails(){
             axios.get(`/api/patient_information/view/${this.$route.params.id}`)

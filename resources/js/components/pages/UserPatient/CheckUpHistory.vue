@@ -26,10 +26,10 @@
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
-                                          <td >{{item.date ? moment(item.date).format('MMMM DD, YYYY') : ''}}</td>
+                                          <td >{{item.created_at ? moment(item.created_at).format('MMMM DD, YYYY') : ''}}</td>
                                           <td>{{item.blood_pressure}}</td>
                                           <td>{{item.temperature}}</td>
-                                          <td >{{item.medicine_given}}</td>
+                                          <td>{{joinArray(item.medicine)}}</td>
                                           <td>{{item.consultation_notes}}</td>
                                           <td >
                                              <v-btn small dark @click="viewPatient(item.id)" rounded color="primary">
@@ -92,6 +92,15 @@ export default {
         }
     },
     methods:{
+        joinArray(data){
+            if(data){
+                let arrayData = [];
+                data.forEach(item => {
+                    arrayData.push(item.name)
+                });
+                return arrayData.join(',');
+            }
+        },
         async viewPatient(id){
             this.loading = true;
             await axios.get(`/api/check_up/edit/${id}`)
@@ -111,13 +120,9 @@ export default {
             })
         },
         async getCheckUpRecord(){
-            axios.get(`/api/check_up/${this.userDetails.patient_id}`)
+            axios.get(`/api/check_up/check/${this.userDetails.patient_id}`)
             .then((res)=>{
                 this.recordList = res.data;
-                this.recordList.forEach(item => {
-                    let date = new Date(item.created_at).toISOString().slice(0, 10);
-                    item.date = date;
-                });
             })
         },
     },
