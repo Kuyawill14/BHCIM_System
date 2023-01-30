@@ -97,6 +97,8 @@ export default {
                 }
             },
             async addServiceEvent(){
+                let date = this.moment(this.form.date).format('YYYY-MM-DD HH:mm:ss');
+                this.form.date = date;
                 await axios.post(`/api/services/insert`, this.form)
                 .then((res)=>{
                     this.$refs.form.reset();
@@ -105,6 +107,8 @@ export default {
                 })
             },
             async updateServiceEvent(){
+                let date = this.moment(this.form.date).format('YYYY-MM-DD HH:mm:ss');
+                this.form.date = date;
                 await axios.put(`/api/services/update/${this.form.id}`, this.form)
                 .then((res)=>{
                     this.$refs.form.reset();
