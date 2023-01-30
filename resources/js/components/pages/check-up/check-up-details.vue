@@ -4,11 +4,11 @@
         <v-avatar size="120">
             <v-img v-if="patientDetails.account"
                 :alt="`${patientDetails.f_name} ${patientDetails.l_name} avatar`"
-                :src="patientDetails.account.picture ? '/storage/'+patientDetails.account.picture : patientDetails.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
+                :src="patientDetails.account.picture ? '/storage/'+patientDetails.account.picture : patientDetails.gender == 1 ? '/img/pp_1.png' : '/img/pp_2.png'">
             </v-img>
               <v-img v-else
                 :alt="`${patientDetails.f_name} ${patientDetails.l_name} avatar`"
-                :src="patientDetails.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
+                :src="patientDetails.gender == 1 ? '/img/pp_1.png' : '/img/pp_2.png'">
             </v-img>
         </v-avatar>
     </v-col>

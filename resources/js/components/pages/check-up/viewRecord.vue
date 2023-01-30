@@ -3,14 +3,14 @@
         <v-row>
             <v-col cols="12" class="px-10 mt-3">
                 <v-row>
-                    <v-col cols="12" class="my-0 py-0" md="6">
+                    <v-col cols="12" class="my-0 py-0" :md="patientDetails.age <= 5 ? '12' : '6'">
                         <div class="pb-2 font-weight-bold">Temperature</div>
                         <div class="d-flex">
                             <v-text-field v-model="form.temperature" 
                             placeholder="Temperature" dense small type="number"  color="primary" readonly />
                         </div>
                     </v-col>
-                    <v-col cols="12" class="my-0 py-0" md="6">
+                    <v-col v-if="patientDetails.age > 5" cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Blood Pressure</div>
                         <div class="d-flex">
                             <v-text-field v-model="form.b_pressure_up" placeholder="Up" 
@@ -97,6 +97,22 @@
                             </template>
                         </v-autocomplete>
                     </v-col>
+                    <v-col v-if="patientDetails.age <= 5" cols="12" class="my-0 py-0 mb-md-5" md="12">
+                            <div class="font-weight-bold">Vaccines Given</div>
+                                <v-row>
+                                    <v-col class="mb-0 pb-0 pb-md-2 mb-md-2" cols="12" md="4">
+                                        <v-checkbox readonly hide-details v-model="form.hepa_b" label="Hepatitis B Vaccine"></v-checkbox>
+                                            <v-checkbox readonly hide-details v-model="form.dptv" label="Diphtheria-Pertussis-Tetanus Vaccine"></v-checkbox>
+                                    </v-col>
+                                    <v-col class="my-0 py-0 py-md-2 my-md-2" cols="12" md="4">
+                                        <v-checkbox readonly hide-details v-model="form.bcg" label="Bacillus Calmette-Guérin"></v-checkbox>
+                                        <v-checkbox readonly hide-details  v-model="form.opv" label="Oral Polio Vaccine"></v-checkbox>
+                                    </v-col>
+                                    <v-col class="mt-0 pt-0 pt-md-2 mt-md-2" cols="12" md="4">
+                                        <v-checkbox readonly hide-details  v-model="form.mv" label="Measles Vaccine"></v-checkbox>
+                                    </v-col>
+                                </v-row>
+                        </v-col>
                     <v-col cols="12" class="my-0 py-0" md="12">
                         <div class="pb-2 font-weight-bold">Check-Up Details</div>
                         <v-textarea  v-model="form.consultation_notes" placeholder="Check-up details" 
@@ -115,7 +131,7 @@
 </template>
 <script>
 export default {
-    props:['viewdata'],
+    props:['viewdata', 'patientDetails'],
     data() {
         return {
             form: {},
@@ -143,6 +159,12 @@ export default {
             this.form.last_mensturation = this.viewdata.last_mensturation;
             this.form.month_of_pregnancy = this.viewdata.month_of_pregnancy;
             this.form.consultation_notes = this.viewdata.consultation_notes;
+
+            this.form.hepa_b = this.patientDetails.health_record.hepa_b;
+            this.form.dptv = this.patientDetails.health_record.dptv;
+            this.form.bcg = this.patientDetails.health_record.bcg;
+            this.form.opv = this.patientDetails.health_record.opv;
+            this.form.mv = this.patientDetails.health_record.mv;
         },
         async getIllnessList(){
             await axios.get(`/api/illness`)

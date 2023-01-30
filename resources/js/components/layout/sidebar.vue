@@ -32,7 +32,7 @@
                 <v-img :src="'/storage/'+userDetails.picture"></v-img>
               </v-avatar>
               <v-avatar v-else color="brown" size="35">
-                <v-img :src="userDetails.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                <v-img :src="userDetails.gender == 1 ? '/img/pp_1.png' : '/img/pp_2.png'"></v-img>
               </v-avatar>
           </v-btn>
         

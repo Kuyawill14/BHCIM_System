@@ -149,7 +149,7 @@
                         <div class="pb-2 font-weight-bold">Mobile Number</div>
                         <v-text-field :readonly="type == 'view'" placeholder="Mobile Number" 
                         prepend-inner-icon="mdi-cellphone"
-                        :rules="nameRules" dense type="number"  v-model="form.cell_number"
+                        :rules="[nameRules, rules.min, rules.max]" dense type="number"  v-model="form.cell_number"
                         color="primary" :outlined="type != 'view'" />
                     </v-col>
                     <v-col cols="12" class="my-0 py-0" md="5">
@@ -235,8 +235,46 @@
                             placeholder="Blood Type"
                         ></v-select>
                     </v-col>
+                    <v-col cols="12" class="my-0 py-0" md="9"></v-col>
+                    <v-col v-if="form.age <= 5 && form.age != ''" cols="12" class="my-0 py-0"  md="3">
+                        <div class="pb-2 font-weight-bold">Type of Delivery</div>
+                            <v-select
+                            :readonly="type == 'view'"
+                            dense
+                            v-model="form.delivery_type"
+                            :items="delivery_type"
+                            :outlined="type != 'view'"
+                            color="primary"
+                            placeholder="Type of Delivery"
+                        ></v-select>
+                    </v-col>
+                     <v-col v-if="form.age <= 5 && form.age != ''" cols="12" class="my-0 py-0"  md="3">
+                        <div class="pb-2 font-weight-bold">Time of Delivery</div>
+                          <v-text-field :readonly="type == 'view'" placeholder="Time of Delivery" dense small type="time" 
+                            v-model="form.delivery_time"
+                            color="primary" :outlined="type != 'view'" />
+                    </v-col>
+                    <v-col cols="12" class="my-0 py-0" md="12"></v-col>
+                    <v-col cols="12" class="my-0 py-0"  md="6">
+                        <div class="pb-0 font-weight-bold">Vaccine Given</div>
+                        <v-row v-if="form.age <= 5 && form.age != ''">
+                            <v-col cols="6">
+                                <v-checkbox :readonly="type == 'view'" hide-details v-model="form.hepa_b" label="Hepatitis B Vaccine"></v-checkbox>
+                                <v-checkbox :readonly="type == 'view'" hide-details v-model="form.bcg" label="Bacillus Calmette-Guérin"></v-checkbox>
+                                <v-checkbox :readonly="type == 'view'" v-model="form.dptv" label="Diphtheria-Pertussis-Tetanus Vaccine"></v-checkbox>
+                            </v-col>
+                             <v-col cols="6">
+                                <v-checkbox :readonly="type == 'view'" hide-details  v-model="form.opv" label="Oral Polio Vaccine"></v-checkbox>
+                                <v-checkbox :readonly="type == 'view'" hide-details  v-model="form.mv" label="Measles Vaccine"></v-checkbox>
+                            </v-col>
+                        </v-row>
+                         <v-row v-else>
+                            <v-col cols="6">
+                                <v-checkbox :readonly="type == 'view'" v-model="form.covid" label="Covid Vaccine"></v-checkbox>
+                            </v-col>
+                        </v-row>
+                    </v-col>
                     <v-col cols="12" class="my-0 py-0" md="6"></v-col>
-                
                     <v-col cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Sickness</div>
                             <v-textarea
@@ -252,7 +290,7 @@
                             ></v-textarea>
                     </v-col>
                     <v-col cols="12" class="my-0 py-0" md="6"></v-col>
-                    <v-col cols="12" class="my-0 py-0" md="6">
+                    <v-col v-if="form.age > 5 " cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Medication Taken</div>
                             <v-textarea
                             :readonly="type == 'view'"
@@ -292,6 +330,7 @@
                 {text: 'NO', val: 0},
             ],
             statusType: ['Single', 'Married','Widowed'],
+            delivery_type: ['Normal Spontaneous Delivery', 'Cesarean delivery'],
             valid: true,
             months_pregnant: [1,2,3,5,6,7,8,9],
             bloodType: ['A+', 'A-', 'B+','B-', 'O+', 'O-', 'AB+', 'AB-'],
@@ -322,6 +361,12 @@
             nameRules: [
                 v => !!v || 'Field is required',
             ],
+            rules: {
+                required: value => !!value || "Field is Required.",
+                min: v => (v && v.length >= 11) || "Min 11 characters",
+                max: v => (v && v.length <= 11) || "Max 11 characters",
+                blank: v => v && !!v.trim() || 'Field cannot be blank',
+            },
             isloading: false,
       }
     },
@@ -410,6 +455,14 @@
             this.form.months_pregnant = this.formData.health_record.month_of_pregnant;
             this.form.sickness = this.formData.health_record.sickness;
             this.form.medication = this.formData.health_record.medication;
+            this.form.delivery_type = this.formData.health_record.delivery_type;
+            this.form.delivery_time = this.formData.health_record.delivery_time;
+            this.form.hepa_b = this.formData.health_record.hepa_b;
+            this.form.bcg = this.formData.health_record.bcg;
+            this.form.dptv = this.formData.health_record.dptv;
+            this.form.opv = this.formData.health_record.opv;
+            this.form.mv = this.formData.health_record.mv;
+            this.form.covid = this.formData.health_record.covid;
         }
     }
   }

@@ -46,7 +46,7 @@
                                             <v-switch @change="activateEvent(item.id,item.active)" inset v-model="item.active"></v-switch>
                                           </td>
                                           <td width="30%">
-                                            <v-btn v-if="item.active" class="my-2" small @click="sendNotification(item.id)" rounded color="primary">
+                                            <v-btn v-if="item.active" class="my-2" small @click="showConfirmPrompt(item.id)" rounded color="primary">
                                                   <v-icon small>
                                                       mdi-email-arrow-right
                                                   </v-icon>
@@ -137,6 +137,14 @@ import ServiceForm from './service-add_edit-form'
                     this.showError(res.data.message);
                 }
             })
+        },
+        async showConfirmPrompt(id){
+            this.showConfirm((confirmed) => {
+               let vm = this;
+               if(confirmed) {
+                   vm.sendNotification(id);                
+                }
+            });  
         },
         async sendNotification(id){
             let form = {};

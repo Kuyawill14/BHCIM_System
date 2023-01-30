@@ -7,7 +7,7 @@
                     <v-row>
                         <v-col cols="12" class="px-10 mt-3">
                             <v-row>
-                                <v-col cols="12" class="my-0 py-0" md="6">
+                                <v-col cols="12" class="my-0 py-0" :md="patientDetails.age <= 5 ? '12' : '6'">
                                     <div class="pb-2 font-weight-bold">Temperature</div>
                                     <div class="d-flex">
                                         <v-text-field v-model="form.temperature" 
@@ -15,7 +15,7 @@
                                         placeholder="Temperature" dense small type="number"  color="primary" outlined />
                                     </div>
                                 </v-col>
-                                <v-col cols="12" class="my-0 py-0" md="6">
+                                <v-col v-if="patientDetails.age > 5" cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Blood Pressure</div>
                                     <div class="d-flex">
                                         <v-text-field v-model="form.b_pressure_up" placeholder="Up" 
@@ -71,9 +71,16 @@
                                         item-value="id"
                                         color="primary"
                                         placeholder="Illness"
-                                        multiple
-                                    ></v-autocomplete>
+                                        multiple>
+                                         <template slot="selection" slot-scope="data">
+                                            <v-chip small color="primary" v-bind="data.attrs" :input-value="data.selected">
+                                                {{ data.item.name }}
+                                            </v-chip>
+                                        </template>
+                                    </v-autocomplete>
                                 </v-col>
+
+                                
                                 <v-col cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Prescribe Medicine</div>
                                     <v-autocomplete
@@ -88,15 +95,29 @@
                                         placeholder="Prescription Medicine"
                                         multiple>
                                         <template slot="selection" slot-scope="data">
-                                            <v-chip v-bind="data.attrs" :input-value="data.selected">
-                                                {{ data.item.name }} - (expire: )
+                                            <v-chip small color="primary" v-bind="data.attrs" :input-value="data.selected">
+                                                {{ data.item.name }}
                                             </v-chip>
                                         </template>
-                                        <template slot="item" slot-scope="data">
-                                            <v-checkbox  v-model="data.selected"></v-checkbox>
-                                            {{ data.item.name }} - (expire: )
-                                        </template>
+                                     
                                     </v-autocomplete>
+                                </v-col>
+
+                                <v-col v-if="patientDetails.age <= 5" cols="12" class="my-0 py-0 mb-md-5" md="12">
+                                    <div class="font-weight-bold">Vaccines Given</div>
+                                        <v-row>
+                                            <v-col class="mb-0 pb-0 pb-md-2 mb-md-2" cols="12" md="4">
+                                                <v-checkbox hide-details v-model="form.hepa_b" label="Hepatitis B Vaccine"></v-checkbox>
+                                                 <v-checkbox hide-details v-model="form.dptv" label="Diphtheria-Pertussis-Tetanus Vaccine"></v-checkbox>
+                                            </v-col>
+                                            <v-col class="my-0 py-0 py-md-2 my-md-2" cols="12" md="4">
+                                                <v-checkbox hide-details v-model="form.bcg" label="Bacillus Calmette-Guérin"></v-checkbox>
+                                                <v-checkbox hide-details  v-model="form.opv" label="Oral Polio Vaccine"></v-checkbox>
+                                            </v-col>
+                                            <v-col class="mt-0 pt-0 pt-md-2 mt-md-2" cols="12" md="4">
+                                                <v-checkbox hide-details  v-model="form.mv" label="Measles Vaccine"></v-checkbox>
+                                            </v-col>
+                                        </v-row>
                                 </v-col>
                                 <v-col cols="12" class="my-0 py-0" md="12">
                                     <div class="pb-2 font-weight-bold">Check-Up Remarks</div>
@@ -132,14 +153,6 @@ export default {
             patientDetails: [],
             valid: true,
             isloaded: false,
-            headers: [
-                {text: 'Date', align: 'start',},
-                { text: 'Blood Pressure', value: 'gender'},
-                { text: 'Temperature', value: 'status'},
-                { text: 'Medicine Given', value: 'b_date' },
-                { text: 'Remarks', value: 'age' },
-                { text: 'Action', },
-            ],
             pregnant:[{text: 'YES', val: true},{text: 'NO', val: 'false'}],
             month_of_pregnant: [],
             rules: {
@@ -157,7 +170,12 @@ export default {
                 medicine_given: '',
                 illness_id: '',
                 consultation_notes: '',
-                gender: ''
+                gender: '',
+                hepa_b: '',
+                dptv: '',
+                bcg: '',
+                opv: '',
+                mv: '',
             },
         }
     },
@@ -167,6 +185,11 @@ export default {
             .then((res)=>{
                 if(res.data.success){
                     this.patientDetails = res.data.data;
+                    this.form.hepa_b = this.patientDetails.health_record.hepa_b;
+                    this.form.dptv = this.patientDetails.health_record.dptv;
+                    this.form.bcg = this.patientDetails.health_record.bcg;
+                    this.form.opv = this.patientDetails.health_record.opv;
+                    this.form.mv = this.patientDetails.health_record.mv;
                     this.isloaded = true;
                 }
             })
@@ -189,11 +212,17 @@ export default {
             }
         },
         async AddCheckUpRecord(){
+            this.form.health_record_id = this.patientDetails.health_record.id;
             this.form.gender = this.patientDetails.gender;
             await axios.post(`/api/check_up/insert`, this.form)
             .then((res)=>{
-                this.$refs.form.reset();
-                this.showSuccess(res.data.message);
+                if(res.data.success){
+                    this.$refs.form.reset();
+                    this.showSuccess(res.data.message);
+                    this.$router.push({name: 'CheckUpRecord', params:{id: this.$route.params.id}})
+                }else{
+                    this.showError(res.data.message);
+                }
             })
         },
         computeMonthPregnant(){

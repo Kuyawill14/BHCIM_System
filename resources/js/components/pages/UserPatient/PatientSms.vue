@@ -30,7 +30,7 @@
                                 <v-list-item  :class="selected_id != item.id ? 'rounded-lg' : 'grey_active rounded-lg'"
                                  @click="setSelectedMessage(item)" link :key="item.id">
                                     <v-list-item-avatar  >
-                                      <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
+                                      <v-img alt="avatar" src="/img/pp_1.png"></v-img>
                                     </v-list-item-avatar>
                                     <v-list-item-content>
                                         <div  style="font-size:12px">
@@ -72,7 +72,7 @@
                             <div class="text-center">
                                 <div class="text-center">
                                     <v-avatar height="60" width="60" max-height="60" max-width="60">
-                                        <v-img src="/storage/upload/pp_1.png"></v-img>
+                                        <v-img src="/img/pp_1.png"></v-img>
                                     </v-avatar>
                                 </div>
                                 <div class="font-weight-bold">
@@ -97,13 +97,13 @@
                                             
                                             </v-card>
                                             <v-avatar class="mt-1" height="40" width="40" max-height="100" max-width="100">
-                                                <v-img src="/storage/upload/pp_1.png"></v-img>
+                                                <v-img src="/img/pp_1.png"></v-img>
                                             </v-avatar>
                                         </v-container>
 
                                         <v-container v-if="item.from == userDetails.id" class="d-flex justify-content-start mt-0 pt-0">
                                         <v-avatar class="mt-1" height="40" width="40" max-height="100" max-width="100">
-                                                <v-img src="/storage/upload/pp_1.png"></v-img>
+                                                <v-img src="/img/pp_1.png"></v-img>
                                             </v-avatar>
                                     
                                             <v-card class="rounded-xl" width="50%" min-height="7vh" elevation="0">

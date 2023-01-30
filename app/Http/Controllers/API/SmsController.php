@@ -20,16 +20,18 @@ class SmsController extends Controller
             }]);
         }])
         ->with(['messages'])
+        ->orderby('created_at', 'DESC')
         ->get();
     }
 
     public function sendToAll($number, $from, $message_content)
     {
-        $allPatient = PatientInformation::all();
+        $allPatient = PatientInformation::get();
         foreach($allPatient as $p){
-            $phone_number = $p->cell_number;
-            if($phone_number){
-                $this->sendSmsMessage($phone_number, $from, $request->message);
+            if($p->cell_number){
+                $tmp_number = substr($p->cell_number, 1);
+                $phone_number = '63'.$tmp_number;
+                $this->sendSmsMessage($phone_number, $from, $message_content);
             }
         }
     }
@@ -49,22 +51,14 @@ class SmsController extends Controller
 
     public function store(Request $request)
     {
- 
         DB::beginTransaction();
         try {
-           
             $id = auth("sanctum")->id();
-
-            $number = "639852394030";
             $from = "BHW";
-            $message_content = $request->message;
-
-            if($request->patient_id == 'all' ){
-                //$this->sendToAll($request->number, $from, $request->message);
+            if($request->patient_id == 'all'){
+                $this->sendToAll($request->number, $from, $request->message);
             }else{
-                //$this->sendSmsMessage($request->number, $from, $request->message);
-
-                //$this->sendSmsMessage($number, $from, $request->message);
+                $this->sendSmsMessage($request->number, $from, $request->message);
             }
             
 
@@ -98,13 +92,14 @@ class SmsController extends Controller
     {   
         DB::beginTransaction();
         try {
-
-            $number = "639852394030";
+            $checkSMS = Sms::find($id);
             $from = "BHW";
-            $message_content = $request->message;
-            //$this->sendSmsMessage($number, $from, $message_content);
+            if($checkSMS->patient_id == 0){
+                $this->sendToAll($request->number, $from, $request->message);
+            }else{
+                $this->sendSmsMessage($request->number, $from, $request->message);
+            }
             
-    
             $newMessage = new Message;
             $newMessage->sms_id = $id;
             $newMessage->from = $request->sender_id;

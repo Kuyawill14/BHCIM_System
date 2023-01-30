@@ -34,12 +34,12 @@
                                             v-if="item.account"
                                             :alt="`${item.f_name} ${item.l_name} avatar`"
                                             :src="item.account.picture ? '/storage/'+item.account.picture : 
-                                            item.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
+                                            item.gender == 1 ? '/img/pp_1.png' : '/img/pp_2.png'">
                                         </v-img>
                                          <v-img
                                             v-else
                                             :alt="`${item.f_name} ${item.l_name} avatar`"
-                                            :src="item.gender == 1 ? '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'">
+                                            :src="item.gender == 1 ? '/img/pp_1.png' : '/img/pp_2.png'">
                                         </v-img>
                                     </v-list-item-avatar>
 
@@ -77,9 +77,7 @@
                                 <v-icon left>mdi-eye</v-icon>
                                 View Check-Up History
                             </v-btn>
-                            
                         </div>
-                           
                     </v-col>
                 </v-row>
             </v-card>

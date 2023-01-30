@@ -31,11 +31,11 @@
                                  @click="setSelectedMessage(item)" link :key="item.id">
                                     <v-list-item-avatar v-if="item.patient_id != 0" >
                                       <v-img v-if="item.patient_id != 0 && item.information.account" alt="avatar" 
-                                      :src="item.information.account.picture ?  '/storage/'+item.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
-                                      <v-img v-else alt="avatar" :src="item.information.gender == 1  ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                      :src="item.information.account.picture ?  '/storage/'+item.information.account.picture  : '/img/pp_1.png'"></v-img>
+                                      <v-img v-else alt="avatar" :src="item.information.gender == 1  ?  '/img/pp_1.png' : '/img/pp_2.png'"></v-img>
                                     </v-list-item-avatar>
                                     <v-list-item-avatar v-else>
-                                      <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
+                                      <v-img alt="avatar" src="/img/pp_1.png"></v-img>
                                     </v-list-item-avatar>
                                     <v-list-item-content>
                                         <div  style="font-size:12px">
@@ -75,13 +75,13 @@
                           <div v-if="selected_id">
                             <div class="text-center">
                                 <div class="text-center">
-                                    <v-avatar v-if="selected_details.patient_id != 0" height="60" width="60" max-height="60" max-width="60">
+                                    <v-avatar v-if="selected_details.patient_id != 0" height="40" width="40" max-height="100" max-width="100">
                                           <v-img v-if="selected_details.information" alt="avatar" 
-                                      :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
-                                      <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                      :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/img/pp_1.png'"></v-img>
+                                      <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/img/pp_1.png' : '/img/pp_2.png'"></v-img>
                                     </v-avatar>
-                                    <v-avatar v-else height="60" width="60" max-height="60" max-width="60">
-                                      <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
+                                    <v-avatar v-else height="40" width="40" max-height="40" max-width="40">
+                                      <v-img alt="avatar" src="/img/pp_1.png"></v-img>
                                     </v-avatar>
                                 </div>
                                 <div class="font-weight-bold">
@@ -104,18 +104,18 @@
                                           </div>
                                         </v-card>
                                         <v-avatar class="mt-1" height="40" width="40" max-height="100" max-width="100">
-                                            <v-img src="/storage/upload/pp_1.png"></v-img>
+                                            <v-img src="/img/pp_1.png"></v-img>
                                         </v-avatar>
                                     </v-container>
 
                                     <v-container v-if="item.from == userDetails.id" class="d-flex justify-content-start mt-0 pt-0">
                                         <v-avatar v-if="selected_details.patient_id != 0" class="mt-1" height="40" width="40" max-height="100" max-width="100">
                                              <v-img v-if="selected_details.information" alt="avatar" 
-                                              :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/storage/upload/pp_1.png'"></v-img>
-                                            <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/storage/upload/pp_1.png' : '/storage/upload/pp_2.png'"></v-img>
+                                              :src="selected_details.information.account.picture ?  '/storage/'+selected_details.information.account.picture  : '/img/pp_1.png'"></v-img>
+                                            <v-img v-else alt="avatar" :src="selected_details.information.gender == 1 ?  '/img/pp_1.png' : '/img/pp_2.png'"></v-img>
                                         </v-avatar>
-                                         <v-avatar v-else height="60" width="60" max-height="60" max-width="60">
-                                          <v-img alt="avatar" src="/storage/upload/pp_1.png"></v-img>
+                                         <v-avatar v-else height="40" width="40" max-height="40" max-width="40">
+                                          <v-img alt="avatar" src="/img/pp_1.png"></v-img>
                                         </v-avatar>
                                 
                                         <v-card class="rounded-xl" width="50%" min-height="7vh" elevation="0">
@@ -272,20 +272,31 @@
         this.form.sender_id = this.userDetails.id;
         await axios.post(`/api/sms/insert`, this.form)
           .then((res)=>{
-            this.showSuccess(res.data.message);
-            this.creating_new = false;
-            this.fetchSmsList();
+            if(res.data.success){
+              this.showSuccess(res.data.message);
+              this.creating_new = false;
+              this.fetchSmsList();
+              this.$refs.form.reset();
+              //this.$refs.form2.reset();
+            }else{
+              this.showError(res.data.message);
+            }
             this.isSending = false;
-            this.$refs.form.reset();
-            this.$refs.form2.reset();
         })
       },
        async SendMessage(){
         this.form.sender_id = this.userDetails.id;
+        this.form.number = this.selected_details.information.cell_number;
+        this.form.patient_id = this.selected_details.patient_id;
         await axios.put(`/api/sms/send/${this.selected_id}`, this.form)
           .then((res)=>{
-            this.selected_details.messages.push(res.data.data);
-            this.$refs.form2.reset();
+            if(res.data.success){
+              this.showSuccess(res.data.message);
+              this.selected_details.messages.push(res.data.data);
+              this.$refs.form2.reset();
+            }else{
+              this.showError(res.data.message);
+            }
             this.isSending = false;
         }).catch((e)=>{
             this.isSending = false;

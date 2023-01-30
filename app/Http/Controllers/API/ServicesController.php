@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Services;
 use App\Models\PatientInformation;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ServicesController extends Controller
 {
@@ -184,38 +186,42 @@ class ServicesController extends Controller
      */
     public function send_notification(Request $request, $id)
     {
-        $Service = Services::find($id);
-        return response()->json([
-            "success"=> true,
-            "data"=> $Service,
-            "message"=> 'Message notification sent to all patient!',
-        ]);
+        DB::beginTransaction();
+        try {
+            $service = Services::find($id);
+            if($service){
 
-        if($Service){
-            $Service->active = $request->active;
-            $Service->save();
-            $message = $request->active ? 'activate' : 'deactivated';
-
-            $allPatient = PatientInformation::all();
-            $from = 'Suerte Healt Center';
-            foreach($allPatient as $patient){
-               // $this->sendSmsMessage($patient->number,  $from, $Service->description);
+                $allPatient = PatientInformation::all();
+                $from = 'Baranagy Suerte Health Center';
+                foreach($allPatient as $patient){
+                    $tmp_number = substr($patient->cell_number, 1);
+                    $phone_number = '63'.$tmp_number;
+                    $this->sendSmsMessage($phone_number, $from, $service->description);
+                }
+                DB::commit();
+                
+                return response()->json([
+                    "success"=> true,
+                    "data"=> $service,
+                    "message"=> 'Message notification sent to all patient!',
+                ]);
             }
-           
-        }   
+        
+        }catch (\Exception $e) {
+            DB::rollback();
 
-       
-
-        return response()->json([
-            "success"=> false,
-            "data"=> [],
-            "message"=> 'Data not found!'
-        ]);
+            return response()->json([
+                "success"=> false,
+                "message"=> 'Message sent failed!'
+            ]);
+        }  
     }
 
     public function sendSmsMessage($number, $from, $message_content)
     {
-        $basic  = new \Vonage\Client\Credentials\Basic("55cf0945", "LJnDPPDYu0sYQkYa");
+        $key = env('VONAGE_API_KEY');
+        $secret = env('VONAGE_API_SECRET');
+        $basic  = new \Vonage\Client\Credentials\Basic($key, $secret);
         $client = new \Vonage\Client($basic);
 
         $response = $client->sms()->send(

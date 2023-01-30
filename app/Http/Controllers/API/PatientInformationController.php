@@ -51,6 +51,7 @@ class PatientInformationController extends Controller
             $newHealthRecord->blood_type = $request->b_type;        
             $newHealthRecord->sickness = $request->sickness;
             $newHealthRecord->medication = $request->medication;
+            $newHealthRecord->covid = $request->covid;
             $newHealthRecord->save();
 
             $newAccount = User::create([
@@ -111,6 +112,13 @@ class PatientInformationController extends Controller
             $newHealthRecord->blood_type = $request->b_type;        
             $newHealthRecord->sickness = $request->sickness;
             $newHealthRecord->medication = $request->medication;
+            $newHealthRecord->delivery_type = $request->delivery_type;
+            $newHealthRecord->delivery_time = $request->delivery_time;
+            $newHealthRecord->hepa_b = $request->hepa_b;
+            $newHealthRecord->bcg = $request->bcg;
+            $newHealthRecord->dptv = $request->dptv;
+            $newHealthRecord->opv = $request->opv;
+            $newHealthRecord->mv = $request->mv;
             $newHealthRecord->save();
 
             $newAccount = User::create([
@@ -141,7 +149,8 @@ class PatientInformationController extends Controller
     }
 
     public function view($id){
-        $viewPatient = PatientInformation::with(['purok'])
+        $viewPatient = PatientInformation::with(['healthRecord'])
+        ->with(['purok'])
         ->with(['account' => function ($query){
             $query->select('patient_id', 'picture');
         }])
@@ -209,6 +218,7 @@ class PatientInformationController extends Controller
                     $UpdateHealthRecord->blood_type = $request->b_type;
                     $UpdateHealthRecord->sickness = $request->sickness;
                     $UpdateHealthRecord->medication = $request->medication;
+                    $UpdateHealthRecord->covid = $request->covid;
                     $UpdateHealthRecord->save();
                 }
             
@@ -272,6 +282,13 @@ class PatientInformationController extends Controller
                     $UpdateHealthRecord->blood_type = $request->b_type;
                     $UpdateHealthRecord->sickness = $request->sickness;
                     $UpdateHealthRecord->medication = $request->medication;
+                    $UpdateHealthRecord->delivery_type = $request->delivery_type;
+                    $UpdateHealthRecord->delivery_time = $request->delivery_time;
+                    $UpdateHealthRecord->hepa_b = $request->hepa_b;
+                    $UpdateHealthRecord->bcg = $request->bcg;
+                    $UpdateHealthRecord->dptv = $request->dptv;
+                    $UpdateHealthRecord->opv = $request->opv;
+                    $UpdateHealthRecord->mv = $request->mv;
                     $UpdateHealthRecord->save();
                 }
             

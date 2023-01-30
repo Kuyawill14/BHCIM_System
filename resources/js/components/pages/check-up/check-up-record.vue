@@ -45,12 +45,12 @@
                 </v-row>
                 <v-row v-else-if="isViewing">
                     <v-col cols="12" class="px-3 px-md-12">
-                        <viewRecord @closeView="isViewing = false,viewdata = []" :viewdata="viewdata"></viewRecord>
+                        <viewRecord @closeView="isViewing = false,viewdata = []" :patientDetails="patientDetails" :viewdata="viewdata"></viewRecord>
                     </v-col>
                 </v-row>
                  <v-row v-else-if="isEditing">
                     <v-col cols="12" class="px-3 px-md-12">
-                        <updateRecord @updatedRecord="isEditing = false,editdata = [],getCheckUpRecord()"  @closeView="isEditing = false,editdata = []" :editdata="editdata"></updateRecord>
+                        <updateRecord :patientDetails="patientDetails" @updatedRecord="isEditing = false,editdata = [],getPatientDetails(),getCheckUpRecord()"  @closeView="isEditing = false,editdata = []" :editdata="editdata"></updateRecord>
                     </v-col>
                 </v-row>
             </v-card>
