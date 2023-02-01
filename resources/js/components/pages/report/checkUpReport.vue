@@ -82,7 +82,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    <VueHtml2pdf :show-layout="false"  :enable-download="true" :preview-modal="true"
+    <VueHtml2pdf :show-layout="false"  :enable-download="false" :preview-modal="true"
         :paginate-elements-by-height="1000" filename="Check-Up Report" :pdf-quality="2" :manual-pagination="false"
         pdf-format="a4" pdf-orientation="portrait" pdf-content-width="780px" :html-to-pdf-options="pdfOptions" 
         @hasDownloaded="printData = []" ref="html2Pdf">
@@ -97,6 +97,7 @@
                 <table >
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Age</th>
@@ -110,12 +111,12 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in printData" :key="index">
+                            <td class="text-center">{{index+1}}</td>
                             <td>{{item.info ? item.info.f_name+' '+item.info.m_name+' '+item.info.l_name : 'N/A'}}</td>
                             <td>{{item.info.gender == 1 ? 'Male' : 'Female'}}</td>
                             <td>{{item.info.age}}</td>
                             <td>{{item.pregnant == 1 ? 'Yes' : ''}}</td>
                             <td>{{item.pregnant == 1 ? item.month_of_pregnancy+' months' : ''}}</td>
-                            
                             <td>{{item.Illness ? JoinArray(item.Illness) : 'N/A'}}</td>
                             <td></td>
                             <td>{{item.info ? item.info.purok.name : 'N/A'}}</td>

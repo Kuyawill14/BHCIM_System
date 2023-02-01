@@ -25,21 +25,22 @@
                     </v-row>
                     <v-card elevation="0">
                           <v-card-title>
-                            <v-text-field type="date" @change="fetchMedicineList" v-model="filter.date_from" dense append-icon="mdi-magnify" label="Date From"  
+                           <!--  <v-text-field type="date" @change="fetchMedicineList" v-model="filter.date_from" dense append-icon="mdi-magnify" label="Date From"  
                                 hide-details>
                             </v-text-field>
                            <div v-show="$vuetify.breakpoint.mdAndUp" class="px-2">-</div>
                             <v-text-field type="date"  v-model="filter.date_to" dense append-icon="mdi-magnify" label="Date To" 
                                 hide-details>
-                            </v-text-field>
-                             <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 5" :key="item"></v-spacer>
+                            </v-text-field> -->
+                             
                             <v-text-field  v-model="search" placeholder="eg. name" dense append-icon="mdi-magnify" label="Search" 
                                 hide-details>
                             </v-text-field>
+                            <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
                             
                           </v-card-title>
 
-                          <v-data-table :items="patientList" :items-per-page="10" class="elevation-0">                                
+                          <v-data-table :items="medicineList" :items-per-page="10" class="elevation-0">                                
                               <template v-slot:header >
                                     <thead>
                                     <tr>
@@ -62,7 +63,7 @@
                                         <td>{{item.remaining}}</td>
                                        <!--  <td>{{convertDate(item.created_at)}}</td> -->
                                       </tr>
-                                      <tr v-if="patientList.length == 0">
+                                      <tr v-if="medicineList.length == 0">
                                           <td colspan="4" class="text-center"> No data available</td>
                                       </tr>
                                   </tbody>
@@ -73,7 +74,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    <VueHtml2pdf :show-layout="false"  :enable-download="true" :preview-modal="true"
+    <VueHtml2pdf :show-layout="false"  :enable-download="false" :preview-modal="true"
         :paginate-elements-by-height="1000" filename="Check-Up Report" :pdf-quality="2" :manual-pagination="false"
         pdf-format="a4" pdf-orientation="portrait" pdf-content-width="780px" :html-to-pdf-options="pdfOptions" 
         @hasDownloaded="printData = []" ref="html2Pdf">
@@ -88,6 +89,7 @@
                 <table >
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Medicine Name</th>
                             <th>Total Distributed</th>
                             <th>Remaining Stocks</th>
@@ -95,6 +97,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in printData" :key="index">
+                            <td class="text-center">{{index+1}}</td>
                             <td >{{item.name}}</td>
                             <td>{{item.total_given}}</td>
                             <td>{{item.remaining}}</td>
@@ -129,9 +132,9 @@ import VueHtml2pdf from 'vue-html2pdf';
             margin: 0.4,
             filename: 'Check-Up Report',
             jsPDF:{
-                orientation: 'l',
+                orientation: 'p',
                 unit: 'in',
-                format: 'a4',
+                format: 'legal',
                 putOnlyUsedFonts:true,
                 floatPrecision: 16, // or "smart", default is 16
             },
@@ -142,11 +145,10 @@ import VueHtml2pdf from 'vue-html2pdf';
       }
     },
     computed: {
-      patientList(){
+      medicineList(){
             if(this.search) {
                 return this.recordList.filter((item) => {
-                        return this.search.toLowerCase().split(' ').every(v => item.info.f_name.toLowerCase()
-                    .includes(v) || item.info.l_name.toLowerCase().includes(v))
+                    return this.search.toLowerCase().split(' ').every(v => item.name.toLowerCase().includes(v));
                 })
             }
             else {

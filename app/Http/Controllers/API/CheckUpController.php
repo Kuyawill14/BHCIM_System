@@ -49,6 +49,7 @@ class CheckUpController extends Controller
         ->with(['info' =>  function ($query){
             $query->with(['purok']);
         }])
+        ->wherehas('info')
         ->get();
 
         foreach($CheckUpRecord as $check){

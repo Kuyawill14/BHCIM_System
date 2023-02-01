@@ -62,7 +62,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    <VueHtml2pdf :show-layout="false"  :enable-download="true" :preview-modal="true"
+    <VueHtml2pdf :show-layout="false"  :enable-download="false" :preview-modal="true"
         :paginate-elements-by-height="1000" filename="Patient Report" :pdf-quality="2" :manual-pagination="false"
         pdf-format="a4" pdf-orientation="portrait" pdf-content-width="780px" :html-to-pdf-options="pdfOptions" 
         @hasDownloaded="printData = []" ref="html2Pdf">
@@ -77,12 +77,14 @@
                 <table >
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Ilness Name</th>
                             <th>Total Cases</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in printData" :key="index">
+                            <td class="text-center">{{index+1}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.check_up_record_count}}</td>
                         </tr>
@@ -114,7 +116,7 @@ import VueHtml2pdf from 'vue-html2pdf';
             jsPDF:{
                 orientation: 'p',
                 unit: 'in',
-                format: 'a4',
+                format: 'legal',
                 putOnlyUsedFonts:true,
                 floatPrecision: 16, // or "smart", default is 16
             },
@@ -128,8 +130,7 @@ import VueHtml2pdf from 'vue-html2pdf';
       patientList(){
             if(this.search) {
                 return this.recordList.filter((item) => {
-                        return this.search.toLowerCase().split(' ').every(v => item.f_name.toLowerCase()
-                    .includes(v) || item.l_name.toLowerCase().includes(v))
+                    return this.search.toLowerCase().split(' ').every(v => item.name.toLowerCase().includes(v));
                 })
             }
             else {

@@ -25,10 +25,20 @@
                     </v-row>
                     <v-card elevation="0">
                           <v-card-title>
+                              <v-select
+                            dense
+                            label="Filter by Age"
+                            v-model="patient_type"
+                            :items="typeSelect"
+                            item-text="text"
+                            item-value="val"
+                            color="primary"
+                        ></v-select>
+                        <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
                             <v-text-field  v-model="search" placeholder="eg. name" dense append-icon="mdi-magnify" label="Search" single-line
                                 hide-details>
                             </v-text-field>
-                            <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
+                            
                           </v-card-title>
 
                           <v-data-table   :items="patientList" :items-per-page="10" class="elevation-0">                                
@@ -76,7 +86,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    <VueHtml2pdf :show-layout="false"  :enable-download="true" :preview-modal="true"
+    <VueHtml2pdf :show-layout="false"  :enable-download="false" :preview-modal="true"
         :paginate-elements-by-height="1000" filename="Patient Report" :pdf-quality="2" :manual-pagination="false"
         pdf-format="a4" pdf-orientation="portrait" pdf-content-width="780px" :html-to-pdf-options="pdfOptions" 
         @hasDownloaded="printData = []" ref="html2Pdf">
@@ -91,6 +101,7 @@
                 <table >
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Last Name</th>
                             <th>First Name</th>
                             <th style="width:13px">M.I</th>
@@ -102,11 +113,12 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in printData" :key="index">
+                            <td class="text-center">{{index+1}}</td>
                             <td>{{item.l_name}}</td>
                             <td>{{item.f_name}}</td>
-                            <td>{{item.m_name}}</td>
+                            <td class="text-center">{{item.m_name}}</td>
                             <td>{{item.gender == 1 ? 'Male' : 'Female'}}</td>
-                            <td>{{item.age}}</td>
+                            <td class="text-center">{{item.age}}</td>
                             <td>{{item.cell_number}}</td>
                             <td>{{item.purok.name}}</td>
                         </tr>
@@ -132,13 +144,20 @@ import VueHtml2pdf from 'vue-html2pdf';
         dialog: false,
         valid: true,
         form: '',
+        patient_type: 1,
+        typeSelect: [
+            {text: 'all', val: 1},
+            {text: '0-5', val: 2},
+            {text: '6-17', val: 3},
+            {text: '18 and up', val: 4},
+        ],
         pdfOptions:{
             margin: 0.4,
             filename: 'Patient List',
             jsPDF:{
                 orientation: 'p',
                 unit: 'in',
-                format: 'a4',
+                format: 'legal',
                 putOnlyUsedFonts:true,
                 floatPrecision: 16, // or "smart", default is 16
             },
@@ -155,6 +174,23 @@ import VueHtml2pdf from 'vue-html2pdf';
                         return this.search.toLowerCase().split(' ').every(v => item.f_name.toLowerCase()
                     .includes(v) || item.l_name.toLowerCase().includes(v))
                 })
+            }
+            if(this.patient_type) {
+                if(this.patient_type == 1){
+                    return this.recordList;
+                }else if(this.patient_type == 2){
+                     return this.recordList.filter((item) => {
+                        return (item.age <= 5);
+                    })
+                }else if(this.patient_type == 3){
+                     return this.recordList.filter((item) => {
+                        return (item.age > 5 && item.age <= 17);
+                    })
+                }else if(this.patient_type == 4){
+                     return this.recordList.filter((item) => {
+                        return (item.age >= 18);
+                    })
+                }
             }
             else {
                 return this.recordList;
@@ -174,7 +210,21 @@ import VueHtml2pdf from 'vue-html2pdf';
         },
         selectAllData(){
             this.recordList.forEach(item => {
-                item.selected = this.selectedAll;
+                if(this.patient_type == 1){
+                    item.selected = this.selectedAll;
+                }else if(this.patient_type == 2){
+                    if(item.age <= 5){
+                        item.selected = this.selectedAll;
+                    }
+                }else if(this.patient_type == 3){
+                    if(item.age > 5 && item.age <= 17){
+                        item.selected = this.selectedAll;
+                    }
+                }else if(this.patient_type == 4){
+                   if(item.age >= 18){
+                        item.selected = this.selectedAll;
+                    }
+                }
             });
         },
         async fetchPatientList(){

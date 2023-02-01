@@ -55,6 +55,8 @@
          <v-dialog  v-model="dialog" width="800">
            <ViewCheckUpDialog
            :formData="form"
+           :illnessList="illnessList"
+           :medicineList="medicineList"
            @closeDialog="dialog = false"
            v-if="dialog"
            />
@@ -83,7 +85,9 @@ export default {
             ],
             search: '',
             loading: false,
-            form: []
+            form: [],
+            illnessList: [],
+            medicineList: [],
         }
     },
     computed: {
@@ -125,9 +129,23 @@ export default {
                 this.recordList = res.data;
             })
         },
+        async getIllnessList(){
+            await axios.get(`/api/illness`)
+            .then((res)=>{
+                this.illnessList = res.data;
+            })
+        },
+        async getIMedicine(){
+            await axios.get(`/api/medicine`)
+            .then((res)=>{
+                this.medicineList = res.data;
+            })
+        },
     },
     beforeMount(){
        this.getCheckUpRecord();
+       this.getIllnessList();
+       this.getIMedicine();
     }
 }
 </script>
