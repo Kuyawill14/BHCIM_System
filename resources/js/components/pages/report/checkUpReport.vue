@@ -152,9 +152,9 @@ import VueHtml2pdf from 'vue-html2pdf';
             margin: 0.4,
             filename: 'Check-Up Report',
             jsPDF:{
-                orientation: 'l',
+                orientation: 'p',
                 unit: 'in',
-                format: 'a4',
+                format: 'legal',
                 putOnlyUsedFonts:true,
                 floatPrecision: 16, // or "smart", default is 16
             },
@@ -226,6 +226,7 @@ import VueHtml2pdf from 'vue-html2pdf';
     #print_table table{
         border: 1px solid #dddddd;
         width: 100%;
+        font-size: 11px;
     }
     #print_table th{
       

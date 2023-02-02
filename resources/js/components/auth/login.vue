@@ -38,7 +38,7 @@
                                                         :rules="[rules.required, rules.min, rules.blank]"
                                                         :type="show ? 'text' : 'password'" name="password"
                                                         label="Password" prepend-inner-icon="mdi-lock"
-                                                        hint="At least 6 characters" :color="system_setting.color" counter
+                                                        hint="At least 6 characters" :color="system_setting.color"
                                                         @click:append="show = !show">
                                                     </v-text-field>
                                                 </v-col>
@@ -49,12 +49,6 @@
                                                         <v-checkbox class="ma-0 pa-0" hide-spin-buttons v-model="form.remember" label="Remember me"></v-checkbox>
                                                     </span>
                                                 <v-spacer></v-spacer>
-                                                    <span class="mt-0">
-                                                         <a href="#"
-                                                         style="text-decoration:none"
-                                                        @click.prevent="isForgotPassword = !isForgotPassword, IsloadingComponent = !IsloadingComponent"
-                                                        >Forgot Password?</a>
-                                                    </span>
                                                 </v-col>
                                                 <v-col
                                                     :class="$vuetify.breakpoint.mdAndUp ? 'ma-0 pa-0 text-left' : 'ml-0 pl-0 pr-0 mr-0 mt-1'"

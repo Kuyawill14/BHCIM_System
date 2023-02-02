@@ -105,5 +105,22 @@ class AccountsController extends Controller
             "message"=> 'Data not found!'
         ]);
     }
+
+    public function reset_password($id) {
+        $user = User::find($id);
+        if($user){
+            $user->password =  Hash::make('user@2023');
+            $user->save();
+            return response()->json([
+                "success"=> true,
+                "message"=> 'Password successfully reset!'
+            ]);
+        }
+
+        return response()->json([
+            "success"=> false,
+            "message"=> 'Password reset unsuccessfull!'
+        ]);
+    }
     
 }

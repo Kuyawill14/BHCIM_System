@@ -65,7 +65,9 @@
                             placeholder="Role"
                         ></v-select>
                     </v-col>
-                   
+                    <v-col v-if="type != 'edit'"  class="my-0 py-0" cols="12" md="12">
+                         <v-btn color="danger" dark  @click="showAlert(form.id)">Reset Password</v-btn>
+                    </v-col>
                    
                 </v-row>
             </v-form>
@@ -132,6 +134,24 @@ export default {
                     this.$refs.form.reset();
                     this.$emit('UpdatePatient');
                     this.showSuccess(res.data.message);
+                })
+            },
+            async showAlert(id){
+                this.showDelete((confirmed) => {
+                let vm = this;
+                if(confirmed) {
+                    vm.resetPassword(id);                
+                    }
+                });  
+            },
+            async resetPassword(id){
+                await axios.put(`/api/account/reset-password/${id}`)
+                .then((res)=>{
+                    if(res.data.success){
+                        this.showSuccess(res.data.message);
+                    }else{
+                        this.showError(res.data.message);
+                    }
                 })
             },
     }

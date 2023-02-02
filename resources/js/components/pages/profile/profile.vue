@@ -12,96 +12,150 @@
                         </v-card>
                     </v-card-title>
                     <div class="px-5 py-10">
-                        <v-card elevation="0">
-                           <v-form ref="form" v-model="valid" lazy-validation>
-                                <v-row class="px-2 pt-2">
-                                    <v-col class="my-0 py-0" cols="12" md="12">
-                                        <div class="pb-2 font-weight-bold">Name</div>
-                                         <v-text-field 
-                                            v-model="userDetails.name" 
-                                            outlined
-                                            :rules="nameRules" 
-                                            placeholder="Name" 
-                                            required>
-                                        </v-text-field>
-                                    </v-col>
+                         <v-tabs  v-model="tab"  align-with-title>
+                        <v-tabs-slider color="primary"></v-tabs-slider>
 
-                                    <v-col class="my-0 py-0" cols="12" md="12">
-                                        <div class="pb-2 font-weight-bold">Username</div>
-                                         <v-text-field 
-                                            v-model="userDetails.username" 
-                                            outlined
-                                            :rules="nameRules" 
-                                            placeholder="Name" 
-                                            required>
-                                        </v-text-field>
-                                    </v-col>
+                        <v-tab v-for="item in items" :key="item" >
+                            {{ item }}
+                        </v-tab>
+                        </v-tabs>
+                          <v-tabs-items v-model="tab">
+                            <v-tab-item class="pb-5">
+                                <v-card elevation="0" class="px-8 pt-5">
+                                    <v-form ref="form" v-model="valid" lazy-validation>
+                                            <v-row class="px-2 pt-2">
+                                                <v-col class="my-0 py-0" cols="12" md="12">
+                                                    <div class="pb-2 font-weight-bold">Name</div>
+                                                    <v-text-field 
+                                                        v-model="userDetails.name" 
+                                                        outlined
+                                                        :rules="nameRules" 
+                                                        placeholder="Name" 
+                                                        required>
+                                                    </v-text-field>
+                                                </v-col>
 
-                                    <v-col class="my-0 py-0" cols="12" md="12">
-                                        <div class="pb-2 font-weight-bold">Gender</div>
-                                         <v-select
-                                            :rules="nameRules" 
-                                            v-model="userDetails.gender"
-                                            :items="genderType"
-                                            item-text="text"
-                                            item-value="val"
-                                            outlined
-                                            color="primary"
-                                            placeholder="Gender"
-                                        ></v-select>
-                                    </v-col>
-                                     <v-col v-if="userDetails.role == 'administrator'" class="my-0 py-0" cols="12" md="12">
-                                        <div class="pb-2 font-weight-bold">Role</div>
-                                        <v-select
-                                            :rules="nameRules" 
-                                            v-model="userDetails.role"
-                                            item-text="text"
-                                            item-value="role"
-                                            :items="roles"
-                                            outlined
-                                            color="primary"
-                                            placeholder="Role"
-                                        ></v-select>
-                                    </v-col>
+                                                <v-col class="my-0 py-0" cols="12" md="12">
+                                                    <div class="pb-2 font-weight-bold">Username</div>
+                                                    <v-text-field 
+                                                        v-model="userDetails.username" 
+                                                        outlined
+                                                        :rules="nameRules" 
+                                                        placeholder="Name" 
+                                                        required>
+                                                    </v-text-field>
+                                                </v-col>
 
-                                    <v-col v-if="(userDetails.picture == null || userDetails.picture == '')" class="my-0 py-0" cols="12" md="12">
-                                        <div class="pb-2 font-weight-bold">Profile</div>
-                                          <v-file-input
-                                            :rules="rules"
-                                            outlined
-                                            @change="FileChange"
-                                            accept="image/png, image/jpeg, image/bmp"
-                                            placeholder="Pick profile"
-                                            prepend-inner-icon="mdi-image-area" prepend-icon=""    
-                                        ></v-file-input>
-                                    </v-col>
+                                                <v-col class="my-0 py-0" cols="12" md="12">
+                                                    <div class="pb-2 font-weight-bold">Gender</div>
+                                                    <v-select
+                                                        :rules="nameRules" 
+                                                        v-model="userDetails.gender"
+                                                        :items="genderType"
+                                                        item-text="text"
+                                                        item-value="val"
+                                                        outlined
+                                                        color="primary"
+                                                        placeholder="Gender"
+                                                    ></v-select>
+                                                </v-col>
+                                            
+                                                <v-col v-if="(userDetails.picture == null || userDetails.picture == '')" class="my-0 py-0" cols="12" md="12">
+                                                    <div class="pb-2 font-weight-bold">Profile</div>
+                                                    <v-file-input
+                                                        :rules="rules"
+                                                        outlined
+                                                        @change="FileChange"
+                                                        accept="image/png, image/jpeg, image/bmp"
+                                                        placeholder="Pick profile"
+                                                        prepend-inner-icon="mdi-image-area" prepend-icon=""    
+                                                    ></v-file-input>
+                                                </v-col>
 
-                                    <v-col v-else class="my-0 py-0" cols="12" md="12">
-                                        <div class="pb-2 font-weight-bold">Profile</div>
-                                        <v-text-field 
-                                            outlined
-                                            v-model="userDetails.picture"
-                                            clearable
-                                            placeholder="Pick profile"
-                                            prepend-inner-icon="mdi-image-area" prepend-icon=""    
-                                        ></v-text-field>
-                                    </v-col>
-                                    <v-col class="my-0 py-0" cols="12" md="12">
-                                         <v-btn
-                                            :disabled="!valid"
-                                            :color="system_setting.color"
-                                            class="mr-4"
-                                            large
-                                            dark
-                                            @click="validate">
-                                            Save Changes
-                                        </v-btn>
-                                    </v-col>
+                                                <v-col v-else class="my-0 py-0" cols="12" md="12">
+                                                    <div class="pb-2 font-weight-bold">Profile</div>
+                                                    <v-text-field 
+                                                        outlined
+                                                        v-model="userDetails.picture"
+                                                        clearable
+                                                        placeholder="Pick profile"
+                                                        prepend-inner-icon="mdi-image-area" prepend-icon=""    
+                                                    ></v-text-field>
+                                                </v-col>
+                                                <v-col class="my-0 py-0" cols="12" md="12">
+                                                    <v-btn
+                                                        :disabled="!valid"
+                                                        :color="system_setting.color"
+                                                        class="mr-4"
+                                                        large
+                                                        dark
+                                                        @click="validate">
+                                                        Save Changes
+                                                    </v-btn>
+                                                </v-col>
+                                            </v-row>
+                                        </v-form>
+                                    </v-card>
+                            </v-tab-item>
+                            <v-tab-item class="pb-5">
+                                 <v-card elevation="0" class="px-12 pt-5">
+                                    <v-form ref="updatePassForm" v-model="valid2" lazy-validation>
+                                        <v-row>
+                                            <v-col class="my-0 py-0" cols="12" md="12">
+                                                <div class="pb-2 font-weight-bold">Current Password</div>
+                                                <v-text-field 
+                                                    v-model="form.current_password" 
+                                                    outlined
+                                                    :append-icon="show ?'mdi-eye':'mdi-eye-off'"
+                                                    @click:append="show = !show"
+                                                    :type="show ? 'text' : 'password'" name="password"
+                                                    :rules="[Passrules.required, Passrules.min, Passrules.blank]"
+                                                    placeholder="Current Password" 
+                                                    required>
+                                                </v-text-field>
+                                            </v-col>
+                                            <v-col class="my-0 py-0" cols="12" md="12">
+                                                <div class="pb-2 font-weight-bold">New Password</div>
+                                                <v-text-field 
+                                                    v-model="form.new_password" 
+                                                    outlined
+                                                    :type="show ? 'text' : 'password'" name="password"
+                                                    :rules="[Passrules.required, Passrules.min, Passrules.blank]"
+                                                    placeholder="New Password" 
+                                                    required>
+                                                </v-text-field>
+                                            </v-col>
+                                            <v-col class="my-0 py-0" cols="12" md="12">
+                                                <div class="pb-2 font-weight-bold">Confirm Password</div>
+                                                <v-text-field 
+                                                    v-model="form.new_confirm_password" 
+                                                    outlined
+                                                    :type="show ? 'text' : 'password'" name="password"
+                                                    :rules="[Passrules.required, Passrules.min, Passrules.blank]"
+                                                    placeholder="Confirm Password" 
+                                                    required>
+                                                </v-text-field>
+                                            </v-col>
+                                            <v-col class="my-0 py-0" cols="12" md="12">
+                                                <v-btn
+                                                    :disabled="!valid"
+                                                    :color="system_setting.color"
+                                                    class="mr-4"
+                                                    large
+                                                    dark
+                                                    @click="validate2">
+                                                    Save Changes
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </v-form>
+                                 </v-card>
+
+                            </v-tab-item>
+                        </v-tabs-items>
 
 
-                                </v-row>
-                            </v-form>
-                        </v-card>
+                       
                    </div>
                 </v-card>
             </v-col>
@@ -113,6 +167,18 @@
     props:['system_setting'],
     data: () => ({
       valid: true,
+      valid2: true,
+      show: false,
+      tab: null,
+      form: {},
+      items: [
+          'Profile Details', 'Change Password'
+        ],
+        Passrules: {
+            required: value => !!value || "Required.",
+            min: v => (v && v.length >= 6) || "Min 6 characters",
+            blank: v => v && !!v.trim() || 'Field cannot be blank',
+        },
       nameRules: [
         v => !!v || 'Field is required',
       ],
@@ -143,6 +209,11 @@
                 this.updateProfile();  
             }
         },
+        validate2 () {
+            if(this.$refs.updatePassForm.validate()){
+                this.updatePassword();  
+            }
+        },
         reset () {
             this.$refs.form.reset()
         },
@@ -154,6 +225,17 @@
             .then((res)=>{
                 this.userDetails.picture = res.data.data;
                 this.showSuccess(res.data.message);
+            })
+        },
+         async updatePassword(){
+            await axios.post(`/api/user/update-password`, this.form)
+            .then((res)=>{
+                 if(res.data.success){
+                    this.showSuccess(res.data.message);
+                    this.$refs.updatePassForm.reset()
+                }else{
+                    this.showError(res.data.message);
+                }
             })
         },
         FileChange(file){

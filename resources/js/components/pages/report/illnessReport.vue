@@ -171,6 +171,7 @@ import VueHtml2pdf from 'vue-html2pdf';
     #print_table table{
         border: 1px solid #dddddd;
         width: 100%;
+        font-size: 11px;
     }
     #print_table th{
       

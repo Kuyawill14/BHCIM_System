@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Rules\OldPass;
 
 class AuthController extends Controller
 {
@@ -67,7 +68,6 @@ class AuthController extends Controller
             $user->name = $userDetails['name'];
             $user->username = $userDetails['username'];
             $user->gender = $userDetails['gender'];
-            $user->role = $userDetails['role'];
             if($request->profile != null && $request->profile != ''  && $request->profile != 'undefined') {
          
                 Storage::delete(public_path($user->picture));
@@ -95,6 +95,28 @@ class AuthController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
         }
-       
+    }    
+
+    public function update_password(Request $request) {
+
+        $request->validate([
+            'current_password' => ['required', new OldPass],
+            'new_password' => ['required','min:6','max:30'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+
+        $newpass = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+
+        if($newpass){
+            return response()->json([
+                "success"=> true,
+                "message"=> 'password successfully updated!'
+            ]);
+        }
+
+        return response()->json([
+            "success"=> false,
+            "message"=> 'password updated unsuccessfull!'
+        ]);
     }
 }

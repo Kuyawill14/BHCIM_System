@@ -89,6 +89,7 @@ Route::prefix('/account')->group(function () {
     Route::get('/edit/{id}', [AccountsController::class, 'edit']);
     Route::put('/update/{id}', [AccountsController::class, 'update']);
     Route::delete('/delete/{id}', [AccountsController::class, 'delete']);
+    Route::put('/reset-password/{id}', [AccountsController::class, 'reset_password']);
 });
 
 //services
@@ -130,7 +131,9 @@ Route::prefix('/medicine')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
-    Route::post('/update', [AuthController::class, 'update']);
+Route::post('/update', [AuthController::class, 'update']);
+Route::post('/update-password', [AuthController::class, 'update_password']);
+
 });
 
 Route::post('/login', [AuthController::class, 'login']);

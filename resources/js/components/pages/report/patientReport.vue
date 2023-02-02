@@ -49,8 +49,9 @@
                                         <th>Name</th>
                                         <th>Gender</th>
                                         <th>Age</th>
+                                        <th>Status</th>
+                                        <th>Cp #</th>
                                         <th>Purok</th>
-                                        <th>Cellphone No.</th>
                                     </tr>
                                     </thead>
                                 </template>
@@ -70,10 +71,10 @@
                                               Female
                                             </v-chip>
                                           </td>
+                                          <td>{{item.status}}</td>
                                           <td>{{item.age}}</td>
+                                          <td>{{item.cell_number}}</td>
                                           <td>{{item.purok ? item.purok.name : ''}}</td>
-                                        <td>{{item.cell_number}}</td>
-                                          
                                       </tr>
                                       <tr v-if="patientList.length == 0">
                                           <td colspan="42" class="text-center"> No data available</td>
@@ -100,25 +101,39 @@
             <section id="print_table" style="width:90%" class="pdf-item" >
                 <table >
                     <thead>
-                        <tr>
+                        <tr v-if="patient_type != 2">
                             <th></th>
                             <th>Last Name</th>
                             <th>First Name</th>
-                            <th style="width:13px">M.I</th>
-                            <th style="width:13px">Gender</th>
-                            <th style="width:13px">Age</th>
-                            <th style="width:17%">Cellphone No.</th>
+                            <th>M.I</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Cp #</th>
+                            <th>Purok</th>
+                        </tr>
+                         <tr v-else>
+                            <th></th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>M.I</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Mother Name</th>
+                            <th>Father Name</th>
+                            <th>Parent Cp #</th>
                             <th>Purok</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in printData" :key="index">
-                            <td class="text-center">{{index+1}}</td>
+                            <td>{{index+1}}</td>
                             <td>{{item.l_name}}</td>
                             <td>{{item.f_name}}</td>
-                            <td class="text-center">{{item.m_name}}</td>
+                            <td>{{item.m_name}}</td>
                             <td>{{item.gender == 1 ? 'Male' : 'Female'}}</td>
-                            <td class="text-center">{{item.age}}</td>
+                            <td>{{item.age}}</td>
+                            <td v-if="patient_type == 2">{{item.mother_name}}</td>
+                            <td v-if="patient_type == 2">{{item.father_name}}</td>
                             <td>{{item.cell_number}}</td>
                             <td>{{item.purok.name}}</td>
                         </tr>
@@ -146,7 +161,7 @@ import VueHtml2pdf from 'vue-html2pdf';
         form: '',
         patient_type: 1,
         typeSelect: [
-            {text: 'all', val: 1},
+            {text: 'All', val: 1},
             {text: '0-5', val: 2},
             {text: '6-17', val: 3},
             {text: '18 and up', val: 4},
@@ -243,6 +258,7 @@ import VueHtml2pdf from 'vue-html2pdf';
     #print_table table{
         border: 1px solid #dddddd;
         width: 100%;
+       font-size: 11px;
     }
     #print_table th{
       
