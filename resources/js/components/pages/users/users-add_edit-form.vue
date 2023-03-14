@@ -1,7 +1,9 @@
 <template>
     <v-card class="pa-2">
         <v-card-title class="font-weight-bold justify-space-between">
-            {{this.type == "add" ? 'ADD ACCOUNT' :  'UPDATE ACCOUNT'}}
+            <span class="primary--text" v-if="type == 'add'">ADD ACCOUNT</span>
+            <span class="primary--text" v-else-if="type == 'update'">UPDATE ACCOUNT</span>
+            <span class="primary--text" v-else>VIEW ACCOUNT</span>
             <v-btn @click="$refs.form.reset(),$emit('closeDialog')" icon large>
                 <v-icon>
                     mdi-close
@@ -13,9 +15,12 @@
                 <v-row class="px-2 pt-2">
                     <v-col class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Full Name</div>
-                        <v-text-field  dense v-model="form.name" 
+                        <v-text-field  
+                        :readonly="type == 'view'"
+                        :outlined="type != 'view'"
+                        dense v-model="form.name" 
                         :rules="[rules.required]" placeholder="Full Name"
-                            color="primary" type="text" outlined />
+                            color="primary" type="text" />
                     </v-col>
                     <v-col cols="12" class="my-0 py-0" md="12">
                         <div class="pb-2 font-weight-bold">Gender</div>
@@ -34,9 +39,12 @@
                     </v-col>
                     <v-col class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Username</div>
-                        <v-text-field  dense v-model="form.username" 
+                        <v-text-field 
+                        :readonly="type == 'view'"
+                        :outlined="type != 'view'"
+                         dense v-model="form.username" 
                         :rules="[rules.required]" placeholder="Username"
-                            color="primary" type="text" outlined />
+                            color="primary" type="text"  />
                     </v-col>
                     <v-col v-if="type == 'add'" class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Password</div>
@@ -55,27 +63,28 @@
                          <v-select
                             dense
                             :readonly="type == 'view'"
+                            :outlined="type != 'view'"
                             :rules="[rules.required]"
                             v-model="form.role"
                             item-text="text"
                             item-value="role"
                             :items="roles"
-                            :outlined="type != 'view'"
                             color="primary"
                             placeholder="Role"
                         ></v-select>
                     </v-col>
-                    <v-col v-if="type != 'edit'"  class="my-0 py-0" cols="12" md="12">
-                         <v-btn color="danger" dark  @click="showAlert(form.id)">Reset Password</v-btn>
+                    <v-col v-if="type == 'update'"  class="my-0 py-0" cols="12" md="12">
+                         <v-btn color="danger" dark  @click="showAlert(form.id)">
+                            <v-icon left>mdi-lock-reset</v-icon>Reset Password
+                        </v-btn>
                     </v-col>
-                   
                 </v-row>
             </v-form>
         </v-container>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text rounded @click="$refs.form.reset(),$emit('closeDialog')">Cancel</v-btn>
-            <v-btn class="px-7" large rounded color="primary" @click="validate()">
+            <v-btn text rounded @click="$refs.form.reset(),$emit('closeDialog')">{{type == 'view' ? 'Close' : 'Cancel'}}</v-btn>
+            <v-btn v-if="type != 'view'" class="px-7" large rounded color="primary" @click="validate()">
                 {{this.type == "add" ? 'Submit' :  'Update'}}</v-btn>
         </v-card-actions>
     </v-card>

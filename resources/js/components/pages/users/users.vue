@@ -53,7 +53,7 @@
                                                 </v-chip>
                                             </td>
                                             <td width="30%">
-                                                <v-btn small dark  rounded color="primary">
+                                                <v-btn small dark @click="openViewDialog(item.id)"  rounded color="primary">
                                                     <v-icon small>
                                                         mdi-eye
                                                     </v-icon>
@@ -142,6 +142,16 @@ import UserForm from './users-add_edit-form'
             await axios.get(`/api/account/edit/${id}`)
             .then((res)=>{
                 this.type = 'update';
+                this.form = res.data.data;
+                this.loading = false;
+                this.dialog = true;  
+            })
+        },
+        async openViewDialog(id){
+            this.loading = true;
+            await axios.get(`/api/account/edit/${id}`)
+            .then((res)=>{
+                this.type = 'view';
                 this.form = res.data.data;
                 this.loading = false;
                 this.dialog = true;  

@@ -3,15 +3,23 @@
         <v-row>
             <v-col cols="12">
                  <v-card >
+                  
                     <v-card-title class="align-start mb-0 pb-0">
-                      <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
-                            <div class="pa-4">
-                                <v-icon dark style="font-size: 25px;">mdi-clipboard-text-clock</v-icon>
-                                <span class="white--text">My Check-Up History</span> 
+                        <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
+                            <div class="pa-5 white--text">
+                                <div class="d-flex">
+                                    <div class="pr-2">
+                                        <v-icon dark :style="$vuetify.breakpoint.mdAndUp ? 'font-size: 36px' : 'font-size: 20px'">mdi-clipboard-text-clock</v-icon>
+                                    </div>
+                                    <div  style="width:100%">
+                                        <div :class="$vuetify.breakpoint.mdAndUp ? 'text-h5 font-weight-light' : ' font-weight-light'">My Check-Up History</div>
+                                        <div class="text-caption">Check-up history details</div>
+                                    </div>
+                                </div>
                             </div>
                         </v-card>
                     </v-card-title>
-                    
+                        
                     <div class="px-10 py-10">
                 
                     <v-card elevation="0">

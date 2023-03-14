@@ -20,9 +20,9 @@
       </v-btn>
     </div>
 
-        <p style="width:50%;line-height:20px" class="pl-3 pt-5">{{$vuetify.breakpoint.mdAndUp ? system_setting.system_long_name : system_setting.system_short_name}}</p>
+        <p style="width:50%;line-height:20px" class="pl-3 pt-5 font-weight-bold primary--text">{{$vuetify.breakpoint.mdAndUp ? system_setting.system_long_name : system_setting.system_short_name}}</p>
       <v-spacer></v-spacer>
-      <div>
+      <div v-if="$vuetify.breakpoint.mdAndUp" >
          <span>Hi! {{userDetails.name}} </span>
       </div>
       <v-menu min-width="150" offset-y>
@@ -35,7 +35,6 @@
                 <v-img :src="userDetails.gender == 1 ? '/img/pp_1.png' : '/img/pp_2.png'"></v-img>
               </v-avatar>
           </v-btn>
-        
         </template>
         <v-list nav >
           <v-list-item link :to="{name: 'Profile'}">
@@ -49,7 +48,7 @@
     </v-app-bar>
 
    <!--  Navigation -->
-    <v-navigation-drawer width="220" v-if="currentRouteName != 'CheckUp' && currentRouteName != 'CheckUpRecord' && currentRouteName != 'CheckUpAdd'" v-model="nav" dark :color="system_setting.color"  app>
+    <v-navigation-drawer  width="220" v-if="currentRouteName != 'CheckUp' && currentRouteName != 'CheckUpRecord' && currentRouteName != 'CheckUpAdd'" v-model="nav" dark :color="system_setting.color"  app>
       <v-list class="mb-0 pb-0 ">
           <v-list-item class="d-flex justify-center pt-3">
               <v-img height="110" width="110" max-height="110" max-width="110"
@@ -81,7 +80,7 @@ export default {
     data(){
         return{
             mini: true,
-            nav: true,
+            nav: this.$vuetify.breakpoint.mdAndUp ?  true : false,
             hasSidebar: true,
             noSideBarRoutes:['CheckUpAdd', 'CheckUpRecord', 'CheckUpAdd'],
             bgdesign: `background: linear-gradient(rgba(56, 142, 60, 0.25), rgba(56, 142, 60, 0.25)) 50% center / cover no-repeat, url('/storage/${this.system_setting.login_bg};background-position-x: center;background-repeat: no-repeat;background-size: cover;`,
