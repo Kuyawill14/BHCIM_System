@@ -7,6 +7,22 @@
                     <v-row>
                         <v-col cols="12" class="px-10 mt-3">
                             <v-row>
+                                <v-col cols="12" class="my-0 py-0" md="6">
+                                    <div class="pb-2 font-weight-bold">Height (cm)</div>
+                                    <div class="d-flex">
+                                        <v-text-field v-model="form.height" 
+                                        :rules="[rules.required]" 
+                                        placeholder="Height" dense small type="number"  color="primary" outlined />
+                                    </div>
+                                </v-col>
+                                <v-col cols="12" class="my-0 py-0" md="6">
+                                    <div class="pb-2 font-weight-bold">Weight (kg)</div>
+                                    <div class="d-flex">
+                                        <v-text-field v-model="form.weight" 
+                                        :rules="[rules.required]" 
+                                        placeholder="Weight" dense small type="number"  color="primary" outlined />
+                                    </div>
+                                </v-col>
                                 <v-col cols="12" class="my-0 py-0" :md="patientDetails.age <= 5 ? '12' : '6'">
                                     <div class="pb-2 font-weight-bold">Temperature</div>
                                     <div class="d-flex">
@@ -79,8 +95,6 @@
                                         </template>
                                     </v-autocomplete>
                                 </v-col>
-
-                                
                                 <v-col cols="12" class="my-0 py-0" md="6">
                                     <div class="pb-2 font-weight-bold">Prescribe Medicine</div>
                                     <v-autocomplete
@@ -176,6 +190,9 @@ export default {
                 bcg: '',
                 opv: '',
                 mv: '',
+                height: '',
+                weight: '',
+                bmi: ''
             },
         }
     },
@@ -240,7 +257,7 @@ export default {
         this.getPatientDetails();
         this.getIllnessList();
         this.getIMedicine();
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 9; i++) {
             this.month_of_pregnant.push(i+1)
         }
     }

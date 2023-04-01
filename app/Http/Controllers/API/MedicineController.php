@@ -92,7 +92,7 @@ class MedicineController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
     
         $medicine = Medicine::with(['total_stocks' => function($query){
@@ -102,7 +102,12 @@ class MedicineController extends Controller
   
 
         foreach($medicine as $item){
-            $count = CheckUpRecord::where('medicine_given', 'LIKE', '%'.$item->id.'%')->count();
+            $count = CheckUpRecord::where('medicine_given', 'LIKE', '%'.$item->id.'%')
+            ->when($request->input('date_from'), function ($query) use ($request) {
+                $query->whereDate('created_at','>=',$request->input('date_from'));
+            })
+            ->count();
+            
             $item->total_given = $count;
             $remaining = $item->total_stocks->qty - $count;
             $item->remaining = $remaining > 0 ? $remaining : 0;

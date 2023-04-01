@@ -41,10 +41,10 @@ class CheckUpController extends Controller
     {
         $CheckUpRecord = CheckUpRecord::
         when($request->input('date_from'), function ($query) use ($request) {
-            $query->where('created_at','>=',$request->input('date_from'));
+            $query->whereDate('created_at','>=',$request->input('date_from'));
         })
         ->when($request->input('date_to'), function ($query) use ($request) {
-            $query->where('created_at','<=',$request->input('date_to'));
+            $query->whereDate('created_at','<=', $request->input('date_to'));
         })
         ->with(['info' =>  function ($query){
             $query->with(['purok']);
@@ -85,6 +85,8 @@ class CheckUpController extends Controller
             $newCheckUp->medicine_given = $request->medicine_given;
             $newCheckUp->illness_id = $request->illness_id;
             $newCheckUp->consultation_notes = $request->consultation_notes;
+            $newCheckUp->height = $request->height;
+            $newCheckUp->weight = $request->weight;
             $newCheckUp->save();
 
             $healthRecord = HealthInformation::find($request->health_record_id);
@@ -158,6 +160,8 @@ class CheckUpController extends Controller
                 $updateCheckUp->illness_id = $request->illness_id;
                 $updateCheckUp->medicine_given = $request->medicine_given;
                 $updateCheckUp->consultation_notes = $request->consultation_notes;
+                $updateCheckUp->height = $request->height;
+                $updateCheckUp->weight = $request->weight;
                 $updateCheckUp->save();
 
                 $healthRecord = HealthInformation::find($request->health_record_id);

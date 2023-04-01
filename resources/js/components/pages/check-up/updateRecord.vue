@@ -4,6 +4,22 @@
             <v-row>
                 <v-col cols="12" class="px-10 mt-3">
                     <v-row>
+                        <v-col cols="12" class="my-0 py-0" md="6">
+                            <div class="pb-2 font-weight-bold">Height (cm)</div>
+                            <div class="d-flex">
+                                <v-text-field v-model="form.height" 
+                                :rules="[rules.required]" 
+                                placeholder="Height" dense small type="number"  color="primary" outlined />
+                            </div>
+                        </v-col>
+                        <v-col cols="12" class="my-0 py-0" md="6">
+                            <div class="pb-2 font-weight-bold">Weight (kg)</div>
+                            <div class="d-flex">
+                                <v-text-field v-model="form.weight" 
+                                :rules="[rules.required]" 
+                                placeholder="Weight" dense small type="number"  color="primary" outlined />
+                            </div>
+                        </v-col>
                         <v-col cols="12" class="my-0 py-0" :md="patientDetails.age <= 5 ? '12' : '6'">
                             <div class="pb-2 font-weight-bold">Temperature</div>
                             <div class="d-flex">
@@ -170,7 +186,8 @@ export default {
             this.form.last_mensturation = this.editdata.last_mensturation;
             this.form.month_of_pregnancy = this.editdata.month_of_pregnancy;
             this.form.consultation_notes = this.editdata.consultation_notes;
-
+            this.form.height = this.editdata.height;
+            this.form.weight = this.editdata.weight;
 
             this.form.hepa_b = this.patientDetails.health_record.hepa_b;
             this.form.dptv = this.patientDetails.health_record.dptv;

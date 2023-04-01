@@ -12,12 +12,44 @@
                     </v-card-title>
                      <v-card-subtitle class="text-right mt-n13">
                         <span class="text-h5">{{dashboardData.patient}}</span><br>
-                        <span> Patients</span>
+                        <span> Total Patients</span>
                     </v-card-subtitle>
                 </v-card>
             </v-col>
             <v-col cols="12" md="4">
                  <v-card >
+                    <v-card-title class="align-start mb-0 pb-0">
+                      <v-card light elevation="6" rounded color="blue" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;">
+                            <div class="pa-8">
+                                <v-icon dark style="font-size: 36px;">mdi-human-male</v-icon>
+                            </div>
+                        </v-card>
+                    </v-card-title>
+                     <v-card-subtitle class="text-right  mt-n13">
+                          <span class="text-h5">{{dashboardData.malePatient}}</span><br>
+                          <span>Male Patients</span> 
+                    </v-card-subtitle>
+                </v-card>
+            </v-col>
+            <v-col cols="12" md="4">
+                <v-card >
+                    <v-card-title class="align-start mb-0 pb-0">
+                      <v-card light elevation="6" rounded color="pink" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;">
+                            <div class="pa-8">
+                                <v-icon dark style="font-size: 36px;">mdi-human-female</v-icon>
+                            </div>
+                        </v-card>
+                    </v-card-title>
+                    <v-card-subtitle class="text-right  mt-n13">
+                          <span class="text-h5">{{dashboardData.femalePatient}}</span><br>
+                          <span>Female Patients</span>
+                    </v-card-subtitle>
+                </v-card>
+            </v-col>
+        </v-row>
+        <v-row class="mt-7">
+            <v-col cols="12" md="6">
+                <v-card >
                     <v-card-title class="align-start mb-0 pb-0">
                       <v-card light elevation="6" rounded color="#0D47A1" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;">
                             <div class="pa-8">
@@ -31,7 +63,7 @@
                     </v-card-subtitle>
                 </v-card>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="6">
                 <v-card >
                     <v-card-title class="align-start mb-0 pb-0">
                       <v-card light elevation="6" rounded color="success" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;">
@@ -47,6 +79,7 @@
                 </v-card>
             </v-col>
         </v-row>
+
 
         <v-row class="mt-7">
             <v-col cols="12" md="12"  >

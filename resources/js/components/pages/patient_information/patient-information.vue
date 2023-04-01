@@ -7,7 +7,7 @@
                       <v-card light elevation="6" rounded color="primary" class="overflow-hidden mt-n9 transition-swing" style="max-width: 100%;width: 100%;">
                             <div class="pa-4">
                                 <v-icon dark style="font-size: 25px;">mdi-account-group</v-icon>
-                                <span class="white--text">Patient Record List</span> 
+                                <span class="white--text">Patient Information List</span> 
                             </div>
                         </v-card>
                     </v-card-title>

@@ -208,18 +208,21 @@
                 </v-card-title>
 
                 <v-row class="px-3 pt-2">
-                    <v-col cols="12" class="my-0 py-0" md="3">
-                        <div class="pb-2 font-weight-bold">Height (cm)</div>
-                        <v-text-field :readonly="type == 'view'" v-model="form.height" dense :rules="nameRules" placeholder="Height"
-                            color="primary" type="number" :outlined="type != 'view'" />
-                    </v-col>
-                    <v-col cols="12" class="my-0 py-0" md="3">
-                        <div class="pb-2 font-weight-bold">Weight (kg)</div>
-                        <v-text-field :readonly="type == 'view'" placeholder="Weight" dense small type="number" 
-                            v-model="form.weight"
+                    <v-col cols="12" class="my-0 py-0" md="6">
+                        <div class="pb-2 font-weight-bold">Illness History</div>
+                            <v-textarea
+                            :readonly="type == 'view'"
+                            v-model="form.illness_history"
+                            :outlined="type != 'view'"
+                            dense
                             :rules="nameRules"
-                            color="primary" :outlined="type != 'view'" />
+                            auto-grow
+                            rows="2"
+                            prepend-inner-icon="mdi-account-injury"
+                            placeholder="Illness History (Put N/A if none)"
+                            ></v-textarea>
                     </v-col>
+                   
                     <v-col cols="12" class="my-0 py-0" md="6"></v-col>
                 
                     <v-col cols="12" class="my-0 py-0"  md="3">
@@ -357,6 +360,7 @@
                 b_type: '',
                 sickness: '',
                 medication: '',
+                illness_history: ''
             },
             nameRules: [
                 v => !!v || 'Field is required',
@@ -403,6 +407,7 @@
             this.form.b_type = '';
             this.form.sickness = '';
             this.form.medication = '';
+            this.form.illness_history = '';
             this.$refs.form.resetValidation();
         },
         getAge(){
@@ -463,6 +468,7 @@
             this.form.opv = this.formData.health_record.opv;
             this.form.mv = this.formData.health_record.mv;
             this.form.covid = this.formData.health_record.covid;
+            this.form.illness_history = this.formData.health_record.illness_history;
         }
     }
   }

@@ -52,6 +52,7 @@ class PatientInformationController extends Controller
             $newHealthRecord->sickness = $request->sickness;
             $newHealthRecord->medication = $request->medication;
             $newHealthRecord->covid = $request->covid;
+            $newHealthRecord->illness_history = $request->illness_history;
             $newHealthRecord->save();
 
             $newAccount = User::create([
@@ -119,6 +120,7 @@ class PatientInformationController extends Controller
             $newHealthRecord->dptv = $request->dptv;
             $newHealthRecord->opv = $request->opv;
             $newHealthRecord->mv = $request->mv;
+            $newHealthRecord->illness_history = $request->illness_history;
             $newHealthRecord->save();
 
             $newAccount = User::create([
@@ -219,6 +221,7 @@ class PatientInformationController extends Controller
                     $UpdateHealthRecord->sickness = $request->sickness;
                     $UpdateHealthRecord->medication = $request->medication;
                     $UpdateHealthRecord->covid = $request->covid;
+                    $UpdateHealthRecord->illness_history = $request->illness_history;
                     $UpdateHealthRecord->save();
                 }
             
@@ -289,6 +292,7 @@ class PatientInformationController extends Controller
                     $UpdateHealthRecord->dptv = $request->dptv;
                     $UpdateHealthRecord->opv = $request->opv;
                     $UpdateHealthRecord->mv = $request->mv;
+                    $UpdateHealthRecord->illness_history = $request->illness_history;
                     $UpdateHealthRecord->save();
                 }
             

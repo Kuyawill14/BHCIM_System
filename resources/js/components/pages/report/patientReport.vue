@@ -94,7 +94,7 @@
         <section slot="pdf-content">
              <section id="print_table" style="width:90%" class="pdf-item" >
                 <div style="text-align:center">
-                    <h2>Patient List</h2>
+                    <div style="line-height: 12px;font-weight:bold">Patient List</div>
                 </div>
              </section>
 

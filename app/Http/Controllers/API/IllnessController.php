@@ -50,11 +50,18 @@ class IllnessController extends Controller
 
     }
 
-    public function report()
+    public function report(Request $request)
     {
         $illness = Illness::get();
         foreach($illness as $item){
-            $count = CheckUpRecord::where('illness_id', 'LIKE', '%'.$item->id.'%')->count();
+            $count = CheckUpRecord::where('illness_id', 'LIKE', '%'.$item->id.'%')
+            ->when($request->input('date_from'), function ($query) use ($request) {
+                $query->whereDate('created_at','>=',$request->input('date_from'));
+            })
+            ->when($request->input('date_to'), function ($query) use ($request) {
+                $query->whereDate('created_at','<=', $request->input('date_to'));
+            })
+            ->count();
             $item->check_up_record_count = $count;
         }
         return $illness;

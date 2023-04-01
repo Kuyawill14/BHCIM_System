@@ -3,32 +3,20 @@ export default {
     methods: {
         showSuccess(message){
               this.$swal.fire({
-                toast: true,
                 icon: 'success',
-                title: message,
-                position: 'top-right',
+                title: 'Success',
+                text: message,
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true,
-               /*  didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                  toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                } */
               })
         },
         showError(message){
                 this.$swal.fire({
-                toast: true,
                 icon: 'error',
-                title: message,
-                position: 'top-right',
+                title: 'Failed',
+                text: message,
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true,
-               /*  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                } */
               })
         },
        async showDelete(callback){

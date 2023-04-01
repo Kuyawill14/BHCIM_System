@@ -29,7 +29,7 @@
                                 hide-details>
                             </v-text-field>
                            <div v-show="$vuetify.breakpoint.mdAndUp" class="px-2">-</div>
-                            <v-text-field type="date"  v-model="filter.date_to" dense append-icon="mdi-magnify" label="Date To" 
+                            <v-text-field type="date" @change="fetchCheckUpList" v-model="filter.date_to" dense append-icon="mdi-magnify" label="Date To" 
                                 hide-details>
                             </v-text-field>
                              <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 5" :key="item"></v-spacer>
@@ -39,7 +39,7 @@
                             
                           </v-card-title>
 
-                          <v-data-table :items="patientList" :items-per-page="10" class="elevation-0">                                
+                          <v-data-table :loading="loading" loading-text="Loading... Please wait" :items="patientList" :items-per-page="10" class="elevation-0">                                
                               <template v-slot:header >
                                     <thead>
                                     <tr>
@@ -89,7 +89,8 @@
         <section slot="pdf-content">
              <section id="print_table" style="width:90%" class="pdf-item" >
                 <div style="text-align:center">
-                    <h2>Check-Up Report</h2>
+                    <div style="line-height: 12px;font-weight:bold">Check-Up Report</div>
+                    <div style="font-size:10px">{{this.filter.date_from}} - {{this.filter.date_to}}</div>
                 </div>
              </section>
 
@@ -210,10 +211,13 @@ import VueHtml2pdf from 'vue-html2pdf';
             });
         },
          async fetchCheckUpList(){
+            this.loading = true;
+            this.recordList = [];
             let params = `date_from=${this.filter.date_from}&date_to=${this.filter.date_to}`
             await axios.get(`/api/check_up/report?${params}`)
             .then((res)=>{
                 this.recordList = res.data;
+                this.loading = false;
             })
         },
     },

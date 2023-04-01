@@ -3,6 +3,20 @@
         <v-row>
             <v-col cols="12" class="px-10 mt-3">
                 <v-row>
+                    <v-col cols="12" class="my-0 py-0" md="6">
+                        <div class="pb-2 font-weight-bold">Height (cm)</div>
+                        <div class="d-flex">
+                            <v-text-field v-model="form.height" 
+                            placeholder="Height" dense small type="number"  color="primary" readonly />
+                        </div>
+                    </v-col>
+                    <v-col cols="12" class="my-0 py-0" md="6">
+                        <div class="pb-2 font-weight-bold">Weight (kg)</div>
+                        <div class="d-flex">
+                            <v-text-field v-model="form.weight" 
+                            placeholder="Weight" dense small type="number"  color="primary" readonly />
+                        </div>
+                    </v-col>
                     <v-col cols="12" class="my-0 py-0" :md="patientDetails.age <= 5 ? '12' : '6'">
                         <div class="pb-2 font-weight-bold">Temperature</div>
                         <div class="d-flex">
@@ -154,7 +168,7 @@ export default {
             this.form.pregnant = this.viewdata.pregnant;
             this.form.illness_id = this.viewdata.illness_id;
             this.form.medicine_given = this.viewdata.medicine_given;
-            console.log(this.form.medicine_given);
+
 
             this.form.last_mensturation = this.viewdata.last_mensturation;
             this.form.month_of_pregnancy = this.viewdata.month_of_pregnancy;
@@ -165,6 +179,9 @@ export default {
             this.form.bcg = this.patientDetails.health_record.bcg;
             this.form.opv = this.patientDetails.health_record.opv;
             this.form.mv = this.patientDetails.health_record.mv;
+            this.form.height = this.viewdata.height;
+            this.form.weight = this.viewdata.weight;
+            this.form.bmi = this.viewdata.bmi;
         },
         async getIllnessList(){
             await axios.get(`/api/illness`)

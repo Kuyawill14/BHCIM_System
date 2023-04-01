@@ -13,6 +13,8 @@ class DashboardController extends Controller
 {
     public function index(){
         $totalPatient = PatientInformation::count();
+        $PatientMale = PatientInformation::where('gender', 1)->count();
+        $PatientFemale = PatientInformation::where('gender', 2)->count();
         $totalAccount = User::count();
         $illness = Illness::get();
         foreach($illness as $item){
@@ -25,7 +27,9 @@ class DashboardController extends Controller
             "patient"=> $totalPatient,
             "account"=> $totalAccount,
             "illness"=> $illness,
-            "checkUp"=> $totalCheckUp
+            "checkUp"=> $totalCheckUp,
+            "malePatient"=> $PatientMale,
+            "femalePatient"=> $PatientFemale
         ]);
     }
 }
