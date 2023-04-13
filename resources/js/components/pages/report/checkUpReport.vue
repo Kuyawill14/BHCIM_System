@@ -44,6 +44,7 @@
                                     <thead>
                                     <tr>
                                         <th> <v-checkbox @change="selectAllData()" v-model="selectedAll"></v-checkbox></th>
+                                        <th>Date</th>
                                         <th>Patient Name</th>
                                         <th>Gender</th>
                                         <th>Pregnant</th>
@@ -51,7 +52,6 @@
                                         <th>Purok</th>
                                         <th>Illness</th>
                                         <th>Medicine Given</th>
-                                        <th>Date of Check-Up</th>
                                     </tr>
                                     </thead>
                                 </template>
@@ -63,6 +63,7 @@
                                         <td width="5%">
                                             <v-checkbox v-model="item.selected"></v-checkbox>
                                         </td>
+                                        <td>{{convertDate(item.created_at)}}</td>
                                         <td >{{item.info ? item.info.f_name+' '+item.info.m_name+' '+item.info.l_name : 'N/A'}}</td>
                                         <td>{{item.info.gender == 1 ? 'Male' : 'Female'}}</td>
                                         <td>{{item.pregnant == 1 ? 'Yes' : ''}}</td>
@@ -80,7 +81,7 @@
                                                {{ item.name }}
                                             </v-chip>
                                         </td>
-                                        <td>{{convertDate(item.created_at)}}</td>
+                                        
                                       </tr>
                                       <tr v-if="patientList.length == 0">
                                           <td colspan="4" class="text-center"> No data available</td>
@@ -110,6 +111,7 @@
                     <thead>
                         <tr>
                             <th></th>
+                            <th>Date</th>
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Age</th>
@@ -118,11 +120,11 @@
                             <th>Ilness</th>
                             <th>Medicine Given</th>
                             <th>Purok</th>
-                            <th>Date of Check-Up</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in printData" :key="index">
+                            <td>{{convertDate(item.created_at)}}</td>
                             <td class="text-center">{{index+1}}</td>
                             <td>{{item.info ? item.info.f_name+' '+item.info.m_name+' '+item.info.l_name : 'N/A'}}</td>
                             <td>{{item.info.gender == 1 ? 'Male' : 'Female'}}</td>
@@ -132,7 +134,7 @@
                             <td>{{item.Illness ? JoinArray(item.Illness) : 'N/A'}}</td>
                             <td>{{item.Illness ? JoinArray(item.medicine) : 'N/A'}}</td>
                             <td>{{item.info ? item.info.purok.name : 'N/A'}}</td>
-                            <td>{{convertDate(item.created_at)}}</td>
+                            
                         </tr>
                     </tbody>
                 </table>
@@ -173,7 +175,7 @@ import VueHtml2pdf from 'vue-html2pdf';
             pagebreak: { mode: ['avoid-all']}
         },
         printData: [],
-        selectedAll: [],
+        selectedAll: false,
       }
     },
     computed: {

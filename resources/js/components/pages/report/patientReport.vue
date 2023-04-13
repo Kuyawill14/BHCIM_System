@@ -28,6 +28,7 @@
                               <v-select
                             dense
                             label="Filter by Age"
+                            @change="changePrintData"
                             v-model="patient_type"
                             :items="typeSelect"
                             item-text="text"
@@ -71,8 +72,8 @@
                                               Female
                                             </v-chip>
                                           </td>
-                                          <td>{{item.status}}</td>
                                           <td>{{item.age}}</td>
+                                          <td>{{item.status}}</td>
                                           <td>{{item.cell_number}}</td>
                                           <td>{{item.purok ? item.purok.name : ''}}</td>
                                       </tr>
@@ -179,7 +180,7 @@ import VueHtml2pdf from 'vue-html2pdf';
             pagebreak: { mode: ['avoid-all']}
         },
         printData: [],
-        selectedAll: [],
+        selectedAll: false,
       }
     },
     computed: {
@@ -213,6 +214,13 @@ import VueHtml2pdf from 'vue-html2pdf';
         },
     },
     methods: {
+        changePrintData(){
+            this.selectedAll = false;
+            this.recordList.forEach(item => {
+                item.selected = false
+              
+            });
+        },
         printSelected(){
             this.recordList.forEach(item => {
                 if(item.selected){

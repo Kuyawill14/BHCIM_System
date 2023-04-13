@@ -138,7 +138,7 @@ import VueHtml2pdf from 'vue-html2pdf';
             pagebreak: { mode: ['avoid-all']}
         },
         printData: [],
-        selectedAll: [],
+        selectedAll: false,
       }
     },
     computed: {
