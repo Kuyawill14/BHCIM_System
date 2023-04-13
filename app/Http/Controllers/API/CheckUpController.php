@@ -39,15 +39,14 @@ class CheckUpController extends Controller
     
     public function report(Request $request)
     {
-        $CheckUpRecord = CheckUpRecord::
-        when($request->input('date_from'), function ($query) use ($request) {
+        $CheckUpRecord = CheckUpRecord::when($request->input('date_from'), function ($query) use ($request) {
             $query->whereDate('created_at','>=',$request->input('date_from'));
         })
         ->when($request->input('date_to'), function ($query) use ($request) {
             $query->whereDate('created_at','<=', $request->input('date_to'));
         })
         ->with(['info' =>  function ($query){
-            $query->with(['purok']);
+            $query->with('purok');
         }])
         ->wherehas('info')
         ->get();
