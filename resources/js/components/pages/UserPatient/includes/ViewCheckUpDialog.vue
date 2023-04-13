@@ -23,6 +23,22 @@
                         <v-col cols="12" class="my-0 py-0" md="8">
                         </v-col>
                         <v-col cols="12" class="my-0 py-0" md="6">
+                            <div class="pb-2 font-weight-bold">Height (cm)</div>
+                            <div class="d-flex">
+                                <v-text-field v-model="form.height" 
+                                readonly
+                                placeholder="Temperature" dense small type="number"  color="primary"  />
+                            </div>
+                        </v-col>
+                        <v-col cols="12" class="my-0 py-0" md="6">
+                            <div class="pb-2 font-weight-bold">Weight (kg)</div>
+                            <div class="d-flex">
+                                <v-text-field v-model="form.weight" 
+                                readonly
+                                placeholder="Temperature" dense small type="number"  color="primary"  />
+                            </div>
+                        </v-col>
+                        <v-col cols="12" class="my-0 py-0" md="6">
                             <div class="pb-2 font-weight-bold">Temperature</div>
                             <div class="d-flex">
                                 <v-text-field v-model="form.temperature" 

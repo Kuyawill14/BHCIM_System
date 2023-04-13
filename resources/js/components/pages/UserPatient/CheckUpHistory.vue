@@ -1,5 +1,5 @@
 <template>
-   <div class="pt-7 px-3">
+   <div class="pt-7 px-0 px-md-5">
         <v-row>
             <v-col cols="12">
                  <v-card >
@@ -20,7 +20,7 @@
                         </v-card>
                     </v-card-title>
                         
-                    <div class="px-10 py-10">
+                    <div class="px-2 px-md-5py-10">
                 
                     <v-card elevation="0">
                           <v-card-title>

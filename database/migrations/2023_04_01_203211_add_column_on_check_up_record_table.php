@@ -27,8 +27,8 @@ class AddColumnOnCheckUpRecordTable extends Migration
     public function down()
     {
         Schema::table('check_up_records', function (Blueprint $table) {
-            $table->dropColumn('delivery_type');
-            $table->dropColumn('delivery_time');
+            $table->dropColumn('weight');
+            $table->dropColumn('height');
         });
     }
 }

@@ -1,5 +1,5 @@
 <template>
-   <div class="pt-3 px-3">
+   <div class="pt-3 px-0 px-md-3">
         <v-row>
             <v-col cols="12">
                  <v-card >
@@ -11,7 +11,7 @@
                             </div>
                         </v-card>
                     </v-card-title>
-                    <div class="px-5 py-10">
+                    <div class="px-2 px-md-5 py-10">
                          <v-tabs  v-model="tab"  align-with-title>
                         <v-tabs-slider color="primary"></v-tabs-slider>
 
@@ -22,7 +22,7 @@
                         </v-tabs>
                           <v-tabs-items v-model="tab">
                             <v-tab-item class="pb-5">
-                                <v-card elevation="0" class="px-8 pt-5">
+                                <v-card elevation="0" class="px-2 px-md-8 pt-5">
                                     <v-form ref="form" v-model="valid" lazy-validation>
                                             <v-row class="px-2 pt-2">
                                                 <v-col class="my-0 py-0" cols="12" md="12">
@@ -99,7 +99,7 @@
                                     </v-card>
                             </v-tab-item>
                             <v-tab-item class="pb-5">
-                                 <v-card elevation="0" class="px-12 pt-5">
+                                 <v-card elevation="0" class="px-md-12 px-2 pt-5">
                                     <v-form ref="updatePassForm" v-model="valid2" lazy-validation>
                                         <v-row>
                                             <v-col class="my-0 py-0" cols="12" md="12">

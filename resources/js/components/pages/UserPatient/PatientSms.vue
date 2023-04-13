@@ -1,5 +1,5 @@
 <template>
-   <div class="pt-7 px-3">
+   <div class="pt-7 px-0 px-md-3">
         <v-row>
             <v-col cols="12">
                  <v-card min-height="85vh" >
