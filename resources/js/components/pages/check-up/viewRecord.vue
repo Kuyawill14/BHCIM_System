@@ -57,6 +57,7 @@
                         <div class="pb-2 font-weight-bold">Months of Pregnancy</div>
                         <v-select
                             dense
+                            :items="month_of_pregnant"
                             v-model="form.month_of_pregnancy"
                             readonly
                             color="primary"
@@ -149,9 +150,10 @@ export default {
     data() {
         return {
             form: {},
-            pregnant:[{text: 'YES', val: true},{text: 'NO', val: 'false'}],
+            pregnant:[{text: 'YES', val: 1},{text: 'NO', val: 0}],
             illnessList: [],
-            medicineList: []
+            medicineList: [],
+            month_of_pregnant: [],
         }
     },
     methods: {
@@ -169,9 +171,14 @@ export default {
             this.form.illness_id = this.viewdata.illness_id;
             this.form.medicine_given = this.viewdata.medicine_given;
 
-
-            this.form.last_mensturation = this.viewdata.last_mensturation;
-            this.form.month_of_pregnancy = this.viewdata.month_of_pregnancy;
+            if(this.viewdata.pregnant == 1){
+                this.form.last_mensturation = this.viewdata.last_mensturation;
+                this.form.month_of_pregnancy = this.viewdata.month_of_pregnancy;
+            }else{
+                this.form.last_mensturation = '';
+                this.form.month_of_pregnancy ='';
+            }
+           
             this.form.consultation_notes = this.viewdata.consultation_notes;
 
             this.form.hepa_b = this.patientDetails.health_record.hepa_b;
@@ -200,6 +207,9 @@ export default {
         this.setViewData();
         this.getIllnessList();
         this.getIMedicine();
+        for (let i = 0; i < 9; i++) {
+            this.month_of_pregnant.push(i+1)
+        }
     }
 }
 </script>

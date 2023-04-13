@@ -73,9 +73,9 @@ class CheckUpController extends Controller
             $newCheckUp->blood_pressure = $request->b_pressure_up.'/'.$request->b_pressure_down;
             $newCheckUp->temperature = $request->temperature;
             
-            if($request->gender == 2){
-                $newCheckUp->pregnant = $request->pregnant == true ? 1 : 0;
-                if($request->pregnant == true){
+            if($request->gender === 2){
+                $newCheckUp->pregnant = $request->pregnant === true ? 1 : 0;
+                if($request->pregnant === true){
                     $newCheckUp->last_mensturation = $request->last_mensturation;
                     $newCheckUp->month_of_pregnancy = $request->month_of_pregnancy;
                 }
@@ -149,9 +149,9 @@ class CheckUpController extends Controller
                 $updateCheckUp->blood_pressure = $request->b_pressure_up.'/'.$request->b_pressure_down;
                 $updateCheckUp->temperature = $request->temperature;
 
-                if($request->gender == 2){
-                    $updateCheckUp->pregnant = $request->pregnant == true ? 1 : 0;
-                    if($request->pregnant == true){
+                if($request->gender === 2){
+                    $updateCheckUp->pregnant = $request->pregnant === true ? 1 : 0;
+                    if($request->pregnant === true){
                         $updateCheckUp->last_mensturation = $request->last_mensturation;
                         $updateCheckUp->month_of_pregnancy = $request->month_of_pregnancy;
                     }
@@ -187,7 +187,7 @@ class CheckUpController extends Controller
             return response()->json([
                 "success"=> false,
                 "data"=> [],
-                "message"=> 'Updating check-up record failed!'
+                "message"=> $e,
             ]);
         }
     }

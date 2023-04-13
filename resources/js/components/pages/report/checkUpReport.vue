@@ -59,16 +59,27 @@
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
+                             
                                         <td width="5%">
                                             <v-checkbox v-model="item.selected"></v-checkbox>
                                         </td>
                                         <td >{{item.info ? item.info.f_name+' '+item.info.m_name+' '+item.info.l_name : 'N/A'}}</td>
                                         <td>{{item.info.gender == 1 ? 'Male' : 'Female'}}</td>
                                         <td>{{item.pregnant == 1 ? 'Yes' : ''}}</td>
-                                        <td>{{item.pregnant == 1 ? item.month_of_pregnancy+' months' : ''}}</td>
+                                        <td>{{item.pregnant == 1 && item.month_of_pregnancy != null ? item.month_of_pregnancy+' months' : ''}}</td>
                                         <td>{{item.info ? item.info.purok.name : 'N/A'}}</td>
-                                        <td>{{item.Illness ? JoinArray(item.Illness) : 'N/A'}}</td>
-                                        <td></td>
+                                        <td>
+                                            <v-chip v-for="(item,  mI) in item.Illness" x-small :key="mI"
+                                            color="red" text-color="white">
+                                               {{ item.name }}
+                                            </v-chip>
+                                        </td>
+                                        <td>
+                                            <v-chip v-for="(item,  mI) in item.medicine" x-small :key="mI"
+                                            color="green" text-color="white">
+                                               {{ item.name }}
+                                            </v-chip>
+                                        </td>
                                         <td>{{convertDate(item.created_at)}}</td>
                                       </tr>
                                       <tr v-if="patientList.length == 0">
@@ -117,9 +128,9 @@
                             <td>{{item.info.gender == 1 ? 'Male' : 'Female'}}</td>
                             <td>{{item.info.age}}</td>
                             <td>{{item.pregnant == 1 ? 'Yes' : ''}}</td>
-                            <td>{{item.pregnant == 1 ? item.month_of_pregnancy+' months' : ''}}</td>
+                            <td>{{item.pregnant == 1 && item.month_of_pregnancy != null ? item.month_of_pregnancy+' months' : ''}}</td>
                             <td>{{item.Illness ? JoinArray(item.Illness) : 'N/A'}}</td>
-                            <td></td>
+                            <td>{{item.Illness ? JoinArray(item.medicine) : 'N/A'}}</td>
                             <td>{{item.info ? item.info.purok.name : 'N/A'}}</td>
                             <td>{{convertDate(item.created_at)}}</td>
                         </tr>

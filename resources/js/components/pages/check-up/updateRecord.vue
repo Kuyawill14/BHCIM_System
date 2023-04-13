@@ -41,6 +41,7 @@
                             <div class="pb-2 font-weight-bold">Pregnant</div>
                             <v-select
                                 dense
+                                @change="checkIfPregnant"
                                 item-text="text"
                                 item-value="val"
                                 :rules="[rules.required]" 
@@ -54,13 +55,17 @@
                         <v-col v-if="form.gender != 1 && form.age > 18" cols="12" class="my-0 py-0" md="4">
                             <div class="pb-2 font-weight-bold">Last Menstruation</div>
                             <v-text-field v-model="form.last_mensturation" 
-                                :disabled="form.pregnant == 'false'"
+                                :disabled="isPregnant"
+                                :rules="!isPregnant ? [rules.required] : ''" 
                                 placeholder="Last Menstruation" dense small type="month"  color="primary" outlined />
                         </v-col>
                         <v-col v-if="form.gender != 1 && form.age > 18" cols="12" class="my-0 py-0" md="4">
                             <div class="pb-2 font-weight-bold">Months of Pregnancy</div>
                             <v-select
+                                :disabled="isPregnant"
+                                :rules="!isPregnant ? [rules.required] : ''"
                                 dense
+                                :items="month_of_pregnant"
                                 v-model="form.month_of_pregnancy"
                                 outlined
                                 color="primary"
@@ -150,6 +155,7 @@ export default {
     props:['editdata', 'patientDetails'],
     data() {
         return {
+            isPregnant: false,
             form: {},
             pregnant:[{text: 'YES', val: true},{text: 'NO', val: 'false'}],
             month_of_pregnant: [],
@@ -164,6 +170,9 @@ export default {
         }
     },
     methods: {
+        checkIfPregnant(){
+            this.isPregnant = this.form.pregnant == true ? false : true;
+        },
         validate() {
             if (this.$refs.form.validate()) {
                this.updatRecord();
@@ -179,12 +188,18 @@ export default {
             }
             this.form.age = this.editdata.info.age;
             this.form.gender = this.editdata.info.gender;
-            this.form.pregnant = this.editdata.pregnant;
+            this.form.pregnant = this.editdata.pregnant == 1 ? true : 'false';
+            this.isPregnant = this.editdata.pregnant == 1 ? false : true;
             this.form.illness_id = this.editdata.illness_id;
             this.form.medicine_given = this.editdata.medicine_given;
 
-            this.form.last_mensturation = this.editdata.last_mensturation;
-            this.form.month_of_pregnancy = this.editdata.month_of_pregnancy;
+            if(this.editdata.pregnant == 1){
+                this.form.last_mensturation = this.editdata.last_mensturation;
+                this.form.month_of_pregnancy = this.editdata.month_of_pregnancy;
+            }else{
+                this.form.last_mensturation = ""
+                this.form.month_of_pregnancy = ""
+            }
             this.form.consultation_notes = this.editdata.consultation_notes;
             this.form.height = this.editdata.height;
             this.form.weight = this.editdata.weight;
@@ -226,6 +241,9 @@ export default {
         this.seteditdata();
         this.getIllnessList();
         this.getIMedicine();
+        for (let i = 0; i < 9; i++) {
+            this.month_of_pregnant.push(i+1)
+        }
     }
 }
 </script>
