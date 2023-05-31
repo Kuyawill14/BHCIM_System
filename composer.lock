@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "377c62b02e793ca52cc6cbaf115a88e1",
+    "content-hash": "45dbe6e2d9cd7d5623669bcfa2cbe0b8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1305,6 +1305,74 @@
             "time": "2022-11-01T14:48:50+00:00"
         },
         {
+            "name": "laravel/nexmo-notification-channel",
+            "version": "v3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/vonage-notification-channel.git",
+                "reference": "0ad09aebc394cf9af80b1a3b9a3fa2ed8e3c3fd9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/vonage-notification-channel/zipball/0ad09aebc394cf9af80b1a3b9a3fa2ed8e3c3fd9",
+                "reference": "0ad09aebc394cf9af80b1a3b9a3fa2ed8e3c3fd9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/notifications": "^8.0|^9.0|^10.0",
+                "illuminate/support": "^8.0|^9.0|^10.0",
+                "php": "^8.0",
+                "vonage/client-core": "^3.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.2",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Illuminate\\Notifications\\VonageChannelServiceProvider"
+                    ],
+                    "aliases": {
+                        "Vonage": "Illuminate\\Notifications\\Facades\\Vonage"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Notifications\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Vonage Notification Channel for laravel.",
+            "keywords": [
+                "laravel",
+                "nexmo",
+                "notifications",
+                "vonage"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/vonage-notification-channel/issues",
+                "source": "https://github.com/laravel/vonage-notification-channel/tree/v3.1.2"
+            },
+            "abandoned": "laravel/vonage-notification-channel",
+            "time": "2023-01-26T12:21:53+00:00"
+        },
+        {
             "name": "laravel/sanctum",
             "version": "v2.15.1",
             "source": {
@@ -2504,6 +2572,80 @@
                 "source": "https://github.com/Vonage/vonage-php-sdk-core"
             },
             "time": "2021-01-21T14:22:30+00:00"
+        },
+        {
+            "name": "nexmo/laravel",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nexmo/nexmo-laravel.git",
+                "reference": "7bfc9007810d80646e3c3fde4266d2437e25b880"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nexmo/nexmo-laravel/zipball/7bfc9007810d80646e3c3fde4266d2437e25b880",
+                "reference": "7bfc9007810d80646e3c3fde4266d2437e25b880",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.2|^6.0|^7.0|^8.0",
+                "php": "^7.4|^8.0|^8.1",
+                "vonage/client": "^3.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.0|^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^5.3|~6.0|~8.0|~9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nexmo\\Laravel\\NexmoServiceProvider"
+                    ],
+                    "aliases": {
+                        "Nexmo": "Nexmo\\Laravel\\Facade\\Nexmo"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nexmo\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Seconde",
+                    "email": "jim.seconde@vonage.com",
+                    "role": "PHP Developer Advocate"
+                },
+                {
+                    "name": "Tim Lytle",
+                    "homepage": "http://twitter.com/tjlytle",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Michael Heap",
+                    "homepage": "http://twitter.com/mheap",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Chris Tankersley",
+                    "homepage": "http://twitter.com/dragonmantank",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Package for Nexmo's PHP Client",
+            "support": {
+                "email": "devrel@nexmo.com",
+                "issues": "https://github.com/Nexmo/nexmo-laravel/issues",
+                "source": "https://github.com/Nexmo/nexmo-laravel/tree/3.0.0"
+            },
+            "abandoned": "vonage-laravel",
+            "time": "2022-02-03T12:04:32+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -8451,5 +8593,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

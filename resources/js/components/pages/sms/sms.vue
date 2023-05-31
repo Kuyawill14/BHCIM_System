@@ -226,7 +226,7 @@
      watch: {
       search (val) {
         if(val){
-          if(val != 'All Patient'){
+          if(val != 'All Patient' && !this.form.patient_id){
             if (this.searchPatient.length > 1) return
               if (this.isLoading) return
               this.isLoading = true
@@ -246,7 +246,6 @@
     },
     methods: {
       userSelected(){
-        console.log(this.form.patient_id)
         if(this.form.patient_id != 'all'){
           this.searchPatient.forEach(item => {
               if(item.id == this.form.patient_id){
@@ -254,7 +253,6 @@
               }
           });
         }
-        
       },
       validate2() {
           if(this.$refs.form2.validate()) {
