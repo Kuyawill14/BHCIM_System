@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\PatientInformation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class SmsController extends Controller
 {
@@ -103,7 +104,7 @@ class SmsController extends Controller
 
             return response()->json([
                 "success"=> false,
-                "message"=> 'Message sent failed!'
+                "message"=> $e->getMessage(),
             ]);
         }
     }
@@ -138,7 +139,7 @@ class SmsController extends Controller
 
             return response()->json([
                 "success"=> false,
-                "message"=> 'Message sent failed!'
+                "message"=> $e->getMessage(),
             ]);
         }
     }
