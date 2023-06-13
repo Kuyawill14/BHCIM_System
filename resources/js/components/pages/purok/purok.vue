@@ -31,7 +31,7 @@
                                     <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
                             </v-card-title>
 
-                            <v-data-table  :search="search" :headers="headers" :items="purokList" :items-per-page="10" class="elevation-0">                                
+                            <v-data-table :headers="headers" :items="listPurok" :items-per-page="10" class="elevation-0">                                
                                 <template v-slot:body="{ items }">
                                     <tbody>
                                         <tr v-for="(item, index) in items" :key="index">
@@ -81,12 +81,13 @@
                         <v-row class="px-2 pt-2">
                             <v-col class="my-0 py-0" cols="12" md="12">
                                 <div class="pb-2 font-weight-bold">Name</div>
-                                <v-text-field  dense v-model="form.name" :rules="nameRules" placeholder="Name"
+                                <v-text-field @input="$capitalizeFormLetter('name')" dense v-model="form.name" :rules="nameRules" placeholder="Name"
                                  color="primary" type="text" outlined />
                             </v-col>
                              <v-col class="my-0 py-0" cols="12" md="12">
                                 <div class="pb-2 font-weight-bold">Description</div>
                                 <v-textarea
+                                @input="$capitalizeFormLetter('description')"
                                 v-model="form.description"
                                     outlined
                                     dense
@@ -143,6 +144,18 @@ export default {
                 v => !!v || 'Field is required',
             ],
         }
+    },
+    computed: {
+      listPurok(){
+            if(this.search) {
+                return this.purokList.filter((item) => {
+                        return this.search.toLowerCase().split(' ').every(v => item.name.toLowerCase()
+                    .includes(v))
+                })
+            }else {
+                return this.purokList;
+            }
+        },
     },
     methods: {
           validate() {

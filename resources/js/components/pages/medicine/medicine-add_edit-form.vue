@@ -13,7 +13,7 @@
                 <v-row class="px-2 pt-2">
                     <v-col v-if="this.type != 'add_stock'" class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Name</div>
-                        <v-text-field class="text-uppercase" dense v-model="form.name" 
+                        <v-text-field @input="$capitalizeFormLetter('name')" class="text-uppercase" dense v-model="form.name" 
                         :rules="[rules.required]" 
                             color="primary" type="text" outlined />
                     </v-col>
@@ -21,6 +21,7 @@
                      <v-col v-if="this.type != 'add_stock'" class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Description</div>
                          <v-textarea
+                            @input="$capitalizeFormLetter('description')"
                             :readonly="type == 'view'"
                             v-model="form.description"
                             :outlined="type != 'view'"
@@ -31,7 +32,7 @@
                     </v-col>
                     <v-col v-if="this.type != 'update'" class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Quantity</div>
-                        <v-text-field class="text-uppercase" dense v-model="form.quantity" 
+                        <v-text-field  class="text-uppercase" dense v-model="form.quantity" 
                         :rules="[rules.required]" 
                             color="primary" type="number" outlined />
                     </v-col>

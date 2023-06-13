@@ -17,7 +17,7 @@
     </v-col>
     <v-col class="text-center mt-0 pt-0" cols="12">
         <div class="d-flex justify-content-center">
-            <div class="px-1"><strong><v-icon color="danger">mdi-home</v-icon>Purok:</strong> {{patientDetails.purok.name}}</div>
+            <div class="px-1"><strong><v-icon color="danger">mdi-home</v-icon>Purok:</strong> {{ patientDetails.purok ? patientDetails.purok.name : 'N/A'}}</div>
             <div class="px-2"><strong>Age:</strong> {{patientDetails.age}}</div>
             <div class="px-1"><strong><v-icon color="info">mdi-gender-female</v-icon>Gender:</strong> {{patientDetails.gender == 1 ? 'Male' : 'Female'}}</div>
         </div>

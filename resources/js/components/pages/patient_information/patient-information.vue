@@ -31,7 +31,7 @@
                             <v-spacer v-show="$vuetify.breakpoint.mdAndUp" v-for="item in 10" :key="item"></v-spacer>
                           </v-card-title>
 
-                          <v-data-table :search="search" :headers="headers" :items="recordList" :items-per-page="10" class="elevation-0">                                
+                          <v-data-table :headers="headers" :items="patientList" :items-per-page="10" class="elevation-0">                                
                               <template v-slot:body="{ items }">
                                   <tbody>
                                       <tr v-for="(item, index) in items" :key="index">
@@ -155,6 +155,18 @@ import PurokForm from './add-purok-form'
             valid: true,
             form: '',
       }
+    },
+    computed: {
+      patientList(){
+            if(this.search) {
+                return this.recordList.filter((item) => {
+                        return this.search.toLowerCase().split(' ').every(v => item.f_name.toLowerCase()
+                    .includes(v) || item.l_name.toLowerCase().includes(v))
+                })
+            }else {
+                return this.recordList;
+            }
+        },
     },
     methods: {
         async newPurokAdded(){

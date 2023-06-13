@@ -14,13 +14,14 @@
                 <v-row class="px-2 pt-2">
                     <v-col class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Name</div>
-                        <v-text-field  dense v-model="form.name" :rules="nameRules" placeholder="Name"
+                        <v-text-field @input="$capitalizeFormLetter('name')" dense v-model="form.name" :rules="nameRules" placeholder="Name"
                             color="primary" type="text" outlined />
                     </v-col>
                         <v-col class="my-0 py-0" cols="12" md="12">
                         <div class="pb-2 font-weight-bold">Description</div>
                         <v-textarea
-                        v-model="form.description"
+                            @input="$capitalizeFormLetter('description')"
+                            v-model="form.description"
                             outlined
                             dense
                             auto-grow

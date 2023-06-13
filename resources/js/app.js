@@ -16,6 +16,11 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import moment from 'moment';
 Vue.prototype.moment = moment;
 
+Vue.prototype.$capitalizeFormLetter = function(inputName) {
+    this.form[inputName] =  this.form[inputName][0].toUpperCase() +  this.form[inputName].slice(1);
+};
+  
+
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 import globalMixin from './mixins/globalMixins'

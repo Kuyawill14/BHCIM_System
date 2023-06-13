@@ -17,27 +17,31 @@
                 <v-row class=" pt-2 px-3">
                     <v-col cols="12" class="my-0 py-0" md="4">
                         <div class="pb-2 font-weight-bold">Last Name</div>
-                        <v-text-field :readonly="type == 'view'" v-model="form.l_name" dense :rules="nameRules" placeholder="Last Name"
+                        <v-text-field :readonly="type == 'view'" 
+                        @input="$capitalizeFormLetter('l_name')"
+                        v-model="form.l_name" dense :rules="nameRules" placeholder="Last Name"
                             color="primary" type="text" :outlined="type != 'view'" />
                     </v-col>
                     
                     <v-col cols="12" class="my-0 py-0" md="4">
                         <div class="pb-2 font-weight-bold">First Name</div>
-                        <v-text-field placeholder="First Name" dense small type="text" v-model="form.f_name"
+                        <v-text-field @input="$capitalizeFormLetter('f_name')" placeholder="First Name" dense small type="text" v-model="form.f_name"
                             :rules="nameRules"
                             :readonly="type == 'view'"
                             color="primary" :outlined="type != 'view'" />
                     </v-col>
                     <v-col cols="12" class="my-0 py-0"  md="2">
                         <div class="pb-2 font-weight-bold">Middle Initial</div>
-                        <v-text-field :readonly="type == 'view'" placeholder="M.I" dense type="text" v-model="form.m_name"
+                        <v-text-field @input="$capitalizeFormLetter('m_name')" :readonly="type == 'view'" placeholder="M.I" dense type="text" v-model="form.m_name"
                             maxlength="1"
                             :rules="nameRules"
                             color="primary" :outlined="type != 'view'" />
                     </v-col>
                     <v-col cols="12" class="my-0 py-0"  md="2">
                         <div class="pb-2 font-weight-bold">Ext(eg. Jr. Sr.)</div>
-                        <v-text-field :readonly="type == 'view'" placeholder="Ext" dense type="text" v-model="form.name_ext"
+                        <v-text-field 
+                         @input="$capitalizeFormLetter('name_ext')"
+                        :readonly="type == 'view'" placeholder="Ext" dense type="text" v-model="form.name_ext"
                             maxlength="2"
                             color="primary" :outlined="type != 'view'" />
                     </v-col>
@@ -87,6 +91,7 @@
                         <v-col cols="12" class="my-0 py-0" md="12">
                             <div class="pb-2 font-weight-bold">Place of Birth</div>
                             <v-textarea
+                            @input="$capitalizeFormLetter('b_place')"
                             v-model="form.b_place"
                             :readonly="type == 'view'"
                             :outlined="type != 'view'"
@@ -102,6 +107,7 @@
                     <v-col v-if="form.age >= 18" cols="12" class="my-0 py-0" md="12">
                             <div class="pb-2 font-weight-bold">Occcupation</div>
                             <v-textarea
+                            @input="$capitalizeFormLetter('occupation')"
                             :readonly="type == 'view'"
                             v-model="form.occupation"
                             :outlined="type != 'view'"
@@ -115,6 +121,7 @@
                     <v-col v-if="form.age > 5 && form.age <= 17" cols="12" class="my-0 py-0" md="12">
                         <div class="pb-2 font-weight-bold">Guardian Name</div>
                         <v-textarea
+                        @input="$capitalizeFormLetter('guardian')"
                         :readonly="type == 'view'"
                         v-model="form.guardian"
                         :outlined="type != 'view'"
@@ -134,14 +141,14 @@
 
                     <v-col v-if="form.age <= 5 && form.age != ''" cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Mother Name</div>
-                        <v-text-field :readonly="type == 'view'" placeholder="Mother Name" 
+                        <v-text-field :readonly="type == 'view'" @input="$capitalizeFormLetter('mother_name')" placeholder="Mother Name" 
                         :rules="nameRules" dense type="text"  v-model="form.mother_name"
                         color="primary" :outlined="type != 'view'" />
                     </v-col>
                      <v-col v-if="form.age <= 5 && form.age != ''" cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Father Name</div>
                         <v-text-field :readonly="type == 'view'" placeholder="Father Name" 
-                        :rules="nameRules" dense type="text"  v-model="form.father_name"
+                        :rules="nameRules" dense type="text" @input="$capitalizeFormLetter('father_name')" v-model="form.father_name"
                         color="primary" :outlined="type != 'view'" />
                     </v-col>
 
@@ -211,6 +218,7 @@
                     <v-col cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Illness History</div>
                             <v-textarea
+                            @input="$capitalizeFormLetter('illness_history')"
                             :readonly="type == 'view'"
                             v-model="form.illness_history"
                             :outlined="type != 'view'"
@@ -281,6 +289,7 @@
                     <v-col cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Sickness</div>
                             <v-textarea
+                             @input="$capitalizeFormLetter('sickness')"
                             :readonly="type == 'view'"
                             v-model="form.sickness"
                             :outlined="type != 'view'"
@@ -296,6 +305,7 @@
                     <v-col v-if="form.age > 5 " cols="12" class="my-0 py-0" md="6">
                         <div class="pb-2 font-weight-bold">Medication Taken</div>
                             <v-textarea
+                            @input="$capitalizeFormLetter('medication')"
                             :readonly="type == 'view'"
                             v-model="form.medication"
                             :outlined="type != 'view'"
